@@ -12,6 +12,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: "@import '@/styles/constant.sass';"
+      }
+    }
+  },
   server: {
     https: false,
     port: 4132,
