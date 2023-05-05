@@ -1,6 +1,6 @@
 <template>
-  <div>
-    appmenus
+  <div class="app-menus">
+
   </div>
 </template>
 
