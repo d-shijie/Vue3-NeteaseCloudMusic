@@ -1,0 +1,8 @@
+@import url(./root.css);
+#app {
+  max-width: 100vw;
+  max-height: 100vh;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-color: var(--v-m-bgc);
+}
