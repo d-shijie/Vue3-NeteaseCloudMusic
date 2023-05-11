@@ -15,7 +15,7 @@
       </el-col>
       <el-col :span="13">
         <div class="right-pannel">
-          <el-popover :show-arrow="false" placement="bottom" :width="276" trigger="click">
+          <el-popover :hide-after="60" :show-arrow="false" placement="bottom" :width="276" trigger="click">
             <template #reference>
               <div class="avatar">
                 <img src="https://img2.baidu.com/it/u=260760610,2790622781&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
@@ -26,24 +26,25 @@
                 </el-icon>
               </div>
             </template>
+            <ProfileCard />
           </el-popover>
-
           <div class="setting">
             <img src="@/assets/cloth.png" alt="">
             <img src="@/assets/setting.png" alt="">
             <img src="@/assets/message.png" alt="">
           </div>
         </div>
-
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script setup lang="ts">
+import ProfileCard from '../components/LoginCard/profileCard.vue';
 import { ArrowLeft, ArrowRight, CaretBottom } from '@element-plus/icons-vue'
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+
 const router = useRouter()
 
 const keywords = ref('')
