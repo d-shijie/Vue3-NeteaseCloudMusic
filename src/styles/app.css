@@ -8,7 +8,9 @@
   background-color: var(--v-m-bgc);
   color:var(--v-m-text-color);
 }
-
+a {
+  text-decoration: none;
+}
 .el-popover {
   background-color: rgb(54, 54, 54) !important;
   border: none !important;
