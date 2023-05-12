@@ -59,7 +59,7 @@
           </div>
         </div>
         <div class="login-btn">
-          <el-button color="rgb(255, 58, 58)" style="width: 100%;">登录</el-button>
+          <el-button @click="login" color="rgb(255, 58, 58)" style="width: 100%;">登录</el-button>
           <a>注册</a>
         </div>
         <div class="third-party-login">
@@ -86,20 +86,18 @@
 import QrcodeVue from 'qrcode.vue'
 import { reactive, ref } from 'vue'
 import { Lock, Iphone } from '@element-plus/icons-vue'
-import type { FormInstance, FormRules } from 'element-plus'
+import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
+import { visitorLoginApi } from '@/api/login'
 // 二维码
 const qrcodeUrl = ref('www.baidu.com')
 const qrcodeSize = ref(170)
 const isShowLeft = ref(false)
 const isShowQrcode = ref(true)
 const qrcodeEnter = () => {
-  console.log(1);
-
   qrcodeSize.value = 120
   isShowLeft.value = true
 }
 const qrcodeLeave = () => {
-  console.log(2);
   qrcodeSize.value = 170
   isShowLeft.value = false
 }
@@ -116,7 +114,25 @@ const params = reactive({
   phone: '',
   password: ''
 })
+const login = () => {
+  loginFormRef.value?.validate(valid => {
+    if (!valid) return
+    if (isAgree.value) {
+      visitorLoginApi().then(res => {
+        console.log(res);
+      })
+    } else {
+      ElMessage({
+        message: '请先勾选同意相关政策',
+        customClass: 'm-message',
+        type: undefined,
+      })
 
+    }
+
+  })
+
+}
 </script>
 
 <style scoped lang="scss">
@@ -250,6 +266,8 @@ const params = reactive({
     }
   }
 }
+
+
 
 
 

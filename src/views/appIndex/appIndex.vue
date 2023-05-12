@@ -22,6 +22,7 @@ import { RouterView } from 'vue-router';
 import appController from '@/layout/appController.vue';
 import appHeader from '@/layout/appHeader.vue';
 import appMenus from '@/layout/appMenus.vue';
+
 </script>
 
 <style scoped lang="scss">
