@@ -18,7 +18,8 @@
             <svg-icon :name="item.prefixIcon"></svg-icon>
           </template>
           <template v-slot:suffix>
-            <svg-icon :name="item.suffixIcon"></svg-icon>
+            <svg-icon v-if="item.suffixIcon" :name="item.suffixIcon"></svg-icon>
+            <p class="suffixText" v-else>{{ item.suffixText }}</p>
           </template>
         </profileItem>
       </div>
@@ -37,18 +38,20 @@ const profileItmes = ref([
     label: '会员中心',
     url: 'test',
     showBorder: false,
-    hasMessage: true
+    hasMessage: true,
+    suffixText:'未订购'
   },
   {
-    prefixIcon: 'vip',
+    prefixIcon: 'level',
     suffixIcon: '',
     label: '等级',
     url: 'test',
     showBorder: false,
-    hasMessage: true
+    hasMessage: true,
+    suffixText:'Lv.9'
   },
   {
-    prefixIcon: 'vip',
+    prefixIcon: 'shop',
     suffixIcon: '',
     label: '商城',
     url: 'test',
@@ -56,7 +59,7 @@ const profileItmes = ref([
     hasMessage: true
   },
   {
-    prefixIcon: 'vip',
+    prefixIcon: 'profile',
     suffixIcon: '',
     label: '个人信息设置',
     url: 'test',
@@ -64,15 +67,15 @@ const profileItmes = ref([
     hasMessage: true
   },
   {
-    prefixIcon: 'vip',
-    suffixIcon: 'vip',
+    prefixIcon: 'socialize',
+    suffixIcon: 'weibo',
     label: '绑定社交账号',
     url: 'test',
     showBorder: true,
     hasMessage: true
   },
   {
-    prefixIcon: 'vip',
+    prefixIcon: 'customer-service',
     suffixIcon: '',
     label: '我的客服',
     url: 'test',
@@ -80,7 +83,7 @@ const profileItmes = ref([
     hasMessage: true
   },
   {
-    prefixIcon: 'vip',
+    prefixIcon: 'logout',
     suffixIcon: '',
     label: '退出登录',
     url: '',
@@ -94,12 +97,13 @@ const profileItmes = ref([
 @import url('@/styles/root.css');
 
 .content {
-  padding: 12px;
+  
 
   .count-wrapper {
+   
     .counts {
       display: flex;
-      padding: 0 12px;
+      padding: 12px;
       justify-content: space-between;
 
       span {
@@ -135,6 +139,12 @@ const profileItmes = ref([
 
       border-bottom: 0.5px solid var(--v-m-text-color);
     }
+  }
+  .suffixText{
+    font-size: 12px;
+    padding: 0;
+    font-weight: 600;
+    margin: 0;
   }
 }
 </style>

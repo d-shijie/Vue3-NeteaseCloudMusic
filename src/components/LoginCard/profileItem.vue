@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-item" :class="{ 'border': item.showBorder }">
+  <div @click="handleClick" class="profile-item" :class="{ 'border': item.showBorder }">
     <span class="icon prefix">
       <slot name="prefix"></slot>
     </span>
@@ -28,13 +28,14 @@ defineProps({
     default: () => { }
   }
 })
+
 </script>
 
 <style scoped lang="scss">
 @import url('@/styles/root.css');
 
 .profile-item {
-  padding: 6px;
+  padding: 10px;
   display: flex;
   align-items: center;
 

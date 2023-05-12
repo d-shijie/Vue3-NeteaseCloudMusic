@@ -1,5 +1,5 @@
 <template>
-  <div>1111</div>
+  <div class="login-card">1111</div>
 </template>
 
 <script setup lang="ts"></script>

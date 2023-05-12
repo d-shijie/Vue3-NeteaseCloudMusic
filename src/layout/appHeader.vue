@@ -26,7 +26,8 @@
                 </el-icon>
               </div>
             </template>
-            <ProfileCard />
+            <!-- <ProfileCard /> -->
+            <LoginCard />
           </el-popover>
           <div class="setting">
             <img src="@/assets/cloth.png" alt="">
@@ -41,6 +42,7 @@
 
 <script setup lang="ts">
 import ProfileCard from '../components/LoginCard/profileCard.vue';
+import LoginCard from '@/components/LoginCard/loginCard.vue';
 import { ArrowLeft, ArrowRight, CaretBottom } from '@element-plus/icons-vue'
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
@@ -74,13 +76,12 @@ const keywords = ref('')
     align-items: center;
     height: 54px;
 
-
     .el-button {
       margin: 0;
     }
 
     :deep(.el-input) {
-      margin-left: 24px;
+
       width: 186px;
       font-size: 14px !important;
 
