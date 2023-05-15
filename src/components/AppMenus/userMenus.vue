@@ -3,12 +3,12 @@
     <el-collapse>
       <el-collapse-item>
         <template #title>
-          创建的歌单
+          {{ options.title }}
           <svg-icon @click.stop.prevent="handleClick" class="action-svg" name="plus"></svg-icon>
         </template>
         <ul>
-          <li v-for="(item, index) in userMenus" :key="index">
-            <ProfileItem class="sub-menu" :item="item">
+          <li v-for="(item, index) in options.data" :key="index">
+            <ProfileItemVue class="sub-menu" :item="item">
               <template v-slot:prefix>
                 <svg-icon :name="item.prefixIcon"></svg-icon>
               </template>
@@ -16,7 +16,7 @@
                 <svg-icon v-if="item.suffixIcon" :name="item.suffixIcon"></svg-icon>
                 <p class="suffixText" v-else>{{ item.suffixText }}</p>
               </template>
-            </ProfileItem>
+            </ProfileItemVue>
           </li>
         </ul>
       </el-collapse-item>
@@ -25,23 +25,25 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import ProfileItem from '../LoginCard/profileItem.vue';
+import type { ProfileItem } from '../LoginCard/profileItem.vue';
+import type { PropType } from 'vue'
+import ProfileItemVue from '../LoginCard/profileItem.vue';
+export interface OptionData extends ProfileItem {
+  [propName: string]: any
+}
+interface Options {
+  title: string
+  data: OptionData[]
+}
+defineProps({
+  options: {
+    type: Object as PropType<Options>,
+    default: () => { }
+  }
+})
 
-const userMenus = ref([
-  {
-    prefixIcon: 'song_sheet',
-    suffixIcon: '',
-    label: '我创建的歌单',
-    url: '',
-    showBorder: false,
-    hasMessage: true,
-    suffixText: ''
-  },
-])
 const handleClick = () => {
   console.log('test');
-
 }
 </script>
 

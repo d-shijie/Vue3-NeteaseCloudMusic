@@ -22,15 +22,34 @@
         </li>
       </ul>
     </div>
-    <UserMenus />
+
+    <UserMenus v-for="(item) in userSongSheetArr" :key="item.title" :options="item" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, inject } from 'vue';
 import { useRoute, useRouter } from 'vue-router'
 import ProfileItem from '../LoginCard/profileItem.vue';
 import UserMenus from './userMenus.vue';
+import type { OptionData } from './userMenus.vue'
+const userSongSheet = inject('userSongSheet', {}) as any
+const userSongSheetArr = ref<any[]>([])
+for (let k in userSongSheet) {
+  const obj = {
+    title: '',
+    data: [] as OptionData[]
+  }
+  if (k === 'createByUser') {
+    obj.title = '创建的歌单'
+  } else {
+    obj.title = '收藏的歌单'
+  }
+  obj.data = userSongSheet[k]
+  userSongSheetArr.value.push(obj)
+}
+console.log(userSongSheetArr);
+
 const route = useRoute()
 const router = useRouter()
 const mainMenus = ref([
@@ -88,8 +107,6 @@ const subMenus = ref([
     suffixText: ''
   },
 ])
-
-
 </script>
 
 <style scoped lang="scss">

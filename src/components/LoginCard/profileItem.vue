@@ -16,11 +16,14 @@
 <script setup lang="ts">
 import { ArrowRight } from '@element-plus/icons-vue'
 import type { PropType } from 'vue';
-interface ProfileItem {
+export interface ProfileItem {
   label: String
   url?: string
   showBorder: boolean
   hasMessage: boolean
+  suffixText?: string
+  suffixIcon?: string
+  prefixIcon?: string
 }
 defineProps({
   item: {
