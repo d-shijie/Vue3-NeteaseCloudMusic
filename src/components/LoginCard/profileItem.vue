@@ -17,10 +17,10 @@
 import { ArrowRight } from '@element-plus/icons-vue'
 import type { PropType } from 'vue';
 export interface ProfileItem {
-  label: String
+  label: string
   url?: string
-  showBorder: boolean
-  hasMessage: boolean
+  showBorder?: boolean
+  hasMessage?: boolean
   suffixText?: string
   suffixIcon?: string
   prefixIcon?: string

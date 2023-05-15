@@ -35,24 +35,35 @@ import UserMenus from './userMenus.vue';
 import type { OptionData } from './userMenus.vue'
 const userSongSheet = inject('userSongSheet', {}) as any
 const userSongSheetArr = ref<any[]>([])
-for (let k in userSongSheet) {
-  const obj = {
-    title: '',
-    data: [] as OptionData[]
+
+setTimeout(() => {
+  for (let k in userSongSheet) {
+    const obj = {
+      title: '',
+      data: [] as OptionData[]
+    }
+    if (k === 'createByUser') {
+      obj.title = '创建的歌单'
+    } else {
+      obj.title = '收藏的歌单'
+    }
+
+    const arr = [] as any[]
+    userSongSheet[k].forEach((res: any) => {
+      arr.push({
+        label: res.name,
+        prefixIcon: res.privacy ? 'lock' : 'song_sheet',
+        suffixText: '',
+        suffixIcon: '',
+        pid: res.id
+      })
+    })
+
+    obj.data = arr
+
+    userSongSheetArr.value.push(obj)
   }
-  if (k === 'createByUser') {
-    obj.title = '创建的歌单'
-  } else {
-    obj.title = '收藏的歌单'
-  }
-  userSongSheet[k].forEach((i: any) => {
-    i.label = i.name
-    i.prefixIcon = 'song_sheet'
-  })
-  obj.data = userSongSheet[k]
-  userSongSheetArr.value.push(obj)
-}
-console.log(userSongSheetArr);
+}, 500)
 
 const route = useRoute()
 const router = useRouter()

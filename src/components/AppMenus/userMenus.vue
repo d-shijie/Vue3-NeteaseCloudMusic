@@ -12,10 +12,7 @@
               <template v-slot:prefix>
                 <svg-icon :name="item.prefixIcon"></svg-icon>
               </template>
-              <template v-slot:suffix>
-                <svg-icon v-if="item.suffixIcon" :name="item.suffixIcon"></svg-icon>
-                <p class="suffixText" v-else>{{ item.suffixText }}</p>
-              </template>
+
             </ProfileItemVue>
           </li>
         </ul>
