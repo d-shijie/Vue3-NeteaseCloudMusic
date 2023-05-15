@@ -31,3 +31,31 @@ export function visitorLoginApi () {
 
   })
 }
+
+// 生成二维码key
+export function createQRcodeKeyApi () {
+  return request({
+    url: "/login/qr/key",
+    method: 'post',
+  })
+}
+// 由key生成登录二维码
+export function createQRcodeApi (key: string) {
+  return request({
+    url: "/login/qr/create",
+    method: 'post',
+    data: {
+      key
+    }
+  })
+}
+// 检测扫码状态
+export function checkQRcodeStatusApi (key: string) {
+  return request({
+    url: "/login/qr/check",
+    method: 'post',
+    data: {
+      key
+    }
+  })
+}

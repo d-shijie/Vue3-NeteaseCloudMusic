@@ -10,6 +10,10 @@
         </Transition>
         <Transition name="cover-right">
           <div v-if="isShowLeft" class="right content">
+            <div v-if="qrcodeStatus === 800 || qrcodeStatus === 802" class="refresh-qrcode-small">
+              <span>二维码已过期</span>
+              <el-button @click="qrLogin" size="small" type="primary">刷新验证码</el-button>
+            </div>
             <qrcode-vue :value="qrcodeUrl" :size='qrcodeSize'></qrcode-vue>
             <p>使用<a href="https://music.163.com/#/download">网易云音乐APP</a> 扫码登录</p>
           </div>
@@ -17,6 +21,11 @@
       </div>
       <Transition name="qrcode">
         <div v-if="!isShowLeft" style="position: absolute;top:120px" @mouseenter="qrcodeEnter">
+          <div v-if="qrcodeStatus === 800 || qrcodeStatus === 802" class="refresh-qrcode">
+            <span>二维码已过期</span>
+            <el-button @click="qrLogin" type="primary">刷新验证码</el-button>
+          </div>
+
           <qrcode-vue :value="qrcodeUrl" :size='qrcodeSize'></qrcode-vue>
           <p>使用<a href="https://music.163.com/#/download">网易云音乐APP</a> 扫码登录</p>
         </div>
@@ -87,12 +96,8 @@ import QrcodeVue from 'qrcode.vue'
 import { reactive, ref } from 'vue'
 import { Lock, Iphone } from '@element-plus/icons-vue'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
-import { visitorLoginApi } from '@/api/login'
-// 二维码
-const qrcodeUrl = ref('www.baidu.com')
-const qrcodeSize = ref(170)
-const isShowLeft = ref(false)
-const isShowQrcode = ref(true)
+import { visitorLoginApi, createQRcodeKeyApi, createQRcodeApi, checkQRcodeStatusApi } from '@/api/login'
+
 const qrcodeEnter = () => {
   qrcodeSize.value = 120
   isShowLeft.value = true
@@ -101,7 +106,7 @@ const qrcodeLeave = () => {
   qrcodeSize.value = 170
   isShowLeft.value = false
 }
-// 登录
+// 手机号登录 暂时只支持二维码登录
 const phoneArea = ref('86')
 const isAutoLogin = ref(false)
 const isAgree = ref(false)
@@ -127,12 +132,68 @@ const login = () => {
         customClass: 'm-message',
         type: undefined,
       })
-
     }
-
   })
 
 }
+// 二维码登录
+const qrcodeSize = ref(170)
+const isShowLeft = ref(false)
+const isShowQrcode = ref(true)
+
+const qrcodeKey = ref('')
+const qrcodeUrl = ref('')
+const qrcodeStatus = ref(0)
+const timer = ref<number | undefined>(undefined)
+async function qrLogin () {
+  await createQRcodeKey()
+  await createQRcode()
+  timer.value = setInterval(checkQRcodeStatus, 2000)
+}
+async function createQRcodeKey () {
+  const { data } = await createQRcodeKeyApi()
+  try {
+    qrcodeKey.value = data.data.unikey
+  } catch (error) {
+    return new Error('Error')
+  }
+}
+async function createQRcode () {
+  const { data } = await createQRcodeApi(qrcodeKey.value)
+  try {
+    qrcodeUrl.value = data.data.qrurl
+
+
+  } catch (error) {
+    return new Error('Error')
+  }
+}
+async function checkQRcodeStatus () {
+  const { data } = await checkQRcodeStatusApi(qrcodeKey.value)
+  try {
+    // 800 过期 801等待扫码 802待确认 803授权成功
+    qrcodeStatus.value = data.code
+    switch (qrcodeStatus.value) {
+      case 800:
+        ElMessage.info('二维码已过期')
+        clearInterval(timer.value)
+        break;
+      case 801:
+        break;
+      case 802:
+        ElMessage.info('待确认')
+        clearInterval(timer.value)
+        break;
+      case 803:
+        break
+      default:
+        ElMessage.error('发生未知错误')
+    }
+  } catch (error) {
+    return new Error('error')
+  }
+}
+qrLogin()
 </script>
 
 <style scoped lang="scss">
@@ -177,6 +238,43 @@ const login = () => {
     }
   }
 
+  .refresh-qrcode {
+    position: absolute;
+    top: 38%;
+    background: rgba(0, 0, 0, .3);
+    left: 46%;
+    width: 170px;
+    height: 180px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    span {
+      color: #fff;
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+  }
+
+  .refresh-qrcode-small {
+    width: 120px;
+    height: 120px;
+    position: absolute;
+    background-color: rgba(0, 0, 0, .3);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+    span {
+      color: #fff;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+  }
 }
 
 .phone-login {
