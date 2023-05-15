@@ -18,7 +18,7 @@
           <el-popover :hide-after="60" :show-arrow="false" placement="bottom" :width="276" trigger="click">
             <template #reference>
               <div class="avatar">
-                <img :src="userStore.userInfo.avatar" alt="">
+                <img :src="userStore.userInfo.avatarUrl" alt="">
                 <p>{{ userStore.userInfo.nickname }}</p>
                 <el-icon>
                   <CaretBottom />

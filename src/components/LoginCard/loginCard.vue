@@ -148,9 +148,11 @@ const qrcodeUrl = ref('')
 const qrcodeStatus = ref(0)
 const timer = ref<number | undefined>(undefined)
 async function qrLogin () {
-  await createQRcodeKey()
-  await createQRcode()
-  timer.value = setInterval(checkQRcodeStatus, 2000)
+  if (!userStore.loginState) {
+    await createQRcodeKey()
+    await createQRcode()
+    timer.value = setInterval(checkQRcodeStatus, 2000)
+  }
 }
 async function createQRcodeKey () {
   const { data } = await createQRcodeKeyApi()
@@ -175,7 +177,7 @@ async function checkQRcodeStatus () {
   try {
     // 800 过期 801等待扫码 802待确认 803授权成功
     qrcodeStatus.value = data.code
-    userStore.loginSuccess({ nickname: '伤心的人别听慢歌', avatar: 'https://img2.baidu.com/it/u=260760610,2790622781&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500' }, new Date() + '')
+    userStore.loginSuccess({ nickname: '伤心的人别听慢歌', avatarUrl: 'http://p2.music.126.net/3dKztt6YVCnBMgBWuhvaQg==/109951163772574480.jpg', userId: 350231932 }, new Date() + '')
     switch (qrcodeStatus.value) {
       case 800:
         ElMessage.info('二维码已过期')
@@ -200,6 +202,7 @@ async function checkQRcodeStatus () {
   }
 }
 qrLogin()
+
 </script>
 
 <style scoped lang="scss">

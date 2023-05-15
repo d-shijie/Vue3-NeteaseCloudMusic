@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { setToken } from "@/util/storage";
+import { setToken, removeToken } from "@/util/storage";
 export const useUserStore = defineStore(
   'user', () => {
     const loginState = ref(false)
@@ -13,7 +13,7 @@ export const useUserStore = defineStore(
     const logout = () => {
       loginState.value = false
       userInfo.value = {}
-      setToken('')
+      removeToken()
     }
     return { loginState, userInfo, loginSuccess, logout }
   },

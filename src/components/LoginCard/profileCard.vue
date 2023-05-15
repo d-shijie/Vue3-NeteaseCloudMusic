@@ -13,7 +13,7 @@
     </div>
     <div class="items">
       <div class="item" v-for="(item, index) in profileItmes" :key="index">
-        <profileItem :item="item">
+        <profileItem @click="profileItemClick(item.url)" :item="item">
           <template v-slot:prefix>
             <svg-icon :name="item.prefixIcon"></svg-icon>
           </template>
@@ -31,6 +31,8 @@
 import { ref } from 'vue'
 import { Coin } from '@element-plus/icons-vue'
 import profileItem from './profileItem.vue';
+import { useUserStore } from '@/stores/modules/user';
+const userStore = useUserStore()
 const profileItmes = ref([
   {
     prefixIcon: 'vip',
@@ -39,7 +41,7 @@ const profileItmes = ref([
     url: 'test',
     showBorder: false,
     hasMessage: true,
-    suffixText:'未订购'
+    suffixText: '未订购'
   },
   {
     prefixIcon: 'level',
@@ -48,7 +50,7 @@ const profileItmes = ref([
     url: 'test',
     showBorder: false,
     hasMessage: true,
-    suffixText:'Lv.9'
+    suffixText: 'Lv.9'
   },
   {
     prefixIcon: 'shop',
@@ -91,16 +93,22 @@ const profileItmes = ref([
     hasMessage: true
   }
 ])
+const profileItemClick = (url: string) => {
+  if (!url) {
+    userStore.logout()
+  }
+  // TODO router url
+}
 </script>
 
 <style scoped lang="scss">
 @import url('@/styles/root.css');
 
 .content {
-  
+
 
   .count-wrapper {
-   
+
     .counts {
       display: flex;
       padding: 12px;
@@ -140,7 +148,8 @@ const profileItmes = ref([
       border-bottom: 0.5px solid var(--v-m-text-color);
     }
   }
-  .suffixText{
+
+  .suffixText {
     font-size: 12px;
     padding: 0;
     font-weight: 600;

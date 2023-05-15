@@ -5,3 +5,6 @@ export function setToken (token: string) {
 export function getToken () {
   return JSON.parse(JSON.stringify(localStorage.getItem(KEYS.NMTOKEN)))
 }
+export function removeToken () {
+  localStorage.removeItem(KEYS.NMTOKEN)
+}
