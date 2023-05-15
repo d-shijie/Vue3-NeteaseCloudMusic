@@ -45,6 +45,10 @@ for (let k in userSongSheet) {
   } else {
     obj.title = '收藏的歌单'
   }
+  userSongSheet[k].forEach((i: any) => {
+    i.label = i.name
+    i.prefixIcon = 'song_sheet'
+  })
   obj.data = userSongSheet[k]
   userSongSheetArr.value.push(obj)
 }
