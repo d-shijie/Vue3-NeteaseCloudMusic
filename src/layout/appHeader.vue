@@ -18,16 +18,15 @@
           <el-popover :hide-after="60" :show-arrow="false" placement="bottom" :width="276" trigger="click">
             <template #reference>
               <div class="avatar">
-                <img src="https://img2.baidu.com/it/u=260760610,2790622781&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"
-                  alt="">
-                <p>伤心时别听慢歌</p>
+                <img :src="userStore.userInfo.avatar" alt="">
+                <p>{{ userStore.userInfo.nickname }}</p>
                 <el-icon>
                   <CaretBottom />
                 </el-icon>
               </div>
             </template>
-            <!-- <ProfileCard /> -->
-            <LoginCard />
+            <ProfileCard v-if="userStore.loginState" />
+            <LoginCard v-else />
           </el-popover>
           <div class="setting">
             <img src="@/assets/cloth.png" alt="">
@@ -46,10 +45,13 @@ import LoginCard from '@/components/LoginCard/loginCard.vue';
 import { ArrowLeft, ArrowRight, CaretBottom } from '@element-plus/icons-vue'
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/modules/user'
+const userStore = useUserStore()
 
 const router = useRouter()
 
 const keywords = ref('')
+
 </script>
 
 <style scoped lang="scss">

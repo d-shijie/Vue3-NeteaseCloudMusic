@@ -175,7 +175,7 @@ async function checkQRcodeStatus () {
   try {
     // 800 过期 801等待扫码 802待确认 803授权成功
     qrcodeStatus.value = data.code
-    console.log(userStore.loginState);
+    userStore.loginSuccess({ nickname: '伤心的人别听慢歌', avatar: 'https://img2.baidu.com/it/u=260760610,2790622781&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500' }, new Date() + '')
     switch (qrcodeStatus.value) {
       case 800:
         ElMessage.info('二维码已过期')
