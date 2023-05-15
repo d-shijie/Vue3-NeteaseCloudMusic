@@ -1,5 +1,5 @@
 <template>
-  <div @click="handleClick" class="profile-item" :class="{ 'border': item.showBorder }">
+  <div class="profile-item" :class="{ 'border': item.showBorder }">
     <span class="icon prefix">
       <slot name="prefix"></slot>
     </span>
@@ -57,6 +57,10 @@ defineProps({
     margin: 0;
     color: var(--v-m-text-color);
     flex: 1;
+    white-space: nowrap;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 }
 

@@ -11,5 +11,6 @@ import AppMenus from '@/components/AppMenus/appMenus.vue';
 <style scoped lang="scss">
 .app-menus {
   padding: 5px;
+
 }
 </style>

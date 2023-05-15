@@ -6,12 +6,31 @@
         {{ item.title }}
       </li>
     </ul>
+    <div class="sub-menus">
+      <p class="sub-title">我的音乐</p>
+      <ul>
+        <li v-for="(item, index) in subMenus" :key="index">
+          <ProfileItem class="sub-menu" :item="item">
+            <template v-slot:prefix>
+              <svg-icon :name="item.prefixIcon"></svg-icon>
+            </template>
+            <template v-slot:suffix>
+              <svg-icon v-if="item.suffixIcon" :name="item.suffixIcon"></svg-icon>
+              <p class="suffixText" v-else>{{ item.suffixText }}</p>
+            </template>
+          </ProfileItem>
+        </li>
+      </ul>
+    </div>
+    <UserMenus />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router'
+import ProfileItem from '../LoginCard/profileItem.vue';
+import UserMenus from './userMenus.vue';
 const route = useRoute()
 const router = useRouter()
 const mainMenus = ref([
@@ -40,7 +59,36 @@ const mainMenus = ref([
     url: '/index/private-fm'
   },
 ])
-console.log(route.path.includes('/index/find-music'));
+const subMenus = ref([
+  {
+    prefixIcon: 'like_outline',
+    suffixIcon: 'beckoning',
+    label: '我喜欢的音乐',
+    url: '',
+    showBorder: false,
+    hasMessage: true,
+    suffixText: ''
+  },
+  {
+    prefixIcon: 'download',
+    suffixIcon: '',
+    label: '本地与下载',
+    url: '',
+    showBorder: false,
+    hasMessage: true,
+    suffixText: ''
+  },
+  {
+    prefixIcon: 'recent',
+    suffixIcon: '',
+    label: '最近播放',
+    url: '',
+    showBorder: false,
+    hasMessage: true,
+    suffixText: ''
+  },
+])
+
 
 </script>
 
@@ -50,6 +98,25 @@ console.log(route.path.includes('/index/find-music'));
 .app-menus {
   position: relative;
   z-index: 100;
+  height: calc(100vh - 152px);
+  overflow: auto;
+
+}
+
+.sub-menus {
+  .sub-title {
+    font-size: 12px;
+    color: var(--v-m-text-dark-color);
+    text-indent: 5px;
+
+    margin-bottom: 0;
+  }
+
+  .sub-menu {
+    padding: 0 5px;
+    border-radius: 0.25em;
+    height: 34px;
+  }
 }
 
 li {
