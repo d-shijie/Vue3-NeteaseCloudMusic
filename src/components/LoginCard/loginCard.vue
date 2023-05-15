@@ -177,6 +177,7 @@ async function checkQRcodeStatus () {
   try {
     // 800 过期 801等待扫码 802待确认 803授权成功
     qrcodeStatus.value = data.code
+    clearInterval(timer.value)
     userStore.loginSuccess({ nickname: '伤心的人别听慢歌', avatarUrl: 'http://p2.music.126.net/3dKztt6YVCnBMgBWuhvaQg==/109951163772574480.jpg', userId: 350231932 }, new Date() + '')
     switch (qrcodeStatus.value) {
       case 800:

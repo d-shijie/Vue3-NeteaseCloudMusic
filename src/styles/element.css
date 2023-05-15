@@ -1,0 +1,6 @@
+.el-popover {
+  background-color: rgb(54, 54, 54) !important;
+  border: none !important;
+  box-shadow: 1px 1px 0px 1px #000 !important;
+  top: 54px !important;
+}
