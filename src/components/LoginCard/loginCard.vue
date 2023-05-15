@@ -96,7 +96,9 @@ import QrcodeVue from 'qrcode.vue'
 import { reactive, ref } from 'vue'
 import { Lock, Iphone } from '@element-plus/icons-vue'
 import { ElMessage, type FormInstance, type FormRules } from 'element-plus'
-import { visitorLoginApi, createQRcodeKeyApi, createQRcodeApi, checkQRcodeStatusApi } from '@/api/login'
+import { visitorLoginApi, createQRcodeKeyApi, createQRcodeApi, checkQRcodeStatusApi, getLoginStatusApi } from '@/api/login'
+import { useUserStore } from '@/stores/modules/user'
+const userStore = useUserStore()
 
 const qrcodeEnter = () => {
   qrcodeSize.value = 120
@@ -173,6 +175,7 @@ async function checkQRcodeStatus () {
   try {
     // 800 过期 801等待扫码 802待确认 803授权成功
     qrcodeStatus.value = data.code
+    console.log(userStore.loginState);
     switch (qrcodeStatus.value) {
       case 800:
         ElMessage.info('二维码已过期')
@@ -181,10 +184,13 @@ async function checkQRcodeStatus () {
       case 801:
         break;
       case 802:
-        ElMessage.info('待确认')
-        clearInterval(timer.value)
         break;
       case 803:
+        clearInterval(timer.value)
+        ElMessage.success('登录成功')
+        getLoginStatusApi(data.cookie).then(res => {
+          userStore.loginSuccess(res.data.data.profile, data.cookie)
+        })
         break
       default:
         ElMessage.error('发生未知错误')

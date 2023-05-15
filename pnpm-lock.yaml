@@ -23,6 +23,7 @@ specifiers:
   normalize.css: ^8.0.1
   npm-run-all: ^4.1.5
   pinia: ^2.0.32
+  pinia-persistedstate-plugin: ^0.1.0
   prettier: ^2.8.4
   qrcode.vue: ^3.4.0
   sass: ^1.62.1
@@ -44,6 +45,7 @@ dependencies:
   loadsh: registry.npmmirror.com/loadsh/0.0.4
   normalize.css: registry.npmmirror.com/normalize.css/8.0.1
   pinia: registry.npmmirror.com/pinia/2.0.35_7h6e7cvei2rsgyre2mq4fyhehq
+  pinia-persistedstate-plugin: registry.npmmirror.com/pinia-persistedstate-plugin/0.1.0_7h6e7cvei2rsgyre2mq4fyhehq
   qrcode.vue: registry.npmmirror.com/qrcode.vue/3.4.0_vue@3.2.47
   sass: registry.npmmirror.com/sass/1.62.1
   vite-plugin-svg-icons: registry.npmmirror.com/vite-plugin-svg-icons/2.0.1_vite@4.3.4
@@ -963,6 +965,12 @@ packages:
     name: '@types/chai'
     version: 4.3.5
     dev: true
+
+  registry.npmmirror.com/@types/js-cookie/3.0.3:
+    resolution: {integrity: sha512-Xe7IImK09HP1sv2M/aI+48a20VX+TdRJucfq4vfRVy6nWN8PYPOEnlMRSgxJAgYQIXJVL8dZ4/ilAM7dWNaOww==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/js-cookie/-/js-cookie-3.0.3.tgz}
+    name: '@types/js-cookie'
+    version: 3.0.3
+    dev: false
 
   registry.npmmirror.com/@types/jsdom/21.1.1:
     resolution: {integrity: sha512-cZFuoVLtzKP3gmq9eNosUL1R50U+USkbLtUQ1bYVgl/lKp0FZM7Cq4aIHAL8oIvQ17uSHi7jXPtfDOdjPwBE7A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/jsdom/-/jsdom-21.1.1.tgz}
@@ -5704,6 +5712,20 @@ packages:
     version: 3.0.0
     engines: {node: '>=4'}
     dev: true
+
+  registry.npmmirror.com/pinia-persistedstate-plugin/0.1.0_7h6e7cvei2rsgyre2mq4fyhehq:
+    resolution: {integrity: sha512-ToKR/EJzhhXElQ5YL8PVVY4CqLJjywxszAJjOCgprjmIVkTrPBsEOY4b/ATOzHQc1TtuaJs/3MJuoCpA3pv8Ew==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/pinia-persistedstate-plugin/-/pinia-persistedstate-plugin-0.1.0.tgz}
+    id: registry.npmmirror.com/pinia-persistedstate-plugin/0.1.0
+    name: pinia-persistedstate-plugin
+    version: 0.1.0
+    dependencies:
+      '@types/js-cookie': registry.npmmirror.com/@types/js-cookie/3.0.3
+      pinia: registry.npmmirror.com/pinia/2.0.35_7h6e7cvei2rsgyre2mq4fyhehq
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - typescript
+      - vue
+    dev: false
 
   registry.npmmirror.com/pinia/2.0.35_7h6e7cvei2rsgyre2mq4fyhehq:
     resolution: {integrity: sha512-P1IKKQWhxGXiiZ3atOaNI75bYlFUbRxtJdhPLX059Z7+b9Z04rnTZdSY8Aph1LA+/4QEMAYHsTQ638Wfe+6K5g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/pinia/-/pinia-2.0.35.tgz}

@@ -59,3 +59,13 @@ export function checkQRcodeStatusApi (key: string) {
     }
   })
 }
+// 登录状态
+export function getLoginStatusApi (cookie: string) {
+  return request({
+    url: "/login/status",
+    method: 'post',
+    data: {
+      cookie
+    }
+  })
+}

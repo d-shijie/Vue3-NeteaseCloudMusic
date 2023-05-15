@@ -1,8 +1,7 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-
 import App from './App.vue'
 import router from './router'
+import store from '@/stores/index'
 import { loadSvg } from "@/icons"
 import './styles/app.css'
 import 'normalize.css'
@@ -17,7 +16,7 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 }
 app.use(ElementPlus)
 
-app.use(createPinia())
+app.use(store)
 app.use(router)
 
 app.mount('#app')
