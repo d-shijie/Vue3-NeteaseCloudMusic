@@ -7,12 +7,15 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-    <div>111111</div>
+    <div>
+      <PlaylistCover />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { getBannerApi } from '@/api/login';
+import PlaylistCover from '@/components/playlist/playlistCover.vue';
 import { ref } from 'vue';
 const banners = ref<any[]>([])
 const getBanner = () => {
