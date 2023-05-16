@@ -1,7 +1,7 @@
 <template>
   <div :style="{ width }" class="playlist-cover">
 
-    <div class="cover" ref="playlistCoverRef">
+    <div @click="gotoDetail('/index/playlist-detail')" class="cover" ref="playlistCoverRef">
       <div class="text">
         <slot name="text"></slot>
       </div>
@@ -14,7 +14,7 @@
       </div>
       <div class="play-icon"></div>
     </div>
-    <div class="desc">
+    <div @click="gotoDetail('/index/playlist-detail')" class="desc">
       {{ cover.name }}
     </div>
   </div>
@@ -22,7 +22,8 @@
 
 <script setup lang="ts">
 import { formatCount } from '@/util/index'
-defineProps({
+import { useRouter } from 'vue-router';
+const props = defineProps({
   cover: {
     type: Object,
     default: () => { }
@@ -36,7 +37,15 @@ defineProps({
     default: '175px'
   }
 })
-
+const router = useRouter()
+const gotoDetail = (path: string) => {
+  router.push({
+    path,
+    query: {
+      id: props.cover.id
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

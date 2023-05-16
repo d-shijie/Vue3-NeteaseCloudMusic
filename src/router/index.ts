@@ -53,8 +53,14 @@ const router = createRouter({
           name: 'PrivateFM',
           component: () => import('@/views/privateFM/privateFMIndex.vue'),
         },
+        {
+          path: '/index/playlist-detail',
+          name: 'PlaylistDetail',
+          component: () => import('@/views/playlistDetail/playlistDetailIndex.vue'),
+        }
       ]
-    }
+    },
+
   ]
 })
 

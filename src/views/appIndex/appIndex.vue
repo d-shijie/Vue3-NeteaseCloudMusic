@@ -47,7 +47,8 @@ import appMenus from '@/layout/appMenus.vue';
 
     .wrapper {
       flex: 1;
-
+      height: calc(100vh - 142px);
+      overflow-y: auto;
     }
   }
 }
