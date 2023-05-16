@@ -16,6 +16,7 @@ export const useUserStore = defineStore(
         loginState.value = false
         userInfo.value = {}
         removeToken()
+        location.reload()
       })
     }
     return { loginState, userInfo, loginSuccess, logout }

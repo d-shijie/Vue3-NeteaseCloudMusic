@@ -61,10 +61,11 @@
 </template>
 
 <script setup lang="ts">
+import { useGlobalStore } from '@/stores/modules/global'
+const globalStore = useGlobalStore()
 const testAudio = () => {
-  const audio = new Audio()
-  audio.src = 'http://m701.music.126.net/20230516113351/38944789bb20eb30ca332187957d19bf/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096410711/7e04/100d/d588/25b0beab3b8bacaa87e4c5fc8eea6cf2.mp3'
-  audio.play()
+  globalStore.appAudio.src = 'http://m701.music.126.net/20230516113351/38944789bb20eb30ca332187957d19bf/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096410711/7e04/100d/d588/25b0beab3b8bacaa87e4c5fc8eea6cf2.mp3'
+  globalStore.appAudio.play()
 }
 </script>
 
