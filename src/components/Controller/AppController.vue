@@ -1,5 +1,6 @@
 <template>
   <div class="controller">
+
     <div class="cover">
       <img src="@/assets/logo.png" alt="">
       <div class="music-info">
@@ -13,19 +14,19 @@
     <div class="main">
       <div class="controll-wrapper">
         <div class="controll-item">
-          <svg-icon style="font-size: 16px;" name="play_order"></svg-icon>
+          <svg-icon class="svg" style="font-size: 16px;" name="play_order"></svg-icon>
         </div>
         <div class="controll-item">
-          <svg-icon style="font-size: 16px;" name="prefix"></svg-icon>
+          <svg-icon class="svg" style="font-size: 16px;" name="prefix"></svg-icon>
         </div>
-        <div class="controll-item play">
-          <svg-icon style="font-size: 16px;" name="pause"></svg-icon>
-        </div>
-        <div class="controll-item">
-          <svg-icon style="font-size: 16px;" name="suffix"></svg-icon>
+        <div @click="testAudio" class="controll-item play">
+          <svg-icon class="svg" style="font-size: 16px;" name="pause"></svg-icon>
         </div>
         <div class="controll-item">
-          <svg-icon style="font-size: 16px;" name="lyric">
+          <svg-icon class="svg" style="font-size: 16px;" name="suffix"></svg-icon>
+        </div>
+        <div class="controll-item">
+          <svg-icon class="svg" style="font-size: 16px;" name="lyric">
           </svg-icon>
         </div>
       </div>
@@ -40,19 +41,19 @@
         标准
       </div>
       <div class="setting-item">
-        <svg-icon style="font-size: 24px;" name="tone">
+        <svg-icon class="svg" style="font-size: 24px;" name="tone">
         </svg-icon>
       </div>
       <div class="setting-item">
-        <svg-icon style="font-size: 24px;" name="volume">
+        <svg-icon class="svg" style="font-size: 24px;" name="volume">
         </svg-icon>
       </div>
       <div class="setting-item">
-        <svg-icon style="font-size: 24px;" name="listen_together">
+        <svg-icon class="svg" style="font-size: 24px;" name="listen_together">
         </svg-icon>
       </div>
       <div class="setting-item">
-        <svg-icon style="font-size: 20px;" name="playlist">
+        <svg-icon class="svg" style="font-size: 20px;" name="playlist">
         </svg-icon>
       </div>
     </div>
@@ -60,7 +61,11 @@
 </template>
 
 <script setup lang="ts">
-
+const testAudio = () => {
+  const audio = new Audio()
+  audio.src = 'http://m701.music.126.net/20230516113351/38944789bb20eb30ca332187957d19bf/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096410711/7e04/100d/d588/25b0beab3b8bacaa87e4c5fc8eea6cf2.mp3'
+  audio.play()
+}
 </script>
 
 <style scoped lang="scss">
@@ -125,6 +130,10 @@
         width: 34px;
         height: 34px;
         border-radius: 50%;
+
+        &:hover {
+          background-color: var(--v-m-hover-bgc);
+        }
       }
     }
 

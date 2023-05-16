@@ -1,5 +1,6 @@
 <template>
   <div class="app-index">
+
     <div class="header">
       <appHeader />
     </div>
@@ -22,6 +23,8 @@ import { RouterView } from 'vue-router';
 import appController from '@/layout/appController.vue';
 import appHeader from '@/layout/appHeader.vue';
 import appMenus from '@/layout/appMenus.vue';
+
+
 
 </script>
 

@@ -113,7 +113,7 @@ const keywords = ref('')
       img {
         width: 20px;
         height: 20px;
-        margin-right: 12px;
+        margin: 0 10px;
         cursor: pointer;
       }
     }
