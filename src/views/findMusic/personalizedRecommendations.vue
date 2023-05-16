@@ -7,23 +7,32 @@
         </el-carousel-item>
       </el-carousel>
     </div>
-    <div>
-      <PlaylistCover />
-    </div>
+    <SubTitle title="推荐歌单" />
+    <RecommendPlaylist :playlist="recommendPlaylist" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { getBannerApi } from '@/api/login';
-import PlaylistCover from '@/components/playlist/playlistCover.vue';
+import { getBannerApi, getRecommendPlaylistApi } from '@/api/personalizedRecommendations';
+import SubTitle from '@/components/SubTitle/subTitle.vue';
+import RecommendPlaylist from './personalizedRecommendations/recommendPlaylist.vue';
+
 import { ref } from 'vue';
 const banners = ref<any[]>([])
 const getBanner = () => {
-  getBannerApi(0).then(res => {
+  getBannerApi(0).then((res: any) => {
     banners.value = res.data.banners
   })
 }
 getBanner()
+
+const recommendPlaylist = ref<any[]>([])
+const getRecommendPlaylist = () => {
+  getRecommendPlaylistApi().then(res => {
+    recommendPlaylist.value = res.data.recommend.slice(0, 9)
+  })
+}
+getRecommendPlaylist()
 </script>
 
 <style scoped lang="scss">

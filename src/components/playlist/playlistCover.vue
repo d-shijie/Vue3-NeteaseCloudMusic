@@ -1,14 +1,22 @@
 <template>
-  <div :style="{ height, width }" class="playlist-cover">
+  <div :style="{ width }" class="playlist-cover">
+
     <div class="cover" ref="playlistCoverRef">
-      <img src="https://p1.music.126.net/xhSzvDHirgjv95C7999Qvw==/109951165469113989.jpg" alt="">
-      <div class="play-count">
-        {{ formatCount(111111111) }}
+      <div class="text">
+        <slot name="text"></slot>
       </div>
-      <div class="creator">tttss</div>
+      <img :src="cover.picUrl" alt="">
+      <div v-if="cover.playcount" class="play-count">
+        {{ formatCount(cover.playcount) }}
+      </div>
+      <div v-if="cover.creator" class="creator">
+        {{ cover.creator.nickname }}
+      </div>
       <div class="play-icon"></div>
     </div>
-    <div class="desc">我杀杀杀杀杀杀哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇哇</div>
+    <div class="desc">
+      {{ cover.name }}
+    </div>
   </div>
 </template>
 
@@ -32,10 +40,22 @@ defineProps({
 </script>
 
 <style scoped lang="scss">
+.playlist-cover {
+  margin-bottom: 12px;
+}
+
 .cover {
   position: relative;
   font-size: 14px;
   cursor: pointer;
+  margin-bottom: 5px;
+
+  .text {
+    position: absolute;
+    left: 50%;
+    top: 65%;
+    transform: translate(-50%, -50%);
+  }
 
   &:hover {
     .play-icon {
@@ -128,6 +148,8 @@ defineProps({
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   word-wrap: break-all;
+  font-size: 14px;
+
 
   &:hover {
     color: #fff;

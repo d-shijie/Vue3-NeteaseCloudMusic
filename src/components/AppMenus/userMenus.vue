@@ -59,7 +59,7 @@ const handleClick = () => {
 
   .action-svg {
     position: relative;
-    right: -90px;
+    right: -85px;
     font-size: 24px;
   }
 

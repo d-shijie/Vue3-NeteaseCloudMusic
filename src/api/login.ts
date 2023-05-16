@@ -1,13 +1,5 @@
 import { request } from '@/util/request'
-export function getBannerApi (type: number) {
-  return request({
-    url: "/banner",
-    method: 'get',
-    params: {
-      type
-    }
-  })
-}
+
 // 暂不支持
 interface TPhoneLogin {
   phone: string
