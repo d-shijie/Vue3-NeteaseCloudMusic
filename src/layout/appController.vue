@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import AppController from '@/components/Controller/AppController.vue';
+import AppController from '@/components/Controller/appController.vue';
 </script>
 
 <style scoped lang="scss">

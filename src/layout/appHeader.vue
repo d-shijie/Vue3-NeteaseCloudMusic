@@ -66,6 +66,7 @@ const keywords = ref('')
     z-index: -1;
     height: 54px;
 
+
     img {
       width: 160px;
       position: relative;
@@ -77,6 +78,7 @@ const keywords = ref('')
     display: flex;
     align-items: center;
     height: 54px;
+    overflow: hidden;
 
     .el-button {
       margin: 0;
@@ -104,6 +106,7 @@ const keywords = ref('')
   .right-pannel {
     display: flex;
     justify-content: right;
+    overflow: hidden;
 
     .setting {
       display: flex;
@@ -157,5 +160,9 @@ const keywords = ref('')
   }
 
 
+}
+
+.el-col {
+  height: 54px;
 }
 </style>

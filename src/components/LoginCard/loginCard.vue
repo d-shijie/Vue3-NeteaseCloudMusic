@@ -193,9 +193,10 @@ async function checkQRcodeStatus () {
         ElMessage.success('登录成功')
         getLoginStatusApi(data.cookie).then(res => {
           userStore.loginSuccess(res.data.data.profile, data.cookie)
+          location.reload()
         })
         // 先手动刷新 避免菜单未渲染
-        location.reload()
+
         break
       default:
         ElMessage.error('发生未知错误')

@@ -19,8 +19,10 @@
         <div class="controll-item">
           <svg-icon class="svg" style="font-size: 16px;" name="prefix"></svg-icon>
         </div>
-        <div @click="testAudio" class="controll-item play">
-          <svg-icon class="svg" style="font-size: 16px;" name="pause"></svg-icon>
+        <div class="controll-item play">
+          <svg-icon @click="globalStore.audioPause" v-if="globalStore.isPlay" class="svg" style="font-size: 16px;"
+            name="pause"></svg-icon>
+          <svg-icon @click="globalStore.audioPlay" v-else class="svg" style="font-size: 16px;" name="play"></svg-icon>
         </div>
         <div class="controll-item">
           <svg-icon class="svg" style="font-size: 16px;" name="suffix"></svg-icon>
@@ -63,10 +65,7 @@
 <script setup lang="ts">
 import { useGlobalStore } from '@/stores/modules/global'
 const globalStore = useGlobalStore()
-const testAudio = () => {
-  globalStore.appAudio.src = 'http://m701.music.126.net/20230516113351/38944789bb20eb30ca332187957d19bf/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/14096410711/7e04/100d/d588/25b0beab3b8bacaa87e4c5fc8eea6cf2.mp3'
-  globalStore.appAudio.play()
-}
+
 </script>
 
 <style scoped lang="scss">
@@ -80,13 +79,13 @@ const testAudio = () => {
     display: flex;
     align-items: center;
     width: 267px;
-    margin-left: 12px;
+    margin-left: 16px;
 
     img {
       cursor: pointer;
       width: 44px;
       height: 44px;
-      margin-right: 5px;
+      margin-right: 14px;
       border-radius: 0.15em;
       position: relative;
 
@@ -158,7 +157,7 @@ const testAudio = () => {
 
   .setting {
     width: 256px;
-    justify-content: space-around;
+    justify-content: right;
     display: flex;
     align-items: center;
 
@@ -171,6 +170,7 @@ const testAudio = () => {
 
     .setting-item {
       display: flex;
+      margin: 0 10px;
       align-items: center;
       justify-content: center;
       cursor: pointer;

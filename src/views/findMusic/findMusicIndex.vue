@@ -1,12 +1,60 @@
 <template>
-  <div>
-    <div>findMusic</div>
-    <RouterView />
+  <div class="find-music-index">
+    <div class="tabs">
+      <SubTab :tabs="tabs" />
+    </div>
+    <div class="router-wrapper">
+      <RouterView />
+    </div>
+
   </div>
 </template>
 
 <script setup lang="ts">
-
+import { ref } from 'vue';
+import SubTab from '@/components/SubTab/subTab.vue';
+import type { Tab } from '@/components/SubTab/subTab.vue';
+const tabs = ref<Tab[]>([
+  {
+    tab: '个性推荐',
+    path: '/index/find-music/personalized-recommendations'
+  },
+  {
+    tab: '专属定制',
+    path: '/index/1'
+  },
+  {
+    tab: '歌单',
+    path: '/index/2'
+  },
+  {
+    tab: '排行榜',
+    path: '/index/3'
+  },
+  {
+    tab: '歌手',
+    path: '/index/4'
+  },
+  {
+    tab: '最新音乐',
+    path: '/index/5'
+  },
+])
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.find-music-index {
+  .tabs {
+    padding: 30px;
+  }
+
+  .router-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    height: calc(100vh - 250px);
+    overflow-y: auto;
+  }
+}
+</style>

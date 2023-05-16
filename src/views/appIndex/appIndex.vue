@@ -47,6 +47,7 @@ import appMenus from '@/layout/appMenus.vue';
 
     .wrapper {
       flex: 1;
+
     }
   }
 }
