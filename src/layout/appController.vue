@@ -1,11 +1,11 @@
 <template>
   <div class="app-controller">
-
+    <AppController />
   </div>
 </template>
 
 <script setup lang="ts">
-
+import AppController from '@/components/Controller/AppController.vue';
 </script>
 
 <style scoped lang="scss">
