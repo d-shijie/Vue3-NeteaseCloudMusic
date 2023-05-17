@@ -36,7 +36,10 @@ export default defineConfig({
     strictPort: false,
     proxy: {
       '/api': {
-        target: 'https://service-p0ngyeui-1318284787.gz.apigw.tencentcs.com/release',
+        // 线上接口有点问题
+        // 线上demo地址 https://www.dshijie.fun/#/index/find-music/personalized-recommendations
+        // target: 'https://service-p0ngyeui-1318284787.gz.apigw.tencentcs.com/release',
+        target: 'https://localhost:3000',
         ws: true,
         changeOrigin: true,
         rewrite: (path) => path.replace('/api', "")
