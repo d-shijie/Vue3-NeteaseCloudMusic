@@ -8,4 +8,4 @@
 import PlaylistMusics from '@/components/playlist/playlistMusics.vue';
 </script>
 
-<style scoped></style>
+<style scoped lang="scss"></style>
