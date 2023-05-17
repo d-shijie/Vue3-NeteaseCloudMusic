@@ -36,7 +36,7 @@ export default defineConfig({
     strictPort: false,
     proxy: {
       '/api': {
-        target: 'http://127.0.0.1:3000',
+        target: 'https://service-p0ngyeui-1318284787.gz.apigw.tencentcs.com/release',
         ws: true,
         changeOrigin: true,
         rewrite: (path) => path.replace('/api', "")
