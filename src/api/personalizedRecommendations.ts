@@ -14,6 +14,6 @@ export function getBannerApi (type: 0 | 1 | 2 | 3) {
 export function getRecommendPlaylistApi () {
   return request({
     url: "/recommend/resource",
-    method: 'get',
+    method: 'post',
   })
 }
