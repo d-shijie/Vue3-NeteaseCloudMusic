@@ -1,8 +1,9 @@
 <template>
   <div class="playlist-music">
-    <el-table size="small" @row-click="playMusic" stripe :data="tableData" style="width: 100%">
+    <el-table element-loading-background="rgb(43, 43, 43)" element-loading-text="载入中..." v-loading="loading" size="small"
+      @row-click="playMusic" stripe :data="tableData" style="width: 100%">
       <template #empty>
-        暂无数据
+        {{ '' }}
       </template>
       <el-table-column type="index" width="50px">
         <template #default="scope">
@@ -19,8 +20,13 @@
       </el-table-column>
       <el-table-column show-overflow-tooltip label="标题">
         <template #default="scope">
-          <div style="color:rgb(213,213,213)">
+          <div style="color:rgb(213,213,213);display: flex;align-items: center;">
             {{ scope.row.name }}
+            <svg-icon v-if="scope.row.sq && !scope.row.hr" style="font-size: 20px;margin-left: 5px;"
+              name="high-quality"></svg-icon>
+            <svg-icon v-if="scope.row.hr" style="font-size: 30px;margin-left: 5px;position: relative;top: 2px;"
+              name="hires"></svg-icon>
+            <svg-icon v-if="scope.row.mv" style="font-size: 18px;margin-left: 5px;cursor: pointer;" name="mv"></svg-icon>
           </div>
         </template>
       </el-table-column>
@@ -64,10 +70,14 @@ const props = defineProps({
 })
 const globalStore = useGlobalStore()
 const route = useRoute()
+const loading = ref(false)
 const tableData = ref<any[]>([])
 const getPlaylistMusic = () => {
+  loading.value = true
   getPlaylistMusicApi({ id: String(route.query.id || props.id) }).then(res => {
     tableData.value = res.data.songs
+  }).finally(() => {
+    loading.value = false
   })
 }
 getPlaylistMusic()

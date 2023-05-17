@@ -6,6 +6,7 @@ export const useGlobalStore = defineStore('global', () => {
   const currentMusicUrl = ref('')
   const currentVideoUrl = ref('')
   const currentMusicLevel = ref<currentMusicLevel>('standard')
+  const currentPlaylist = ref([])
   const isPlay = ref<boolean>(false)
   const appAudio = new Audio()
   const setAudioUrlAndId = (url: string, id: string) => {
@@ -21,5 +22,5 @@ export const useGlobalStore = defineStore('global', () => {
     isPlay.value = false
     appAudio.pause()
   }
-  return { currentMusicId, currentMusicUrl, currentVideoUrl, currentMusicLevel, isPlay, appAudio, setAudioUrlAndId, audioPlay, audioPause }
+  return { currentMusicId, currentMusicUrl, currentVideoUrl, currentMusicLevel, currentPlaylist, isPlay, appAudio, setAudioUrlAndId, audioPlay, audioPause }
 }) 
