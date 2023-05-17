@@ -1,3 +1,10 @@
+## [线上 DEMO](https://www.dshijie.fun/#/index/find-music/personalized-recommendations)
+
+### [接口](https://github.com/Binaryify/NeteaseCloudMusicApi)
+
+线上服务部分接口存在问题
+建议 clone 此项目本地运行
+
 ## Project Setup
 
 ```sh
