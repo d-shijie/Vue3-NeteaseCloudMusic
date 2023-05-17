@@ -23,7 +23,7 @@ const router = createRouter({
             {
               path: '/index/find-music/personalized-recommendations',
               name: 'Personalizedrecommendations',
-              component: () => import('@/views/findMusic/personalizedrecommendations.vue')
+              component: () => import('@/views/findMusic/personalizedRecommendations.vue')
             },
 
           ]
