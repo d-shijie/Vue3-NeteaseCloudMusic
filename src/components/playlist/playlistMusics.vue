@@ -1,12 +1,14 @@
 <template>
   <div class="playlist-music">
-    <el-table size="small" stripe :data="tableData" style="width: 100%">
+    <el-table size="small" @row-click="playMusic" stripe :data="tableData" style="width: 100%">
+      <template #empty>
+        暂无数据
+      </template>
       <el-table-column type="index" width="50px">
         <template #default="scope">
-          <div style="text-align: right">
+          <div style="text-align: right;width: 100%;">
             {{ indexMethod(scope.$index) }}
           </div>
-
         </template>
       </el-table-column>
       <el-table-column label="操作" width="70px">
@@ -52,15 +54,34 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { getPlaylistMusicApi } from '@/api/playlist'
 import { stampToMin } from '@/util/timeFormat'
+import { getMusicUrlApi } from '@/api/music'
+import { useGlobalStore } from '@/stores/modules/global';
+const props = defineProps({
+  id: {
+    type: [String, Number],
+    default: ''
+  }
+})
+const globalStore = useGlobalStore()
 const route = useRoute()
-
 const tableData = ref<any[]>([])
 const getPlaylistMusic = () => {
-  getPlaylistMusicApi({ id: String(route.query.id) }).then(res => {
+  getPlaylistMusicApi({ id: String(route.query.id || props.id) }).then(res => {
     tableData.value = res.data.songs
   })
 }
 getPlaylistMusic()
+
+const playMusic = (row: any) => {
+
+  getMusicUrlApi({
+    id: row.id,
+    level: globalStore.currentMusicLevel
+  }).then(res => {
+    globalStore.setAudioUrlAndId(res.data.data[0].url, row.id)
+    globalStore.audioPlay()
+  })
+}
 
 const formatAr = (arr: any[]): string => {
   let res: string = ''
@@ -93,6 +114,8 @@ const indexMethod = (index: number) => {
 }
 
 :deep(.el-table__body) {
+  border: none !important;
+
   td {
     border: none;
     background-color: rgb(43, 43, 43);
@@ -101,13 +124,7 @@ const indexMethod = (index: number) => {
       display: flex;
       align-items: center;
     }
-
-    &:hover {
-      background-color: red;
-    }
   }
-
-
 }
 
 :deep(.el-table__row--striped) {
@@ -122,5 +139,17 @@ const indexMethod = (index: number) => {
   &:hover {
     color: var(--v-m-text-color);
   }
+}
+
+:deep(.el-table__empty-block) {
+  background-color: var(--v-m-bgc);
+}
+
+:deep(.el-table__inner-wrapper::before) {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 0;
+  z-index: 3;
 }
 </style>

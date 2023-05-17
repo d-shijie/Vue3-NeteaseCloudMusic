@@ -12,3 +12,6 @@
   background-color: var(--v-m-hover-bgc) !important;
 
 }
+.el-table::before {
+  background-color: transparent;
+}

@@ -20,9 +20,8 @@
           <svg-icon class="svg" style="font-size: 16px;" name="prefix"></svg-icon>
         </div>
         <div class="controll-item play">
-          <svg-icon @click="globalStore.audioPause" v-if="globalStore.isPlay" class="svg" style="font-size: 16px;"
-            name="pause"></svg-icon>
-          <svg-icon @click="globalStore.audioPlay" v-else class="svg" style="font-size: 16px;" name="play"></svg-icon>
+          <svg-icon @click="pause" v-if="globalStore.isPlay" class="svg" style="font-size: 22px;" name="pause"></svg-icon>
+          <svg-icon @click="play" v-else class="svg" style="font-size: 22px;" name="play"></svg-icon>
         </div>
         <div class="controll-item">
           <svg-icon class="svg" style="font-size: 16px;" name="suffix"></svg-icon>
@@ -65,7 +64,19 @@
 <script setup lang="ts">
 import { useGlobalStore } from '@/stores/modules/global'
 const globalStore = useGlobalStore()
-
+const play = () => {
+  if (globalStore.currentMusicUrl) {
+    if (!globalStore.appAudio.paused) {
+      globalStore.setAudioUrlAndId(globalStore.currentMusicUrl, globalStore.currentMusicId)
+    }
+    globalStore.audioPlay()
+  }
+}
+const pause = () => {
+  if (globalStore.currentMusicUrl) {
+    globalStore.audioPause()
+  }
+}
 </script>
 
 <style scoped lang="scss">
