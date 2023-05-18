@@ -6,8 +6,8 @@
         <slot name="text"></slot>
       </div>
       <img :src="cover.picUrl" alt="">
-      <div v-if="cover.playcount" class="play-count">
-        {{ formatCount(cover.playcount) }}
+      <div class="play-count">
+        {{ cover.playcount ? formatCount(cover.playcount) : formatCount(cover.playCount) }}
       </div>
       <div v-if="cover.creator" class="creator">
         {{ cover.creator.nickname }}
@@ -37,6 +37,8 @@ const props = defineProps({
     default: '175px'
   }
 })
+console.log(props.cover);
+
 const router = useRouter()
 const gotoDetail = (path: string) => {
   router.push({

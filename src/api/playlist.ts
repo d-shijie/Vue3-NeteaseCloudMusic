@@ -13,3 +13,11 @@ export function getPlaylistMusicApi (params: GetPlaylistMusic) {
     params
   })
 }
+
+// 推荐歌单
+export function getRecommendPlaylistApi () {
+  return request({
+    url: "/personalized",
+    method: 'get',
+  })
+}

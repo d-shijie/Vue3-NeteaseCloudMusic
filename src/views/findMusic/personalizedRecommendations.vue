@@ -13,7 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { getBannerApi, getRecommendPlaylistApi } from '@/api/personalizedRecommendations';
+import { getBannerApi, getDaylyRecommendPlaylistApi } from '@/api/personalizedRecommendations';
+import { getRecommendPlaylistApi } from '@/api/playlist'
 import SubTitle from '@/components/SubTitle/subTitle.vue';
 import RecommendPlaylist from './personalizedRecommendations/recommendPlaylist.vue';
 
@@ -28,8 +29,15 @@ getBanner()
 
 const recommendPlaylist = ref<any[]>([])
 const getRecommendPlaylist = () => {
-  getRecommendPlaylistApi().then(res => {
+  getDaylyRecommendPlaylistApi().then((res) => {
     recommendPlaylist.value = res.data.recommend.slice(0, 9)
+  }).catch(() => {
+    // TODO定位302错误
+    // 防止线上接口302无数据 测试用
+    getRecommendPlaylistApi().then((res) => {
+      recommendPlaylist.value = res.data.result.slice(0, 9)
+    })
+
   })
 }
 getRecommendPlaylist()

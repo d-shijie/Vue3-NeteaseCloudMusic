@@ -11,7 +11,7 @@ export function getBannerApi (type: 0 | 1 | 2 | 3) {
   })
 }
 // 推荐歌单
-export function getRecommendPlaylistApi () {
+export function getDaylyRecommendPlaylistApi () {
   return request({
     url: "/recommend/resource",
     method: 'get',
