@@ -2,13 +2,15 @@
   <div class="app-controller">
 
     <div class="cover">
-      <img src="@/assets/logo.png" alt="">
+      <img :src="currentMusicInfo.info.al?.picUrl" alt="">
       <div class="music-info">
         <div style="font-size: 14px;">
-          好久不见
+          {{ currentMusicInfo.info.name || '' }}
           <svg-icon style="font-size: 20px;cursor: pointer;position: relative;top: 4px;" name="like_outline"></svg-icon>
         </div>
-        <div style="font-size: 13px;">陈奕迅</div>
+        <div style="font-size: 13px;">
+          {{ formatAr(currentMusicInfo.info.ar) }}
+        </div>
       </div>
     </div>
     <div class="main">
@@ -32,9 +34,13 @@
         </div>
       </div>
       <div class="time">
-        <span class="current-time">01:44</span>
-        <div class="controll-time"></div>
-        <span class="end-time">03:53</span>
+        <span class="current-time">{{ stampToMin(currentTime) }}</span>
+        <div class="controll-time">
+          <div ref="timerRef" class="timer">
+
+          </div>
+        </div>
+        <span class="end-time">{{ stampToMin(currentMusicInfo.info.dt) }}</span>
       </div>
     </div>
     <div class="setting">
@@ -63,7 +69,28 @@
 
 <script setup lang="ts">
 import { useGlobalStore } from '@/stores/modules/global'
+import { getMusicDetailApi } from '@/api/music'
+import { reactive, ref } from 'vue'
+import { stampToMin } from '@/util/timeFormat'
 const globalStore = useGlobalStore()
+
+const timerRef = ref()
+const timer = ref()
+const currentTime = ref()
+const currentMusicInfo = reactive({
+  info: {} as any
+})
+globalStore.$subscribe(() => {
+  clearInterval(timer.value)
+  getMusicDetailApi(globalStore.currentMusicId).then(res => {
+    currentMusicInfo.info = res.data.songs[0]
+    timer.value = setInterval(() => {
+      currentTime.value = Number(globalStore.appAudio.currentTime.toFixed(0)) * 1000
+      const w = (currentTime.value / currentMusicInfo.info.dt * 100).toFixed(2) + '%'
+      timerRef.value.style.width = w
+    }, 1000)
+  })
+})
 const play = () => {
   if (globalStore.currentMusicUrl) {
     if (!globalStore.appAudio.paused) {
@@ -76,6 +103,15 @@ const pause = () => {
   if (globalStore.currentMusicUrl) {
     globalStore.audioPause()
   }
+}
+const formatAr = (arr: any[]): string => {
+  if (!arr) return ''
+  let res: string = ''
+  arr.forEach((item, index) => {
+    const l = index === arr.length - 1 ? '' : '/'
+    res += item.name + l
+  })
+  return res
 }
 </script>
 
@@ -161,7 +197,15 @@ const pause = () => {
         flex: 1;
         cursor: pointer;
         margin: 0 6px;
-        background-color: rgb(236, 65, 65);
+        background-color: #fff;
+
+
+        .timer {
+          background-color: #fff;
+          background-color: rgb(236, 65, 65);
+          height: 100%;
+          width: 0;
+        }
       }
     }
 

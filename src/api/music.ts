@@ -12,3 +12,13 @@ export function getMusicUrlApi (params: GetMusicUrl) {
     params
   })
 }
+// 获取歌曲详情
+export function getMusicDetailApi (ids: string) {
+  return request({
+    url: "/song/detail",
+    method: 'get',
+    params: {
+      ids
+    }
+  })
+}
