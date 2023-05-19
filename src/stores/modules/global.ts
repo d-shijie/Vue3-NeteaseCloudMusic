@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 export type currentMusicLevel = 'standard' | 'higher' | 'exhigh' | 'lossless' | 'hires' | 'jyeffect' | 'jymaster'
 export const useGlobalStore = defineStore('global', () => {
+  // TODO audio相关封装为hook
   const currentMusicId = ref('')
   const currentMusicUrl = ref('')
   const currentVideoUrl = ref('')
