@@ -2,11 +2,14 @@
   <div class="app-controller">
 
     <div class="cover">
-      <img :src="currentMusicInfo.info.al?.picUrl" alt="">
+      <img
+        :src="currentMusicInfo.info.al?.picUrl || 'https://img1.baidu.com/it/u=950943067,1138707327&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'"
+        alt="">
       <div class="music-info">
         <div style="font-size: 14px;">
           {{ currentMusicInfo.info.name || '' }}
-          <svg-icon style="font-size: 20px;cursor: pointer;position: relative;top: 4px;" name="like_outline"></svg-icon>
+          <svg-icon v-if="currentMusicInfo.info.name" style="font-size: 20px;cursor: pointer;position: relative;top: 4px;"
+            name="like_outline"></svg-icon>
         </div>
         <div style="font-size: 13px;">
           {{ formatAr(currentMusicInfo.info.ar) }}

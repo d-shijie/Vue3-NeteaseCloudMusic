@@ -52,18 +52,25 @@
         </div>
       </div>
     </div>
-    <PlaylistMusics />
+    <div class="tabs">
+      <div @click="activeTab = 'musicList'" class="tab" :class="{ 'active': activeTab === 'musicList' }">歌曲列表</div>
+      <div @click="activeTab = 'comment'" class="tab" :class="{ 'active': activeTab === 'comment' }">评论</div>
+      <div @click="activeTab = 'collectors'" class="tab" :class="{ 'active': activeTab === 'collectors' }">收藏者</div>
+    </div>
+    <component :is="activeComponent" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import PlaylistMusics from '@/components/playlist/playlistMusics.vue';
+
 import { formatDayTime } from '@/util/timeFormat'
 import { formatCount } from '@/util/index'
 import { getPlaylistDetailApi } from '@/api/playlist'
 import { useRoute } from 'vue-router';
 const route = useRoute()
+// 歌单详情
 const playlist = ref()
 const getPlaylistDetail = () => {
   getPlaylistDetailApi(String(route.query.id)).then(res => {
@@ -71,12 +78,27 @@ const getPlaylistDetail = () => {
   })
 }
 getPlaylistDetail()
+
+// tabs
+const activeTab = ref<'musicList' | 'comment' | 'collectors'>('musicList')
+const activeComponent = computed(() => {
+  switch (activeTab.value) {
+    case 'musicList':
+      return PlaylistMusics
+    case 'comment':
+      return PlaylistMusics
+    case 'collectors':
+      return PlaylistMusics
+    default:
+      return PlaylistMusics
+  }
+})
 </script>
 
 <style scoped lang="scss">
 .playlist-detail {
   &-header {
-    padding: 30px;
+    padding: 30px 30px 15px;
     display: flex;
 
     >img {
@@ -178,5 +200,28 @@ getPlaylistDetail()
     }
   }
 
+  .tabs {
+    display: flex;
+    font-size: 14px;
+    padding: 0 30px 20px;
+
+    .tab {
+      margin-right: 24px;
+      display: flex;
+      cursor: pointer;
+      align-items: center;
+
+      &:hover {
+        color: #fff;
+      }
+    }
+
+    .active {
+      padding: 3px 0;
+      font-size: 18px;
+      font-weight: 600;
+      border-bottom: 3px solid rgb(236, 65, 65)
+    }
+  }
 }
 </style>
