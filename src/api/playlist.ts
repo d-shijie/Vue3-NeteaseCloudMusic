@@ -31,3 +31,16 @@ export function getPlaylistDetailApi (id: number | string) {
     }
   })
 }
+// 收藏者
+interface GetPlaylistCollectors {
+  id: string | number
+  offset: number
+  limit: number
+}
+export function getPlaylistCollectorsApi (params: GetPlaylistCollectors) {
+  return request({
+    url: "/playlist/subscribers",
+    method: 'get',
+    params
+  })
+}

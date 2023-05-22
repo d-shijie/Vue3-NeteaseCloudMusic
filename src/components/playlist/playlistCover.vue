@@ -37,7 +37,7 @@ const props = defineProps({
     default: '175px'
   }
 })
-console.log(props.cover);
+
 
 const router = useRouter()
 const gotoDetail = (path: string) => {

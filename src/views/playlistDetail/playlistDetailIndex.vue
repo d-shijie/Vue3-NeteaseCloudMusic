@@ -54,7 +54,8 @@
     </div>
     <div class="tabs">
       <div @click="activeTab = 'musicList'" class="tab" :class="{ 'active': activeTab === 'musicList' }">歌曲列表</div>
-      <div @click="activeTab = 'comment'" class="tab" :class="{ 'active': activeTab === 'comment' }">评论</div>
+      <div @click="activeTab = 'comment'" class="tab" :class="{ 'active': activeTab === 'comment' }">评论({{
+        playlist ? playlist.commentCount : 0 }})</div>
       <div @click="activeTab = 'collectors'" class="tab" :class="{ 'active': activeTab === 'collectors' }">收藏者</div>
     </div>
     <component :is="activeComponent" />
@@ -64,7 +65,8 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import PlaylistMusics from '@/components/playlist/playlistMusics.vue';
-
+import Collectors from './playlistCollectors.vue';
+import Comment from './playlistComment.vue';
 import { formatDayTime } from '@/util/timeFormat'
 import { formatCount } from '@/util/index'
 import { getPlaylistDetailApi } from '@/api/playlist'
@@ -86,9 +88,9 @@ const activeComponent = computed(() => {
     case 'musicList':
       return PlaylistMusics
     case 'comment':
-      return PlaylistMusics
+      return Comment
     case 'collectors':
-      return PlaylistMusics
+      return Collectors
     default:
       return PlaylistMusics
   }
@@ -146,7 +148,6 @@ const activeComponent = computed(() => {
         font-size: 22px;
         font-weight: 600;
         color: var(--v-m-text-color);
-
       }
 
       &-creator {
@@ -180,7 +181,6 @@ const activeComponent = computed(() => {
         .create-time {
           color: rgb(139, 139, 139)
         }
-
       }
 
       &-desc {
