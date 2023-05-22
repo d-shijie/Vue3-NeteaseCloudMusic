@@ -63,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import PlaylistMusics from '@/components/playlist/playlistMusics.vue';
 import Collectors from './playlistCollectors.vue';
 import Comment from './playlistComment.vue';
@@ -79,6 +79,10 @@ const getPlaylistDetail = () => {
     playlist.value = res.data.playlist
   })
 }
+
+watch(route, () => {
+  getPlaylistDetail()
+})
 getPlaylistDetail()
 
 // tabs

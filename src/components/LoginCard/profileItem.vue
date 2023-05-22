@@ -17,6 +17,7 @@
 import { ArrowRight } from '@element-plus/icons-vue'
 import type { PropType } from 'vue';
 export interface ProfileItem {
+  id?: number | string
   label: string
   url?: string
   showBorder?: boolean

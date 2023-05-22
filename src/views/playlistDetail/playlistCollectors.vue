@@ -16,12 +16,11 @@
       <el-pagination @current-change="hanldCurrentChange" small background v-model:current-page="params.offset"
         :page-size="60" layout="prev, pager, next" :total="total" />
     </div>
-
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { getPlaylistCollectorsApi } from '@/api/playlist'
 import { useRoute } from 'vue-router';
 const route = useRoute()
@@ -42,6 +41,11 @@ const getPlaylistCollectors = () => {
     collectors.value = res.data.subscribers
   })
 }
+watch(route, () => {
+  params.id = String(route.query.id)
+  getPlaylistCollectors()
+})
+
 getPlaylistCollectors()
 
 const hanldCurrentChange = (page: number) => {

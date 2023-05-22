@@ -56,7 +56,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { getPlaylistMusicApi } from '@/api/playlist'
 import { stampToMin } from '@/util/timeFormat'
@@ -80,6 +80,9 @@ const getPlaylistMusic = () => {
     loading.value = false
   })
 }
+watch(route, () => {
+  getPlaylistMusic()
+})
 getPlaylistMusic()
 
 const playMusic = (row: any) => {

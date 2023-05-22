@@ -50,7 +50,9 @@ setTimeout(() => {
 
     const arr = [] as any[]
     userSongSheet[k].forEach((res: any) => {
+
       arr.push({
+        id: res.id,
         label: res.name,
         prefixIcon: res.privacy ? 'lock' : 'song_sheet',
         suffixText: '',

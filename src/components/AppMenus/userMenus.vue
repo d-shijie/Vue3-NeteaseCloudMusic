@@ -7,12 +7,11 @@
           <svg-icon @click.stop.prevent="handleClick" class="action-svg" name="plus"></svg-icon>
         </template>
         <ul>
-          <li v-for="(item, index) in options.data" :key="index">
+          <li @click="gotoPlaylist(item)" v-for="(item, index) in options.data" :key="index">
             <ProfileItemVue class="sub-menu" :item="item">
               <template v-slot:prefix>
                 <svg-icon :name="item.prefixIcon"></svg-icon>
               </template>
-
             </ProfileItemVue>
           </li>
         </ul>
@@ -25,6 +24,8 @@
 import type { ProfileItem } from '../LoginCard/profileItem.vue';
 import type { PropType } from 'vue'
 import ProfileItemVue from '../LoginCard/profileItem.vue';
+import { useRouter } from 'vue-router'
+const router = useRouter()
 export interface OptionData extends ProfileItem {
   [propName: string]: any
 }
@@ -41,6 +42,14 @@ defineProps({
 
 const handleClick = () => {
   console.log('test');
+}
+const gotoPlaylist = (item: ProfileItem) => {
+  router.push({
+    path: '/index/playlist-detail',
+    query: {
+      id: item.id
+    }
+  })
 }
 </script>
 
