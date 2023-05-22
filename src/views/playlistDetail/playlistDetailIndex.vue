@@ -1,40 +1,54 @@
 <template>
   <div class="playlist-detail">
-    <div class="playlist-detail-header">
-      <img
-        src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F026b3f9c-ca71-4d5d-a6d7-b172dc761dbe%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1687083637&t=d0a2b1fafbfe64c30689ed2958dfa2b0"
-        alt="">
+    <div v-if="playlist" class="playlist-detail-header">
+      <img :src="playlist.coverImgUrl" alt="">
       <div class="playlist-detail-header-info">
-        <div class="playlist-detail-header-info-title">今天《爱在日出前（女声版）》爱不释耳|私人雷达</div>
+        <div class="playlist-detail-header-info-title">{{ playlist.name }}</div>
         <div class="playlist-detail-header-info-creator">
           <label>
             <span class="avatar">
-              <img
-                src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F026b3f9c-ca71-4d5d-a6d7-b172dc761dbe%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1687083637&t=d0a2b1fafbfe64c30689ed2958dfa2b0"
-                alt="">
+              <img :src="playlist.creator.avatarUrl" alt="">
             </span>
             <span class="creator-name">
-              网易云音乐
+              {{ playlist.creator.nickname }}
             </span>
           </label>
           <span class="create-time">
-            {{ formatDayTime(111111111) }}创建
+            {{ formatDayTime(playlist.createTime) }}创建
           </span>
         </div>
-        <div class="playlist-detail-header-info-actions">3</div>
+        <div class="playlist-detail-header-info-actions">
+          <div class="action-btn play">
+            <svg-icon style="font-size: 18px;margin-right: 6px;" name="play"></svg-icon> 播放全部
+            <svg-icon style="font-size: 18px;margin-left: 6px;" name="plus_white"></svg-icon>
+          </div>
+          <div class="action-btn">
+            <svg-icon style="font-size: 18px;margin-right: 6px;" name="collect"></svg-icon> 收藏({{
+              formatCount(playlist.subscribedCount) }})
+          </div>
+          <div class="action-btn">
+            <svg-icon style="font-size: 18px;margin-right: 6px;" name="share"></svg-icon> 分享({{
+              formatCount(playlist.shareCount) }})
+          </div>
+          <div class="action-btn">
+            <svg-icon style="font-size: 18px;margin-right: 6px;" name="download"></svg-icon> 下载全部
+          </div>
+        </div>
         <div class="playlist-detail-header-info-counts" style="font-size: 12px;">
           <span style="margin-right: 8px;" class="musics">
-            <span style="color:rgb(213,213,213)">歌曲: </span><span style="color:rgb(139,139,139)">35</span>
+            <span style="color:rgb(213,213,213)">歌曲: </span><span style="color:rgb(139,139,139)">{{ playlist.trackCount
+            }}</span>
           </span>
           <span class="plays">
-            <span style="color:rgb(213,213,213)">播放: </span><span style="color:rgb(139,139,139)"> {{ formatCount(23123131)
+            <span style="color:rgb(213,213,213)">播放: </span><span style="color:rgb(139,139,139)"> {{
+              formatCount(playlist.playCount)
             }}</span>
           </span>
         </div>
         <div class="playlist-detail-header-info-desc" style="font-size: 12px;">
           <div style="color:rgb(213,213,213)">简介: </div>
           <div class="desc" style="color:rgb(139,139,139)">
-            你爱的歌，值得反复聆听1111111111111111111111</div>
+            {{ playlist.description }}</div>
         </div>
       </div>
     </div>
@@ -43,9 +57,20 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import PlaylistMusics from '@/components/playlist/playlistMusics.vue';
 import { formatDayTime } from '@/util/timeFormat'
 import { formatCount } from '@/util/index'
+import { getPlaylistDetailApi } from '@/api/playlist'
+import { useRoute } from 'vue-router';
+const route = useRoute()
+const playlist = ref()
+const getPlaylistDetail = () => {
+  getPlaylistDetailApi(String(route.query.id)).then(res => {
+    playlist.value = res.data.playlist
+  })
+}
+getPlaylistDetail()
 </script>
 
 <style scoped lang="scss">
@@ -66,10 +91,40 @@ import { formatCount } from '@/util/index'
         margin-bottom: 12px;
       }
 
+      &-actions {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        .action-btn {
+          margin-right: 12px;
+          border: 1px solid rgb(75, 75, 75);
+          padding: 8px 16px;
+          font-size: 13px;
+          border-radius: 2em;
+          display: flex;
+          align-items: center;
+
+          &:hover {
+            background-color: rgb(54, 54, 54);
+          }
+        }
+
+        .play {
+          background-color: rgb(236, 65, 65);
+          border: none;
+
+          &:hover {
+            background-color: rgb(217, 63, 63);
+          }
+        }
+      }
+
       &-title {
         font-size: 22px;
         font-weight: 600;
         color: var(--v-m-text-color);
+
       }
 
       &-creator {

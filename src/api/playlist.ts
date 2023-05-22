@@ -21,3 +21,13 @@ export function getRecommendPlaylistApi () {
     method: 'get',
   })
 }
+// 歌单详情
+export function getPlaylistDetailApi (id: number | string) {
+  return request({
+    url: "/playlist/detail",
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}
