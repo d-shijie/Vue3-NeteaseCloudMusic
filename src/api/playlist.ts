@@ -32,14 +32,22 @@ export function getPlaylistDetailApi (id: number | string) {
   })
 }
 // 收藏者
-interface GetPlaylistCollectors {
+interface GetPlaylist {
   id: string | number
   offset: number
   limit: number
 }
-export function getPlaylistCollectorsApi (params: GetPlaylistCollectors) {
+export function getPlaylistCollectorsApi (params: GetPlaylist) {
   return request({
     url: "/playlist/subscribers",
+    method: 'get',
+    params
+  })
+}
+// 歌单评论
+export function getPlaylistCommentsApi (params: GetPlaylist) {
+  return request({
+    url: "/comment/playlist",
     method: 'get',
     params
   })

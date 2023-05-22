@@ -58,18 +58,27 @@
         playlist ? playlist.commentCount : 0 }})</div>
       <div @click="activeTab = 'collectors'" class="tab" :class="{ 'active': activeTab === 'collectors' }">收藏者</div>
     </div>
-    <component :is="activeComponent" />
+    <!-- TODO 如何使用动态组件传值 -->
+    <!-- <component :is="activeComponent" /> -->
+    <PlaylistMusics v-if="activeTab === 'musicList'" />
+    <Collectors v-if="activeTab === 'collectors'" />
+    <Comment :hot-comments="hotComments" :comments="playlistComments" v-if="activeTab === 'comment'">
+      <template v-slot:pagination>
+        <el-pagination @current-change="hanldCurrentChange" small background v-model:current-page="params.offset"
+          :page-size="60" layout="prev, pager, next" :total="total" />
+      </template>
+    </Comment>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { ref, watch, reactive } from 'vue';
 import PlaylistMusics from '@/components/playlist/playlistMusics.vue';
 import Collectors from './playlistCollectors.vue';
-import Comment from './playlistComment.vue';
+import Comment, { type Comments } from '@/components/Comment/appComment.vue';
 import { formatDayTime } from '@/util/timeFormat'
 import { formatCount } from '@/util/index'
-import { getPlaylistDetailApi } from '@/api/playlist'
+import { getPlaylistDetailApi, getPlaylistCommentsApi } from '@/api/playlist'
 import { useRoute } from 'vue-router';
 const route = useRoute()
 // 歌单详情
@@ -87,18 +96,57 @@ getPlaylistDetail()
 
 // tabs
 const activeTab = ref<'musicList' | 'comment' | 'collectors'>('musicList')
-const activeComponent = computed(() => {
-  switch (activeTab.value) {
-    case 'musicList':
-      return PlaylistMusics
-    case 'comment':
-      return Comment
-    case 'collectors':
-      return Collectors
-    default:
-      return PlaylistMusics
-  }
+
+// 获取评论
+const hotComments = ref<Comments>([])
+const playlistComments = ref<Comments>([])
+const total = ref(0)
+const params = reactive({
+  id: route.query.id,
+  offset: 1,
+  limit: 60
 })
+const getComments = () => {
+  getPlaylistCommentsApi({
+    id: String(params.id),
+    offset: (params.offset - 1) * params.limit,
+    limit: params.limit
+  }).then(res => {
+
+    playlistComments.value = []
+    total.value = res.data.total
+    if (res.data.hotComments) {
+      res.data.hotComments.slice(0, 9).forEach((item: any) => {
+        hotComments.value.push({
+          avatarUrl: item.user.avatarUrl,
+          content: item.content,
+          likeCount: item.likedCount,
+          time: item.time,
+          nickname: item.user.nickname,
+          commentId: item.commentId,
+          userId: item.user.userId
+        })
+      })
+    }
+
+    res.data.comments.forEach((item: any) => {
+      playlistComments.value.push({
+        avatarUrl: item.user.avatarUrl,
+        content: item.content,
+        likeCount: item.likedCount,
+        time: item.time,
+        nickname: item.user.nickname,
+        commentId: item.commentId,
+        userId: item.user.userId
+      })
+    })
+  })
+}
+getComments()
+const hanldCurrentChange = (page: number) => {
+  params.offset = page
+  getComments()
+}
 </script>
 
 <style scoped lang="scss">

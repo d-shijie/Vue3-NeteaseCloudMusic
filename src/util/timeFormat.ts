@@ -14,3 +14,10 @@ export const formatDayTime = (time: number | string | Date): string => {
   const date = new Date(time)
   return dayjs(date).format('YYYY-MM-DD')
 }
+export const formateTime = (time: number | string | Date): string => {
+  if (!time) {
+    return 'N/A'
+  }
+  const date = new Date(time)
+  return dayjs(date).format('YYYY年MM月DD日 HH:mm')
+}
