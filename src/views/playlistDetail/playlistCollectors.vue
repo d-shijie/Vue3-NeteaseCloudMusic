@@ -36,7 +36,7 @@ const getPlaylistCollectors = () => {
   getPlaylistCollectorsApi({
     id: params.id,
     limit: params.limit,
-    offset: params.offset - 1
+    offset: (params.offset - 1) * params.limit
   }).then(res => {
     total.value = res.data.total
     collectors.value = res.data.subscribers
