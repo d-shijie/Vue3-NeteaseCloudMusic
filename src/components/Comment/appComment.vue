@@ -33,11 +33,11 @@ export type Comments = Array<Comment>
 const commentContent = ref('')
 defineProps({
   hotComments: {
-    type: Array as PropType<Comment[]>,
+    type: Array as PropType<Comments>,
     default: () => []
   },
   comments: {
-    type: Array as PropType<Comment[]>,
+    type: Array as PropType<Comments>,
     default: () => []
   },
 })
