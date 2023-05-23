@@ -75,7 +75,7 @@ const getRecommendPlaylist = () => {
         recommendPlaylist.value.push({
           id: item.id,
           name: item.name,
-          nickname: item.creator.nickname,
+          nickname: item.creator ? item.creator.nickname : '',
           playcount: item.playCount,
           picUrl: item.picUrl,
           path: '/index/playlist-detail'

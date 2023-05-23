@@ -6,7 +6,7 @@
         <slot name="text"></slot>
       </div>
       <img :src="cover.picUrl" alt="">
-      <div class="play-count">
+      <div v-if="cover.playcount" class="play-count">
         {{ formatCount(cover.playcount) }}
       </div>
       <div v-if="cover.nickname" class="creator">
