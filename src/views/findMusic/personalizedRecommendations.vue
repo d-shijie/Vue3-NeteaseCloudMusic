@@ -9,6 +9,8 @@
     </div>
     <SubTitle title="推荐歌单" />
     <RecommendPlaylist :playlist="recommendPlaylist" />
+    <SubTitle title="热门播客" />
+    <Podcastlist />
   </div>
 </template>
 
@@ -17,7 +19,7 @@ import { getBannerApi, getDaylyRecommendPlaylistApi } from '@/api/personalizedRe
 import { getRecommendPlaylistApi } from '@/api/playlist'
 import SubTitle from '@/components/SubTitle/subTitle.vue';
 import RecommendPlaylist from './personalizedRecommendations/recommendPlaylist.vue';
-
+import Podcastlist from '@/components/PodcastList/podcastlist.vue';
 import { ref } from 'vue';
 const banners = ref<any[]>([])
 const getBanner = () => {
