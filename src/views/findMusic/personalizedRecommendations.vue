@@ -70,7 +70,17 @@ const getRecommendPlaylist = () => {
     // TODO定位302错误
     // 防止线上接口302无数据 测试用
     getRecommendPlaylistApi().then((res) => {
-      recommendPlaylist.value = res.data.result.slice(0, 9)
+      recommendPlaylist.value = []
+      res.data.result.slice(0, 9).forEach((item: any) => {
+        recommendPlaylist.value.push({
+          id: item.id,
+          name: item.name,
+          nickname: item.creator.nickname,
+          playcount: item.playCount,
+          picUrl: item.picUrl,
+          path: '/index/playlist-detail'
+        })
+      })
     })
 
   })
