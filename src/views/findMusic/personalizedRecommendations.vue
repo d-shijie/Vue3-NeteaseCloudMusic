@@ -10,17 +10,17 @@
     <SubTitle title="推荐歌单" />
     <RecommendPlaylist :playlist="recommendPlaylist" />
     <SubTitle title="热门播客" />
-    <Podcastlist />
+    <podcastListVue />
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import { getBannerApi, getDaylyRecommendPlaylistApi } from '@/api/personalizedRecommendations';
 import { getRecommendPlaylistApi } from '@/api/playlist'
 import SubTitle from '@/components/SubTitle/subTitle.vue';
 import RecommendPlaylist from './personalizedRecommendations/recommendPlaylist.vue';
-import Podcastlist from '@/components/PodcastList/podcastlist.vue';
-import { ref } from 'vue';
+import podcastListVue from '@/components/PodcastList/podcastList.vue';
 const banners = ref<any[]>([])
 const getBanner = () => {
   getBannerApi(0).then((res: any) => {
