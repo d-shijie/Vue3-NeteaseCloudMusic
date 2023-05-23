@@ -10,17 +10,18 @@
     <SubTitle title="推荐歌单" />
     <RecommendPlaylist :playlist="recommendPlaylist" />
     <SubTitle title="热门播客" />
-    <podcastListVue />
+    <podcastListVue :list="hotDjs" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getBannerApi, getDaylyRecommendPlaylistApi } from '@/api/personalizedRecommendations';
+import { getBannerApi, getDaylyRecommendPlaylistApi, getHotDjRecommendApi } from '@/api/personalizedRecommendations';
 import { getRecommendPlaylistApi } from '@/api/playlist'
 import SubTitle from '@/components/SubTitle/subTitle.vue';
 import RecommendPlaylist from './personalizedRecommendations/recommendPlaylist.vue';
-import podcastListVue from '@/components/PodcastList/podcastList.vue';
+import podcastListVue, { type DjList } from '@/components/PodcastList/podcastList.vue';
+// banner
 const banners = ref<any[]>([])
 const getBanner = () => {
   getBannerApi(0).then((res: any) => {
@@ -29,6 +30,7 @@ const getBanner = () => {
 }
 getBanner()
 
+// 推荐歌单
 const recommendPlaylist = ref<any[]>([])
 const getRecommendPlaylist = () => {
   getDaylyRecommendPlaylistApi().then((res) => {
@@ -43,6 +45,28 @@ const getRecommendPlaylist = () => {
   })
 }
 getRecommendPlaylist()
+
+// 热门播客
+const hotDjs = ref<DjList>([])
+const getHotDjRecommend = () => {
+  getHotDjRecommendApi().then(res => {
+    hotDjs.value = []
+    res.data.result.forEach((item: any) => {
+      hotDjs.value.push({
+        id: item.id,
+        coverImg: item.picUrl,
+        tag: item.program.channels[0],
+        title: item.name,
+        creator: item.program.name,
+        playcount: item.program.mainSong.playNum,
+        duration: item.program.duration
+      })
+    })
+
+
+  })
+}
+getHotDjRecommend()
 </script>
 
 <style scoped lang="scss">

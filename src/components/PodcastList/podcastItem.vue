@@ -1,23 +1,23 @@
 <template>
   <div class="podcast-item">
-    <div class="cover">
-      <img src="https://img1.baidu.com/it/u=950943067,1138707327&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500" alt="">
+    <div class="cover" @click="coverClick">
+      <img :src="dj.coverImg" alt="">
       <div class="svg">
         <svg-icon style="font-size: 12px;" name="play_red"></svg-icon>
       </div>
     </div>
     <div class="item">
-      <div class="title">背对背拥抱</div>
-      <div class="tag">歌曲翻唱</div>
+      <div class="title">{{ dj.title }}</div>
+      <div class="tag">{{ dj.tag }}</div>
       <div class="info">
-        <span class="name">音乐知我心</span>
+        <span class="name">{{ dj.creator }}</span>
         <span class="palycount">
           <svg-icon style="font-size: 10px;margin-right: 3px;" name="play_outline"></svg-icon>
-          {{ formatCount(11111111) }}
+          {{ formatCount(dj.playcount) }}
         </span>
         <span class="time">
           <svg-icon style="font-size: 10px;margin-right: 3px;" name="time"></svg-icon>
-          {{ stampToMin(222222) }}
+          {{ stampToMin(dj.duration) }}
         </span>
       </div>
     </div>
@@ -27,6 +27,27 @@
 <script setup lang="ts">
 import { formatCount } from '@/util';
 import { stampToMin } from '@/util/timeFormat';
+import { ElMessage } from 'element-plus';
+import type { PropType } from 'vue';
+export interface Dj {
+  coverImg: string
+  title: string
+  tag: string | string[]
+  creator: string
+  playcount: number
+  duration: number
+  id: number
+}
+defineProps({
+  dj: {
+    type: Object as PropType<Dj>,
+    default: () => { }
+  }
+})
+
+const coverClick = () => {
+  ElMessage.info('接口获取的音频URL暂时都为NULL 此处只做展示')
+}
 </script>
 
 <style scoped lang="scss">
@@ -34,6 +55,12 @@ import { stampToMin } from '@/util/timeFormat';
   display: flex;
   align-items: center;
   cursor: pointer;
+  height: 75px;
+
+  &:hover {
+    background-color: var(--v-m-hover-bgc);
+    border-radius: 5px;
+  }
 
   .cover {
     position: relative;
@@ -56,6 +83,8 @@ import { stampToMin } from '@/util/timeFormat';
       width: 75px;
       height: 75px;
       border-radius: 5px;
+      position: relative;
+      top: 2px;
     }
   }
 
@@ -94,7 +123,6 @@ import { stampToMin } from '@/util/timeFormat';
         white-space: nowrap;
       }
     }
-
   }
 }
 </style>

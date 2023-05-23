@@ -17,3 +17,10 @@ export function getDaylyRecommendPlaylistApi () {
     method: 'get',
   })
 }
+// 热门播客 电台个性推荐
+export function getHotDjRecommendApi () {
+  return request({
+    url: "/personalized/djprogram",
+    method: 'get',
+  })
+}
