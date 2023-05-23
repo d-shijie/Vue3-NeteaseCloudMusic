@@ -1,7 +1,13 @@
 <template>
   <div class="sub-title">
-    <div :class="{ 'sub-title-after': enabled }">
+    <div class="title" :class="{ 'sub-title-after': enabled }">
+      <div class="icon">
+        <slot name="prefix"></slot>
+      </div>
       {{ title }}
+      <div class="icon">
+        <slot name="suffix"></slot>
+      </div>
     </div>
 
   </div>
@@ -30,6 +36,13 @@ defineProps({
   font-weight: 600;
   margin-bottom: 8px;
   margin-top: 24px;
+
+  .title {
+    display: flex;
+
+
+  }
+
 }
 
 .sub-title-after {

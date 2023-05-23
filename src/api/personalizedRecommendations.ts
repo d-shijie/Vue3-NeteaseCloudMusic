@@ -24,3 +24,11 @@ export function getHotDjRecommendApi () {
     method: 'get',
   })
 }
+
+// 听见好书 电台有声书
+export function getRecommendBooksApi () {
+  return request({
+    url: "/dj/recommend/type?type=10001",
+    method: 'get',
+  })
+}

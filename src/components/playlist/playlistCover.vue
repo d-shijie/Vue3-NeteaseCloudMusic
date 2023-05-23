@@ -1,20 +1,20 @@
 <template>
   <div :style="{ width }" class="playlist-cover">
 
-    <div @click="gotoDetail('/index/playlist-detail')" class="cover" ref="playlistCoverRef">
+    <div @click="gotoDetail" class="cover" ref="playlistCoverRef">
       <div class="text">
         <slot name="text"></slot>
       </div>
       <img :src="cover.picUrl" alt="">
       <div class="play-count">
-        {{ cover.playcount ? formatCount(cover.playcount) : formatCount(cover.playCount) }}
+        {{ formatCount(cover.playcount) }}
       </div>
-      <div v-if="cover.creator" class="creator">
-        {{ cover.creator.nickname }}
+      <div v-if="cover.nickname" class="creator">
+        {{ cover.nickname }}
       </div>
       <div class="play-icon"></div>
     </div>
-    <div @click="gotoDetail('/index/playlist-detail')" class="desc">
+    <div @click="gotoDetail" class="desc">
       {{ cover.name }}
     </div>
   </div>
@@ -22,10 +22,19 @@
 
 <script setup lang="ts">
 import { formatCount } from '@/util/index'
+import type { PropType } from 'vue';
 import { useRouter } from 'vue-router';
+export interface PlaylistCover {
+  id: number
+  playcount: number
+  nickname?: string
+  name?: string
+  picUrl: string
+  path: string
+}
 const props = defineProps({
   cover: {
-    type: Object,
+    type: Object as PropType<PlaylistCover>,
     default: () => { }
   },
   height: {
@@ -40,9 +49,9 @@ const props = defineProps({
 
 
 const router = useRouter()
-const gotoDetail = (path: string) => {
+const gotoDetail = (g) => {
   router.push({
-    path,
+    path: props.cover.path,
     query: {
       id: props.cover.id
     }

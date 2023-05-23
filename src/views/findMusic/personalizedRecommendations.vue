@@ -11,15 +11,34 @@
     <RecommendPlaylist :playlist="recommendPlaylist" />
     <SubTitle title="热门播客" />
     <podcastListVue :list="hotDjs" />
+    <div class="book">
+      <div class="left">
+        <svg-icon style="font-size: 24px;" name="refresh"></svg-icon>
+        <span>听见好书</span>
+      </div>
+
+
+      <div class="right">
+        <el-button @click="expandStatus = !expandStatus"
+          style="font-size: 13px; background-color: rgb(43, 43, 43);color: var(--v-m-text-color);border-color: rgb(73,73,73);border-radius: 15px;">全部分类<el-icon
+            class="el-icon--right">
+            <CaretBottom v-if="!expandStatus" />
+            <CaretTop v-else />
+          </el-icon></el-button>
+      </div>
+
+    </div>
+    <RecommendPlaylist :playlist="recommendBooks" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getBannerApi, getDaylyRecommendPlaylistApi, getHotDjRecommendApi } from '@/api/personalizedRecommendations';
+import { getBannerApi, getDaylyRecommendPlaylistApi, getHotDjRecommendApi, getRecommendBooksApi } from '@/api/personalizedRecommendations';
 import { getRecommendPlaylistApi } from '@/api/playlist'
+import { CaretBottom, CaretTop } from '@element-plus/icons-vue';
 import SubTitle from '@/components/SubTitle/subTitle.vue';
-import RecommendPlaylist from './personalizedRecommendations/recommendPlaylist.vue';
+import RecommendPlaylist, { type Playlist } from './personalizedRecommendations/recommendPlaylist.vue';
 import podcastListVue, { type DjList } from '@/components/PodcastList/podcastList.vue';
 // banner
 const banners = ref<any[]>([])
@@ -31,10 +50,22 @@ const getBanner = () => {
 getBanner()
 
 // 推荐歌单
-const recommendPlaylist = ref<any[]>([])
+const recommendPlaylist = ref<Playlist>([])
 const getRecommendPlaylist = () => {
   getDaylyRecommendPlaylistApi().then((res) => {
-    recommendPlaylist.value = res.data.recommend.slice(0, 9)
+    recommendPlaylist.value = []
+    res.data.recommend.slice(0, 9).forEach((item: any) => {
+      recommendPlaylist.value.push({
+        id: item.id,
+        name: item.name,
+        nickname: item.creator.nickname,
+        playcount: item.playcount,
+        picUrl: item.picUrl,
+        path: '/index/playlist-detail'
+
+      })
+    })
+
   }).catch(() => {
     // TODO定位302错误
     // 防止线上接口302无数据 测试用
@@ -67,6 +98,27 @@ const getHotDjRecommend = () => {
   })
 }
 getHotDjRecommend()
+
+// 听见好书
+const expandStatus = ref(false)
+const recommendBooks = ref<any[]>([])
+const getRecommendBooks = () => {
+  getRecommendBooksApi().then(res => {
+    recommendBooks.value = []
+    res.data.djRadios.slice(0, 4).forEach((item: any) => {
+      recommendBooks.value.push({
+        id: item.id,
+        name: item.name,
+        nickname: '',
+        playcount: item.playCount,
+        picUrl: item.picUrl,
+        //TODO dj详情页
+        path: ''
+      })
+    })
+  })
+}
+getRecommendBooks()
 </script>
 
 <style scoped lang="scss">
@@ -96,5 +148,29 @@ getHotDjRecommend()
     }
   }
 
+}
+
+.book {
+  display: flex;
+  align-self: center;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  margin-top: 24px;
+
+  >div {
+    display: flex;
+    align-items: center;
+  }
+
+  .left {
+    font-size: 20px;
+    font-weight: 600;
+
+    &:hover {
+      color: #fff;
+      cursor: pointer;
+    }
+  }
 }
 </style>
