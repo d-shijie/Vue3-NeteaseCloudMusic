@@ -40,3 +40,11 @@ export function getExclusiveBroadcastApi () {
     method: 'get',
   })
 }
+
+// 推荐新音乐
+export function getRecommendNewSongsApi () {
+  return request({
+    url: "/personalized/newsong?limit=12",
+    method: 'get',
+  })
+}

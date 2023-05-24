@@ -31,12 +31,14 @@
     <RecommendBooks :playlist="recommendBooks" />
     <SubTitle title="独家放送" />
     <ExclusiveBroadcast :list="privateContent" />
+    <SubTitle title="最新音乐" />
+    <RecommendNewSongs :list="recommendNewSongs" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getBannerApi, getDaylyRecommendPlaylistApi, getHotDjRecommendApi, getRecommendBooksApi, getExclusiveBroadcastApi } from '@/api/personalizedRecommendations';
+import { getBannerApi, getDaylyRecommendPlaylistApi, getHotDjRecommendApi, getRecommendBooksApi, getExclusiveBroadcastApi, getRecommendNewSongsApi } from '@/api/personalizedRecommendations';
 import { getRecommendPlaylistApi } from '@/api/playlist'
 import { CaretBottom, CaretTop } from '@element-plus/icons-vue';
 import SubTitle from '@/components/SubTitle/subTitle.vue';
@@ -44,6 +46,7 @@ import RecommendPlaylist, { type Playlist } from './personalizedRecommendations/
 import RecommendBooks from './personalizedRecommendations/recommendBooks.vue';
 import podcastListVue, { type DjList } from '@/components/PodcastList/podcastList.vue';
 import ExclusiveBroadcast, { type List } from './personalizedRecommendations/exclusiveBroadcast.vue'
+import RecommendNewSongs, { type RecommendNewSongsType } from './personalizedRecommendations/recommendNewSongs.vue'
 // banner
 const banners = ref<any[]>([])
 const getBanner = () => {
@@ -149,6 +152,26 @@ const getExclusiveBroadcast = () => {
   })
 }
 getExclusiveBroadcast()
+
+// 最新音乐
+const recommendNewSongs = ref<RecommendNewSongsType>([])
+const getRecommendNewSongs = () => {
+  getRecommendNewSongsApi().then(res => {
+    recommendNewSongs.value = []
+    res.data.result.forEach((item: any) => {
+      recommendNewSongs.value.push({
+        id: item.id,
+        coverImg: item.picUrl,
+        name: item.name,
+        mvId: item.song.mvid,
+        hires: !!item.song.hrMusic,
+        sq: !!item.song.sqMusic,
+        ar: item.song.artists,
+      })
+    })
+  })
+}
+getRecommendNewSongs()
 </script>
 
 <style scoped lang="scss">
