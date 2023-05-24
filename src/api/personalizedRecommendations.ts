@@ -32,3 +32,11 @@ export function getRecommendBooksApi () {
     method: 'get',
   })
 }
+
+// 独家放送
+export function getExclusiveBroadcastApi () {
+  return request({
+    url: "/personalized/privatecontent",
+    method: 'get',
+  })
+}

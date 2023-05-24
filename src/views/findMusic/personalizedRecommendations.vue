@@ -28,18 +28,22 @@
       </div>
 
     </div>
-    <RecommendPlaylist :playlist="recommendBooks" />
+    <RecommendBooks :playlist="recommendBooks" />
+    <SubTitle title="独家放送" />
+    <ExclusiveBroadcast :list="privateContent" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getBannerApi, getDaylyRecommendPlaylistApi, getHotDjRecommendApi, getRecommendBooksApi } from '@/api/personalizedRecommendations';
+import { getBannerApi, getDaylyRecommendPlaylistApi, getHotDjRecommendApi, getRecommendBooksApi, getExclusiveBroadcastApi } from '@/api/personalizedRecommendations';
 import { getRecommendPlaylistApi } from '@/api/playlist'
 import { CaretBottom, CaretTop } from '@element-plus/icons-vue';
 import SubTitle from '@/components/SubTitle/subTitle.vue';
 import RecommendPlaylist, { type Playlist } from './personalizedRecommendations/recommendPlaylist.vue';
+import RecommendBooks from './personalizedRecommendations/recommendBooks.vue';
 import podcastListVue, { type DjList } from '@/components/PodcastList/podcastList.vue';
+import ExclusiveBroadcast, { type List } from './personalizedRecommendations/exclusiveBroadcast.vue'
 // banner
 const banners = ref<any[]>([])
 const getBanner = () => {
@@ -129,6 +133,22 @@ const getRecommendBooks = () => {
   })
 }
 getRecommendBooks()
+
+// 独家放送
+const privateContent = ref<List>([])
+const getExclusiveBroadcast = () => {
+  getExclusiveBroadcastApi().then(res => {
+    privateContent.value = []
+    res.data.result.forEach((item: any) => {
+      privateContent.value.push({
+        id: item.id,
+        coverImg: item.picUrl,
+        name: item.name
+      })
+    })
+  })
+}
+getExclusiveBroadcast()
 </script>
 
 <style scoped lang="scss">
