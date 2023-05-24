@@ -33,12 +33,18 @@
     <ExclusiveBroadcast :list="privateContent" />
     <SubTitle title="最新音乐" />
     <RecommendNewSongs :list="recommendNewSongs" />
+    <SubTitle title="主题播客" />
+    <TopicDjs :list="topicDjs" />
+    <SubTitle title="推荐MV" />
+    <RecommendMV :list="recommendMV" />
+    <SubTitle title="看看" />
+    3
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import { getBannerApi, getDaylyRecommendPlaylistApi, getHotDjRecommendApi, getRecommendBooksApi, getExclusiveBroadcastApi, getRecommendNewSongsApi } from '@/api/personalizedRecommendations';
+import { getBannerApi, getDaylyRecommendPlaylistApi, getHotDjRecommendApi, getRecommendBooksApi, getExclusiveBroadcastApi, getRecommendNewSongsApi, getHotDjsApi, getRecommendMVApi } from '@/api/personalizedRecommendations';
 import { getRecommendPlaylistApi } from '@/api/playlist'
 import { CaretBottom, CaretTop } from '@element-plus/icons-vue';
 import SubTitle from '@/components/SubTitle/subTitle.vue';
@@ -47,6 +53,8 @@ import RecommendBooks from './personalizedRecommendations/recommendBooks.vue';
 import podcastListVue, { type DjList } from '@/components/PodcastList/podcastList.vue';
 import ExclusiveBroadcast, { type List } from './personalizedRecommendations/exclusiveBroadcast.vue'
 import RecommendNewSongs, { type RecommendNewSongsType } from './personalizedRecommendations/recommendNewSongs.vue'
+import TopicDjs, { type TopicDjsType } from './personalizedRecommendations/topicDjs.vue';
+import RecommendMV, { type RecommendMVType } from './personalizedRecommendations/recommendMV.vue';
 // banner
 const banners = ref<any[]>([])
 const getBanner = () => {
@@ -172,6 +180,39 @@ const getRecommendNewSongs = () => {
   })
 }
 getRecommendNewSongs()
+
+// 主题播客 
+const topicDjs = ref<TopicDjsType>([])
+const getHotDjs = () => {
+  getHotDjsApi().then(res => {
+    topicDjs.value = []
+    res.data.djRadios.forEach((item: any) => {
+      topicDjs.value.push({
+        id: item.id,
+        coverImg: item.picUrl,
+        category: item.category
+      })
+    })
+  })
+}
+getHotDjs()
+
+// 推荐MV
+const recommendMV = ref<RecommendMVType>([])
+const getRecommendMV = () => {
+  getRecommendMVApi().then(res => {
+    console.log(res);
+    res.data.result.forEach((item: any) => {
+      recommendMV.value.push({
+        id: item.id,
+        coverImg: item.picUrl,
+        playcount: item.playCount,
+        name: item.name
+      })
+    })
+  })
+}
+getRecommendMV()
 </script>
 
 <style scoped lang="scss">

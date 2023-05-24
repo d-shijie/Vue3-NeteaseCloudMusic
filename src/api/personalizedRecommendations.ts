@@ -48,3 +48,22 @@ export function getRecommendNewSongsApi () {
     method: 'get',
   })
 }
+
+// 主题播客 
+export function getHotDjsApi () {
+  return request({
+    url: "/dj/hot",
+    method: 'get',
+    params: {
+      limit: 6
+    }
+  })
+}
+
+// 推荐MV
+export function getRecommendMVApi () {
+  return request({
+    url: "/personalized/mv",
+    method: 'get',
+  })
+}

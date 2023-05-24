@@ -9,7 +9,6 @@
       </div>
       <div class="content">
         <div>
-
           {{ item.name }}
         </div>
         <div class="info">
@@ -21,7 +20,6 @@
             {{ ar.name }} {{ index === item.ar.length - 1 ? '' : '/ ' }}
           </span>
         </div>
-
       </div>
     </div>
   </div>
@@ -59,7 +57,6 @@ const playMusic = (id: number) => {
     id,
     level: 'standard'
   }).then(res => {
-
     globalStore.setAudioUrlAndId(res.data.data[0].url, id)
     globalStore.audioPlay()
   })
@@ -74,7 +71,6 @@ const playMusic = (id: number) => {
   justify-content: space-between;
 
   .item {
-
     width: 32%;
     display: flex;
     align-items: center;
