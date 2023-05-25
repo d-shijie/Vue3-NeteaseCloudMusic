@@ -37,8 +37,7 @@
     <TopicDjs :list="topicDjs" />
     <SubTitle title="推荐MV" />
     <RecommendMV :list="recommendMV" />
-    <SubTitle title="看看" />
-    3
+
   </div>
 </template>
 
