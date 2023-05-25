@@ -136,8 +136,7 @@ const getRecommendBooks = () => {
         nickname: '',
         playcount: item.playCount,
         picUrl: item.picUrl,
-        //TODO dj详情页
-        path: ''
+        path: '/index/dj-detail'
       })
     })
   })

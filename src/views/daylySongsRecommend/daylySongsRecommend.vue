@@ -26,14 +26,20 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { getDaylyRecommendSongsApi } from '@/api/music'
+import { getToken } from '@/util/storage'
 import PlaylistMusics from '@/components/playlist/playlistMusics.vue';
+import { ElMessage } from 'element-plus';
 const nowDay = new Date().getDate()
 
 const songs = ref<any[]>([])
 const getDaylyRecommendSongs = () => {
-  getDaylyRecommendSongsApi().then(res => {
-    songs.value = res.data.data.dailySongs
-  })
+  if (getToken()) {
+    getDaylyRecommendSongsApi().then(res => {
+      songs.value = res.data.data.dailySongs
+    })
+  } else {
+    ElMessage.info('未登录')
+  }
 }
 getDaylyRecommendSongs()
 </script>

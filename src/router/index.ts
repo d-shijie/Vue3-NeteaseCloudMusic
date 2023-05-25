@@ -61,6 +61,11 @@ const router = createRouter({
           path: '/index/dayly-songs-recommend',
           name: 'DaylySongsRecommend',
           component: () => import('@/views/daylySongsRecommend/daylySongsRecommend.vue')
+        },
+        {
+          path: '/index/dj-detail',
+          name: 'DjDetail',
+          component: () => import('@/views/djDetail/djDetailIndex.vue')
         }
       ]
     },

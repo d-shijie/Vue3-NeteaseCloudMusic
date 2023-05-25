@@ -4,7 +4,7 @@
 
     </playlistCover>
 
-    <playlistCover class="item" v-for="(item, index) in playlist" :key="index" :cover="(item as any)" />
+    <playlistCover class="item" v-for="(item, index) in playlist" :key="index" :cover="item" />
   </div>
 </template>
 
