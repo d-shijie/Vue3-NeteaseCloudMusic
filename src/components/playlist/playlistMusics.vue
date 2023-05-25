@@ -66,6 +66,10 @@ const props = defineProps({
   id: {
     type: [String, Number],
     default: ''
+  },
+  data: {
+    type: Array,
+    default: () => []
   }
 })
 const globalStore = useGlobalStore()
@@ -74,6 +78,11 @@ const loading = ref(false)
 const tableData = ref<any[]>([])
 const getPlaylistMusic = () => {
   loading.value = true
+  if (!route.query.id && !props.id) {
+    tableData.value = props.data
+    loading.value = false
+    return
+  }
   getPlaylistMusicApi({ id: String(route.query.id || props.id) }).then(res => {
     tableData.value = res.data.songs
   }).finally(() => {
@@ -81,6 +90,9 @@ const getPlaylistMusic = () => {
   })
 }
 watch(route, () => {
+  getPlaylistMusic()
+})
+watch(props, () => {
   getPlaylistMusic()
 })
 getPlaylistMusic()

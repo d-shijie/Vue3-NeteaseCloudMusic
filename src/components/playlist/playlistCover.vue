@@ -25,7 +25,7 @@ import { formatCount } from '@/util/index'
 import type { PropType } from 'vue';
 import { useRouter } from 'vue-router';
 export interface PlaylistCover {
-  id: number
+  id: number | string
   playcount: number
   nickname?: string
   name?: string

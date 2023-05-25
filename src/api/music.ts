@@ -22,3 +22,11 @@ export function getMusicDetailApi (ids: string) {
     }
   })
 }
+// 每日推荐歌曲
+export function getDaylyRecommendSongsApi () {
+  return request({
+    url: "/recommend/songs",
+    method: 'get',
+
+  })
+}

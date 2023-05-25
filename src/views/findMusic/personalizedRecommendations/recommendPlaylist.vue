@@ -23,10 +23,10 @@ defineProps({
   }
 })
 const dayRecommend = reactive<PlaylistCover>({
-  id: 0,
+  id: '',
   nickname: '',
   playcount: 0,
-  path: '',
+  path: '/index/dayly-songs-recommend',
   picUrl: new URL('@/assets/dayRecommend.png', import.meta.url).href,
   name: '每日歌曲推荐'
 })

@@ -37,7 +37,6 @@
     <TopicDjs :list="topicDjs" />
     <SubTitle title="推荐MV" />
     <RecommendMV :list="recommendMV" />
-
   </div>
 </template>
 
@@ -54,6 +53,7 @@ import ExclusiveBroadcast, { type List } from './personalizedRecommendations/exc
 import RecommendNewSongs, { type RecommendNewSongsType } from './personalizedRecommendations/recommendNewSongs.vue'
 import TopicDjs, { type TopicDjsType } from './personalizedRecommendations/topicDjs.vue';
 import RecommendMV, { type RecommendMVType } from './personalizedRecommendations/recommendMV.vue';
+
 // banner
 const banners = ref<any[]>([])
 const getBanner = () => {
@@ -200,7 +200,7 @@ getHotDjs()
 const recommendMV = ref<RecommendMVType>([])
 const getRecommendMV = () => {
   getRecommendMVApi().then(res => {
-    console.log(res);
+
     res.data.result.forEach((item: any) => {
       recommendMV.value.push({
         id: item.id,

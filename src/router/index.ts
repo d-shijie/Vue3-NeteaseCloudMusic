@@ -25,7 +25,6 @@ const router = createRouter({
               name: 'Personalizedrecommendations',
               component: () => import('@/views/findMusic/personalizedRecommendations.vue')
             },
-
           ]
         },
         {
@@ -57,6 +56,11 @@ const router = createRouter({
           path: '/index/playlist-detail',
           name: 'PlaylistDetail',
           component: () => import('@/views/playlistDetail/playlistDetailIndex.vue'),
+        },
+        {
+          path: '/index/dayly-songs-recommend',
+          name: 'DaylySongsRecommend',
+          component: () => import('@/views/daylySongsRecommend/daylySongsRecommend.vue')
         }
       ]
     },
