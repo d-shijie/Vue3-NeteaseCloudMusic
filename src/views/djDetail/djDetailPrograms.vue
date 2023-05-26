@@ -1,5 +1,18 @@
 <template>
   <div class="dj-detail-program">
+    <div class="sort-wrapper">
+      <span>共{{ total }}期</span>
+      <span class="sort">
+        <span style="margin-right: 3px;">排序 </span>
+        <div @click="sortPrograms(false)" :class="{ 'active': !params.asc }" class="svg"> <svg-icon
+            style="font-size: 20px;" name="desc"></svg-icon>
+        </div>
+        <div @click="sortPrograms(true)" :class="{ 'active': params.asc }" class="svg"> <svg-icon style="font-size: 20px;"
+            name="asc"></svg-icon>
+        </div>
+
+      </span>
+    </div>
     <div class="table-wrapper">
       <el-table element-loading-background="rgb(43, 43, 43)" element-loading-text="载入中..." v-loading="loading"
         :show-header="false" :data="programs" style="width: 100%">
@@ -64,6 +77,7 @@ const route = useRoute()
 const params = reactive({
   offset: 1,
   limit: 100,
+  asc: true
 })
 const total = ref<number>(0)
 const loading = ref<boolean>(false)
@@ -74,7 +88,7 @@ const getDjProgram = () => {
     rid: Number(route.query.id),
     limit: params.limit,
     offset: (params.offset - 1) * params.limit,
-    asc: true
+    asc: params.asc
   }).then((res: any) => {
     total.value = res.data.count
     programs.value = res.data.programs
@@ -87,9 +101,41 @@ const hanldCurrentChange = (page: number) => {
   params.offset = page
   getDjProgram()
 }
+
+const sortPrograms = (asc: boolean) => {
+  params.asc = asc
+  getDjProgram()
+}
 </script>
 
 <style scoped lang="scss">
+.sort-wrapper {
+  padding: 10px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--v-m-text-dark-color);
+
+  .active {
+    background-color: rgb(96, 96, 96) !important;
+  }
+
+  .sort {
+    display: flex;
+    align-items: center;
+
+    .svg {
+      padding: 1px 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background-color: rgb(54, 54, 54);
+    }
+  }
+}
+
 :deep(.el-table__header) {
   th {
     background-color: rgb(43, 43, 43);
