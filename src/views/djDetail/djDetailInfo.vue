@@ -1,5 +1,5 @@
 <template>
-  <div class="dj-detail-info">
+  <div v-if="detail" class="dj-detail-info">
     <div class="title">
       电台内容简介
     </div>

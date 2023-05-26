@@ -8,7 +8,11 @@
     </div>
     <DjDetailInfo v-if="activeTab === 'detail'" />
     <DjDetailPrograms v-if="activeTab === 'programs'" />
-    <DjDetailRecommend v-if="activeTab === 'recommend'" />
+    <Suspense v-if="activeTab === 'recommend'">
+      <template #default>
+        <DjDetailRecommend @handle-click="rcommendClick" />
+      </template>
+    </Suspense>
   </div>
 </template>
 
@@ -18,7 +22,19 @@ import DjDetailHeader from './djDetailHeader.vue';
 import DjDetailPrograms from './djDetailPrograms.vue';
 import DjDetailInfo from './djDetailInfo.vue'
 import DjDetailRecommend from './djDetailRcommend.vue'
+import { useRouter } from 'vue-router';
+const router = useRouter()
 const activeTab = ref<'detail' | 'programs' | 'recommend'>('programs')
+
+const rcommendClick = (id: any) => {
+  router.push({
+    path: '',
+    query: {
+      id
+    }
+  })
+  activeTab.value = 'programs'
+}
 </script>
 
 <style scoped lang="scss">

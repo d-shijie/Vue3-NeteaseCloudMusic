@@ -25,3 +25,14 @@ export function getDjProgramApi (params: GetDjProgramType) {
     params
   })
 }
+
+// 电台分类推荐
+export function getDjCateRecommendApi (type: number) {
+  return request({
+    url: "/dj/recommend/type",
+    method: 'get',
+    params: {
+      type
+    }
+  })
+}

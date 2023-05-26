@@ -67,7 +67,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { getDjProgramApi } from '@/api/dj';
 import { useRoute } from 'vue-router';
 import { formatCount } from '@/util';
@@ -106,6 +106,10 @@ const sortPrograms = (asc: boolean) => {
   params.asc = asc
   getDjProgram()
 }
+
+watch(route, () => {
+  getDjProgram()
+})
 </script>
 
 <style scoped lang="scss">

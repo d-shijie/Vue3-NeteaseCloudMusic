@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { getDjDetailApi } from '@/api/dj';
 import { useRoute } from 'vue-router';
 import { formatCount } from '@/util';
@@ -38,6 +38,10 @@ const getDjDetail = () => {
   })
 }
 getDjDetail()
+
+watch(route, () => {
+  getDjDetail()
+})
 </script>
 
 <style scoped lang="scss">
