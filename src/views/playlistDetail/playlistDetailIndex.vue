@@ -62,7 +62,8 @@
     <!-- <component :is="activeComponent" /> -->
     <PlaylistMusics v-if="activeTab === 'musicList'" />
     <Collectors v-if="activeTab === 'collectors'" />
-    <Comment :hot-comments="hotComments" :comments="playlistComments" v-if="activeTab === 'comment'">
+    <Comment @hanlde-comment="commentPlaylist" :hot-comments="hotComments" :comments="playlistComments"
+      v-if="activeTab === 'comment'">
       <template v-slot:pagination>
         <el-pagination @current-change="hanldCurrentChange" small background v-model:current-page="params.offset"
           :page-size="60" layout="prev, pager, next" :total="total" />
@@ -79,7 +80,9 @@ import Comment, { type Comments } from '@/components/Comment/appComment.vue';
 import { formatDayTime } from '@/util/timeFormat'
 import { formatCount } from '@/util/index'
 import { getPlaylistDetailApi, getPlaylistCommentsApi } from '@/api/playlist'
+import { commentApi } from '@/api/comment'
 import { useRoute } from 'vue-router';
+import { ElMessage } from 'element-plus';
 const route = useRoute()
 // 歌单详情
 const playlist = ref()
@@ -146,6 +149,22 @@ getComments()
 const hanldCurrentChange = (page: number) => {
   params.offset = page
   getComments()
+}
+
+// 发送评论
+const commentPlaylist = (content: string) => {
+  commentApi({
+    content: content,
+    t: 1,
+    type: 2,
+    id: Number(route.query.id)
+  }).then(res => {
+    if (res.data.code === 200) {
+      getComments()
+    } else {
+      ElMessage.info('请登录')
+    }
+  })
 }
 </script>
 

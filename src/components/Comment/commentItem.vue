@@ -40,13 +40,13 @@ export interface Comment {
   commentId: number
   [propName: string]: any
 }
-const props = defineProps({
+defineProps({
   comment: {
     type: Object as PropType<Comment>,
     default: () => { }
   }
 })
-console.log(props.comment);
+
 
 </script>
 

@@ -43,7 +43,8 @@ defineProps({
 })
 const emits = defineEmits(['hanldeComment'])
 const hanldeComment = () => {
-  emits('hanldeComment')
+  emits('hanldeComment', commentContent.value)
+  commentContent.value = ''
 }
 
 </script>
