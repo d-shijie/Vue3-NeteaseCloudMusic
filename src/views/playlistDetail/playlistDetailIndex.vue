@@ -93,6 +93,8 @@ const getPlaylistDetail = () => {
 }
 
 watch(route, () => {
+  params.id = route.query.id
+  getComments()
   getPlaylistDetail()
 })
 getPlaylistDetail()
@@ -116,21 +118,21 @@ const getComments = () => {
     limit: params.limit
   }).then(res => {
 
+
     playlistComments.value = []
+    hotComments.value = []
     total.value = res.data.total
-    if (res.data.hotComments) {
-      res.data.hotComments.slice(0, 9).forEach((item: any) => {
-        hotComments.value.push({
-          avatarUrl: item.user.avatarUrl,
-          content: item.content,
-          likeCount: item.likedCount,
-          time: item.time,
-          nickname: item.user.nickname,
-          commentId: item.commentId,
-          userId: item.user.userId
-        })
+    res.data.hotComments.slice(0, 9).forEach((item: any) => {
+      hotComments.value.push({
+        avatarUrl: item.user.avatarUrl,
+        content: item.content,
+        likeCount: item.likedCount,
+        time: item.time,
+        nickname: item.user.nickname,
+        commentId: item.commentId,
+        userId: item.user.userId
       })
-    }
+    })
 
     res.data.comments.forEach((item: any) => {
       playlistComments.value.push({
