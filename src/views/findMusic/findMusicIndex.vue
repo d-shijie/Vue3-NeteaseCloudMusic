@@ -21,7 +21,7 @@ const tabs = ref<Tab[]>([
   },
   {
     tab: '专属定制',
-    path: '/index/1'
+    path: '/index/find-music/exclusive-custome'
   },
   {
     tab: '歌单',

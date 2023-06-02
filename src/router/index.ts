@@ -25,6 +25,11 @@ const router = createRouter({
               name: 'Personalizedrecommendations',
               component: () => import('@/views/findMusic/personalizedRecommendations.vue')
             },
+            {
+              path: '/index/find-music/exclusive-custome',
+              name: 'ExclusiveCustom',
+              component: () => import('@/views/findMusic/exclusiveCustom.vue')
+            },
           ]
         },
         {
