@@ -13,8 +13,9 @@
     <div class="actions">
       <div class="svg warn">举报 <el-divider style="border-left:none;background-color: rgb(73,73,66);"
           direction="vertical" /></div>
-      <div class="svg">
-        <svg-icon name="dianzan" style="margin-right: 3px;"></svg-icon>
+      <div @click="likeComment" class="svg">
+        <svg-icon v-if="comment.lieked" name="unlike" style="margin-right: 3px;"></svg-icon>
+        <svg-icon v-else name="dianzan" style="margin-right: 3px;"></svg-icon>
         <div>
           {{ comment.likeCount }}
         </div>
@@ -30,23 +31,48 @@
 <script setup lang="ts">
 import type { PropType } from 'vue'
 import { formateTime } from '@/util/timeFormat'
+import { likeCommentApi, type CType } from '@/api/comment'
+import { ElMessage } from 'element-plus'
+import { useRoute } from 'vue-router'
+const route = useRoute()
 export interface Comment {
   avatarUrl: string
   nickname: string
   content: string
+  lieked: boolean
   time: string | number
   likeCount: number
   userId: number
   commentId: number
   [propName: string]: any
 }
-defineProps({
+const props = defineProps({
   comment: {
     type: Object as PropType<Comment>,
     default: () => { }
+  },
+  type: {
+    type: Number as PropType<CType>,
+    default: 0
   }
 })
 
+
+const likeComment = () => {
+  likeCommentApi({
+    id: Number(route.query.id),
+    cid: props.comment.commentId,
+    type: props.type,
+    t: 1
+  }).then((res: any) => {
+    if (res.code === 200) {
+      ElMessage.success('点赞成功')
+    } else {
+      ElMessage.info(res.data.msg)
+    }
+  })
+
+}
 
 </script>
 

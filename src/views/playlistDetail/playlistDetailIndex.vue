@@ -62,7 +62,7 @@
     <!-- <component :is="activeComponent" /> -->
     <PlaylistMusics v-if="activeTab === 'musicList'" />
     <Collectors v-if="activeTab === 'collectors'" />
-    <Comment @hanlde-comment="commentPlaylist" :hot-comments="hotComments" :comments="playlistComments"
+    <Comment :type="2" @hanlde-comment="commentPlaylist" :hot-comments="hotComments" :comments="playlistComments"
       v-if="activeTab === 'comment'">
       <template v-slot:pagination>
         <el-pagination @current-change="hanldCurrentChange" small background v-model:current-page="params.offset"
@@ -128,6 +128,7 @@ const getComments = () => {
         content: item.content,
         likeCount: item.likedCount,
         time: item.time,
+        lieked: item.lieked,
         nickname: item.user.nickname,
         commentId: item.commentId,
         userId: item.user.userId
@@ -140,6 +141,7 @@ const getComments = () => {
         content: item.content,
         likeCount: item.likedCount,
         time: item.time,
+        lieked: item.lieked,
         nickname: item.user.nickname,
         commentId: item.commentId,
         userId: item.user.userId

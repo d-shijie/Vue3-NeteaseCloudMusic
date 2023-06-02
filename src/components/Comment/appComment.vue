@@ -14,12 +14,12 @@
       </div>
     </div>
     <h5 class="subtitle">精彩评论</h5>
-    <CommentItem :comment="item" v-for="(item, index) in hotComments" :key="index" />
+    <CommentItem :type="type" :comment="item" v-for="(item, index) in hotComments" :key="index" />
     <div class="pagination-wrapper ">
       <div class="more-btn">更多精彩评论 ></div>
     </div>
     <h5 class="subtitle">最新评论</h5>
-    <CommentItem :comment="item" v-for="(item, index) in comments" :key="index" />
+    <CommentItem :type="type" :comment="item" v-for="(item, index) in comments" :key="index" />
     <div class="pagination-wrapper">
       <slot name="pagination"></slot>
     </div>
@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue';
 import CommentItem, { type Comment } from './commentItem.vue';
+import type { CType } from '@/api/comment'
 export type Comments = Array<Comment>
 const commentContent = ref('')
 defineProps({
@@ -40,6 +41,10 @@ defineProps({
     type: Array as PropType<Comments>,
     default: () => []
   },
+  type: {
+    type: Number as PropType<CType>,
+    default: 0
+  }
 })
 const emits = defineEmits(['hanldeComment'])
 const hanldeComment = () => {
