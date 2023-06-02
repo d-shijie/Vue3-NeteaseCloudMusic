@@ -59,14 +59,16 @@ const props = defineProps({
 
 
 const likeComment = () => {
+  const t = props.comment.lieked ? 0 : 1
   likeCommentApi({
     id: Number(route.query.id),
     cid: props.comment.commentId,
     type: props.type,
-    t: 1
+    t
   }).then((res: any) => {
+    const message = props.comment.lieked ? '取消点赞成功' : '点赞成功'
     if (res.code === 200) {
-      ElMessage.success('点赞成功')
+      ElMessage.success(message)
     } else {
       ElMessage.info(res.data.msg)
     }

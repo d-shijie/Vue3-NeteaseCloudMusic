@@ -52,3 +52,15 @@ export function getPlaylistCommentsApi (params: GetPlaylist) {
     params
   })
 }
+
+// 收藏歌单
+export function subscribePlaylistApi (id: number, t: 1 | 0) {
+  return request({
+    url: "/playlist/subscribe",
+    method: 'post',
+    data: {
+      id,
+      t
+    }
+  })
+}

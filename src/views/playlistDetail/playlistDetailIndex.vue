@@ -22,8 +22,9 @@
             <svg-icon style="font-size: 18px;margin-right: 6px;" name="play"></svg-icon> 播放全部
             <svg-icon style="font-size: 18px;margin-left: 6px;" name="plus_white"></svg-icon>
           </div>
-          <div class="action-btn">
-            <svg-icon style="font-size: 18px;margin-right: 6px;" name="collect"></svg-icon> 收藏({{
+          <div @click="subscribePlaylist" class="action-btn">
+            <svg-icon v-if="!playlist.subscribed" style="font-size: 18px;margin-right: 6px;" name="collect"></svg-icon>
+            {{ playlist.subscribed ? '取消收藏' : '收藏' }}({{
               formatCount(playlist.subscribedCount) }})
           </div>
           <div class="action-btn">
@@ -79,10 +80,11 @@ import Collectors from './playlistCollectors.vue';
 import Comment, { type Comments } from '@/components/Comment/appComment.vue';
 import { formatDayTime } from '@/util/timeFormat'
 import { formatCount } from '@/util/index'
-import { getPlaylistDetailApi, getPlaylistCommentsApi } from '@/api/playlist'
+import { getPlaylistDetailApi, getPlaylistCommentsApi, subscribePlaylistApi } from '@/api/playlist'
 import { commentApi } from '@/api/comment'
 import { useRoute } from 'vue-router';
 import { ElMessage } from 'element-plus';
+
 const route = useRoute()
 // 歌单详情
 const playlist = ref()
@@ -168,6 +170,22 @@ const commentPlaylist = (content: string) => {
     } else {
       ElMessage.info('请登录')
     }
+  })
+}
+
+// 收藏歌单
+const subscribePlaylist = () => {
+  const t = playlist.value.subscribed ? 0 : 1
+  subscribePlaylistApi(Number(route.query.id), t).then((res: any) => {
+    if (res.code === 200) {
+      const message = playlist.value.subscribed ? '取消收藏成功' : '收藏成功'
+      ElMessage.success(message)
+      getPlaylistDetail()
+    } else {
+      ElMessage.info(res.data.msg)
+    }
+  }).catch((err: any) => {
+    ElMessage.info(err)
   })
 }
 </script>
