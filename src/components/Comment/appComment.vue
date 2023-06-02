@@ -14,12 +14,14 @@
       </div>
     </div>
     <h5 class="subtitle">精彩评论</h5>
-    <CommentItem :type="type" :comment="item" v-for="(item, index) in hotComments" :key="index" />
+    <CommentItem @like-comment="likeComment" :type="type" :comment="item" v-for="(item, index) in hotComments"
+      :key="index" />
     <div class="pagination-wrapper ">
       <div class="more-btn">更多精彩评论 ></div>
     </div>
     <h5 class="subtitle">最新评论</h5>
-    <CommentItem :type="type" :comment="item" v-for="(item, index) in comments" :key="index" />
+    <CommentItem @like-comment="likeComment" :type="type" :comment="item" v-for="(item, index) in comments"
+      :key="index" />
     <div class="pagination-wrapper">
       <slot name="pagination"></slot>
     </div>
@@ -46,12 +48,14 @@ defineProps({
     default: 0
   }
 })
-const emits = defineEmits(['hanldeComment'])
+const emits = defineEmits(['hanldeComment', 'likeComment'])
 const hanldeComment = () => {
   emits('hanldeComment', commentContent.value)
   commentContent.value = ''
 }
-
+const likeComment = () => {
+  emits('likeComment')
+}
 </script>
 
 <style scoped lang="scss">

@@ -57,7 +57,7 @@ const props = defineProps({
   }
 })
 
-
+const emits = defineEmits(['likeComment'])
 const likeComment = () => {
   const t = props.comment.lieked ? 0 : 1
   likeCommentApi({
@@ -69,6 +69,7 @@ const likeComment = () => {
     const message = props.comment.lieked ? '取消点赞成功' : '点赞成功'
     if (res.code === 200) {
       ElMessage.success(message)
+      emits('likeComment')
     } else {
       ElMessage.info(res.data.msg)
     }
