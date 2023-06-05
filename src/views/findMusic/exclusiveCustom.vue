@@ -1,15 +1,47 @@
 <template>
-  <div class="exclusive-custom">
+  <div class="exclusive-custom" ref="scrollRef">
     <SubTitle title="晚风吹过的时光" :enabled="false" />
-
+    <div class="play-list">
+      <div v-for="(item, index) in playlist" :key="index" class="item">
+        <playlistCover :cover="item" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import SubTitle from '@/components/SubTitle/subTitle.vue';
+import { getBoutiquePlaylistApi } from '@/api/playlist'
+import playlistCover, { type PlaylistCover } from '@/components/playlist/playlistCover.vue';
+import { reactive, ref } from 'vue';
+
+const params = reactive({
+  before: undefined,
+  limit: 15
+})
+const playlist = ref<PlaylistCover[]>([])
+const getBoutiquePlaylist = () => {
+  getBoutiquePlaylistApi(params.limit, params.before).then(res => {
+    playlist.value = []
+    res.data.playlists.forEach((item: any) => {
+      playlist.value.push({
+        id: item.id,
+        name: item.name,
+        nickname: item.creator.nickname,
+        playcount: item.playCount,
+        picUrl: item.coverImgUrl,
+        path: '/index/playlist-detail'
+      })
+    })
+
+  })
+}
+getBoutiquePlaylist()
+
+
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .exclusive-custom {
   padding: 0 30px;
   max-width: 1098px;
@@ -19,5 +51,16 @@ import SubTitle from '@/components/SubTitle/subTitle.vue';
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .play-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 24px;
+
+    .item {
+      width: 17%;
+    }
+  }
 }
 </style>

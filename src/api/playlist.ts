@@ -64,3 +64,15 @@ export function subscribePlaylistApi (id: number, t: 1 | 0) {
     }
   })
 }
+
+// 精品歌单
+export function getBoutiquePlaylistApi (limit: number, before?: number) {
+  return request({
+    url: "/top/playlist/highquality",
+    method: 'get',
+    params: {
+      limit,
+      before
+    }
+  })
+}
