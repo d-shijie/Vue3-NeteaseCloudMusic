@@ -13,8 +13,10 @@
 import SubTitle from '@/components/SubTitle/subTitle.vue';
 import { getBoutiquePlaylistApi } from '@/api/playlist'
 import playlistCover, { type PlaylistCover } from '@/components/playlist/playlistCover.vue';
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
+import { useScroll } from '@/hooks/useScroll'
 
+const scrollRef = ref()
 const params = reactive({
   before: undefined,
   limit: 15
@@ -37,6 +39,15 @@ const getBoutiquePlaylist = () => {
   })
 }
 getBoutiquePlaylist()
+onMounted(() => {
+  window.addEventListener('scroll', scroll, true)
+})
+const scroll = () => {
+  useScroll(scrollRef, () => {
+    params.limit += 15
+    getBoutiquePlaylist()
+  })
+}
 
 
 </script>
@@ -51,12 +62,12 @@ getBoutiquePlaylist()
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: auto;
 
   .play-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-top: 24px;
 
     .item {
       width: 17%;
