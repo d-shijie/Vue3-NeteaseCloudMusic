@@ -76,6 +76,13 @@ export function getBoutiquePlaylistApi (limit: number, before?: number) {
     }
   })
 }
+// 歌单完整分类
+export function getPlaylistCategoryApi () {
+  return request({
+    url: "/playlist/catlist",
+    method: 'get',
+  })
+}
 // 热门歌单分类
 export function getHotPlaylistCategoryApi () {
   return request({

@@ -26,17 +26,47 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { getHotPlaylistCategoryApi, getPlaylistApi } from '@/api/playlist'
+import { getHotPlaylistCategoryApi, getPlaylistApi, getPlaylistCategoryApi } from '@/api/playlist'
 import playlistCover, { type PlaylistCover } from '@/components/playlist/playlistCover.vue'
-// 歌单分类
+
+// 歌单完整分类
+interface PlaylistCategoryItem {
+  key: number | string
+  label: string
+  data: string[]
+}
+const playlistCategory = ref<PlaylistCategoryItem[]>([])
+async function getPlaylistCategory () {
+  const { data } = await getPlaylistCategoryApi()
+
+  playlistCategory.value = []
+  for (let k in data.categories) {
+    playlistCategory.value.push({
+      key: k,
+      label: data.categories[k],
+      data: []
+    })
+  }
+  data.sub.forEach((item: any) => {
+    playlistCategory.value.forEach(i => {
+      if (item.category === Number(i.key)) {
+        i.data.push(item.name)
+      }
+    })
+  })
+  console.log(playlistCategory.value);
+
+
+}
+await getPlaylistCategory()
+
+// 歌单热门分类
 const hotPlaylistCategory = ref<any[]>([])
 const currentIndex = ref(0)
 
 async function getHotPlaylistCategory () {
   const { data } = await getHotPlaylistCategoryApi()
   hotPlaylistCategory.value = data.tags
-  console.log(hotPlaylistCategory.value);
-
 }
 
 await getHotPlaylistCategory()
@@ -74,10 +104,7 @@ getPlaylist()
 const changeCategory = (index: number) => {
   currentIndex.value = index
   params.cat = hotPlaylistCategory.value[index].name
-  console.log(hotPlaylistCategory.value[index].name);
-
   getPlaylist()
-
 }
 
 const hanldCurrentChange = (page: number) => {
