@@ -1,5 +1,5 @@
 import { onMounted, type Ref } from 'vue';
-import _ from 'loadsh'
+import _ from 'lodash'
 export function useScroll (ele: Ref<HTMLElement>, fn: Function) {
   onMounted(()=>{
     const onScroll=()=>{

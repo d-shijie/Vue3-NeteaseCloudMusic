@@ -4,6 +4,9 @@ dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
     version: registry.npmmirror.com/@element-plus/icons-vue@2.1.0(vue@3.2.47)
+  '@types/lodash':
+    specifier: ^4.14.195
+    version: registry.npmmirror.com/@types/lodash@4.14.195
   axios:
     specifier: ^1.4.0
     version: registry.npmmirror.com/axios@1.4.0
@@ -13,9 +16,9 @@ dependencies:
   element-plus:
     specifier: ^2.3.4
     version: registry.npmmirror.com/element-plus@2.3.4(vue@3.2.47)
-  loadsh:
-    specifier: ^0.0.4
-    version: registry.npmmirror.com/loadsh@0.0.4
+  lodash:
+    specifier: ^4.17.21
+    version: registry.npmmirror.com/lodash@4.17.21
   normalize.css:
     specifier: ^8.0.1
     version: registry.npmmirror.com/normalize.css@8.0.1
@@ -1037,13 +1040,13 @@ packages:
     name: '@types/lodash-es'
     version: 4.17.7
     dependencies:
-      '@types/lodash': registry.npmmirror.com/@types/lodash@4.14.194
+      '@types/lodash': registry.npmmirror.com/@types/lodash@4.14.195
     dev: false
 
-  registry.npmmirror.com/@types/lodash@4.14.194:
-    resolution: {integrity: sha512-r22s9tAS7imvBt2lyHC9B8AGwWnXaYb1tY09oyLkXDs4vArpYJzw09nj8MLx5VfciBPGIb+ZwG0ssYnEPJxn/g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.194.tgz}
+  registry.npmmirror.com/@types/lodash@4.14.195:
+    resolution: {integrity: sha512-Hwx9EUgdwf2GLarOjQp5ZH8ZmblzcbTBC2wtQWNKARBSxM9ezRIAUpeDTgoQRAFB0+8CNWXVA9+MaSOzOF3nPg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/lodash/-/lodash-4.14.195.tgz}
     name: '@types/lodash'
-    version: 4.14.194
+    version: 4.14.195
     dev: false
 
   registry.npmmirror.com/@types/node@14.18.44:
@@ -3007,7 +3010,7 @@ packages:
       '@element-plus/icons-vue': registry.npmmirror.com/@element-plus/icons-vue@2.1.0(vue@3.2.47)
       '@floating-ui/dom': registry.npmmirror.com/@floating-ui/dom@1.2.7
       '@popperjs/core': registry.npmmirror.com/@sxzz/popperjs-es@2.11.7
-      '@types/lodash': registry.npmmirror.com/@types/lodash@4.14.194
+      '@types/lodash': registry.npmmirror.com/@types/lodash@4.14.195
       '@types/lodash-es': registry.npmmirror.com/@types/lodash-es@4.17.7
       '@vueuse/core': registry.npmmirror.com/@vueuse/core@9.13.0(vue@3.2.47)
       async-validator: registry.npmmirror.com/async-validator@4.2.5
@@ -5018,13 +5021,6 @@ packages:
       big.js: registry.npmmirror.com/big.js@5.2.2
       emojis-list: registry.npmmirror.com/emojis-list@3.0.0
       json5: registry.npmmirror.com/json5@1.0.2
-    dev: false
-
-  registry.npmmirror.com/loadsh@0.0.4:
-    resolution: {integrity: sha512-U+wLL8InpfRalWrr+0SuhWgGt10M4OyAk6G8xCYo2rwpiHtxZkWiFpjei0vO463ghW8LPCdhqQxXlMy2qicAEw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/loadsh/-/loadsh-0.0.4.tgz}
-    name: loadsh
-    version: 0.0.4
-    deprecated: This is a typosquat on the popular Lodash package. This is not maintained nor is the original Lodash package.
     dev: false
 
   registry.npmmirror.com/local-pkg@0.4.3:
