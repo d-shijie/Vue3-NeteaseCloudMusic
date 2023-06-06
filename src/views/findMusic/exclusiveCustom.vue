@@ -48,8 +48,6 @@ const scroll = () => {
     getBoutiquePlaylist()
   })
 }
-
-
 </script>
 
 <style scoped lang="scss">
@@ -63,12 +61,12 @@ const scroll = () => {
   justify-content: center;
   align-items: center;
   overflow: auto;
-
+ 
   .play-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-
+height: 100%;
     .item {
       width: 17%;
     }
