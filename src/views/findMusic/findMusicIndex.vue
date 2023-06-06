@@ -4,7 +4,9 @@
       <SubTab :tabs="tabs" />
     </div>
     <div class="router-wrapper">
-      <RouterView class="router-wrapper__page"/>
+      <Suspense>
+        <RouterView class="router-wrapper__page" />
+      </Suspense>
     </div>
 
   </div>
@@ -54,18 +56,19 @@ const tabs = ref<Tab[]>([
     align-items: center;
     height: calc(100vh - 250px);
     overflow-y: auto;
-   &__page {
-    padding: 0 30px;
-  max-width: 1098px;
-  min-width: 765px;
-  width: 75vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-   }
 
-    
+    &__page {
+      padding: 0 30px;
+      max-width: 1098px;
+      min-width: 765px;
+      width: 75vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+
   }
 }
 </style>

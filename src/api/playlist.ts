@@ -83,3 +83,17 @@ export function getHotPlaylistCategoryApi () {
     method: 'get',
   })
 }
+// 获取歌单
+interface GetPlaylistType {
+  order?:'new'|'hot'
+  cat?:string
+  limit?:number
+  offset?:number
+}
+export function getPlaylistApi (params:GetPlaylistType) {
+  return request({
+    url: "/top/playlist",
+    method: 'get',
+    params
+  })
+}

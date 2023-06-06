@@ -12,29 +12,77 @@
       </div>
 
     </div>
+    <div class="play-list">
+      <div v-for="(item, index) in playlist" :key="index" class="item">
+        <playlistCover style="width: 100%;" :cover="item" />
+      </div>
+    </div>
+    <div class="pagination-wrapper">
+      <el-pagination @current-change="hanldCurrentChange" small background v-model:current-page="params.offset"
+        :page-size="60" layout="prev, pager, next" :total="total" />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { getHotPlaylistCategoryApi } from '@/api/playlist'
-
+import { reactive, ref } from 'vue'
+import { getHotPlaylistCategoryApi, getPlaylistApi } from '@/api/playlist'
+import playlistCover, { type PlaylistCover } from '@/components/playlist/playlistCover.vue'
 // 歌单分类
 const hotPlaylistCategory = ref<any[]>([])
 const currentIndex = ref(0)
-const getHotPlaylistCategory = () => {
-  getHotPlaylistCategoryApi().then(res => {
-    hotPlaylistCategory.value = res.data.tags
-  })
+
+async function getHotPlaylistCategory () {
+  const { data } = await getHotPlaylistCategoryApi()
+  hotPlaylistCategory.value = data.tags
+  console.log(hotPlaylistCategory.value);
+
 }
-getHotPlaylistCategory()
+
+await getHotPlaylistCategory()
 
 // 歌单列表
-
-
+const params = reactive({
+  offset: 1,
+  limit: 80,
+  cat: '',
+})
+const total = ref(0)
+const playlist = ref<PlaylistCover[]>([])
+const getPlaylist = () => {
+  params.cat = hotPlaylistCategory.value[currentIndex.value].name
+  getPlaylistApi({
+    offset: params.limit * params.offset - 1,
+    limit: params.limit,
+    cat: params.cat
+  }).then(res => {
+    playlist.value = []
+    total.value = res.data.total
+    res.data.playlists.forEach((item: any) => {
+      playlist.value.push({
+        id: item.id,
+        name: item.name,
+        nickname: item.creator.nickname,
+        playcount: item.playCount,
+        picUrl: item.coverImgUrl,
+        path: '/index/playlist-detail'
+      })
+    })
+  })
+}
+getPlaylist()
 const changeCategory = (index: number) => {
   currentIndex.value = index
+  params.cat = hotPlaylistCategory.value[index].name
+  console.log(hotPlaylistCategory.value[index].name);
 
+  getPlaylist()
+
+}
+
+const hanldCurrentChange = (page: number) => {
+  params.offset = page
+  getPlaylist()
 }
 </script>
 
@@ -44,6 +92,7 @@ const changeCategory = (index: number) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 24px;
 
   .name {
     font-size: 15px;
@@ -87,5 +136,52 @@ const changeCategory = (index: number) => {
     }
   }
 
+}
+
+.play-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  height: 100%;
+
+  .item {
+    width: 22%;
+  }
+}
+
+.pagination-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+
+  :deep(.el-pagination) {
+    button {
+      background-color: rgb(58, 58, 58) !important;
+      border-radius: 5px;
+      color: var(--v-m-text-color);
+
+      &:hover {
+        background-color: transparent !important;
+      }
+    }
+
+    .el-pager {
+      li {
+        background-color: rgb(43, 43, 43);
+        border: 1px solid rgb(54, 54, 54);
+        color: var(--v-m-text-color);
+        border-radius: 5px;
+
+        &:hover {
+          border: none;
+        }
+      }
+
+      .is-active {
+        background-color: rgb(236, 65, 65);
+      }
+    }
+  }
 }
 </style>
