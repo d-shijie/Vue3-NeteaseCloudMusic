@@ -76,3 +76,10 @@ export function getBoutiquePlaylistApi (limit: number, before?: number) {
     }
   })
 }
+// 热门歌单分类
+export function getHotPlaylistCategoryApi () {
+  return request({
+    url: "/playlist/hot",
+    method: 'get',
+  })
+}

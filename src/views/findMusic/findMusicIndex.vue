@@ -4,7 +4,7 @@
       <SubTab :tabs="tabs" />
     </div>
     <div class="router-wrapper">
-      <RouterView />
+      <RouterView class="router-wrapper__page"/>
     </div>
 
   </div>
@@ -25,7 +25,7 @@ const tabs = ref<Tab[]>([
   },
   {
     tab: '歌单',
-    path: '/index/2'
+    path: '/index/find-music/find-music-playlist'
   },
   {
     tab: '排行榜',
@@ -52,9 +52,20 @@ const tabs = ref<Tab[]>([
     display: flex;
     flex-direction: column;
     align-items: center;
-
     height: calc(100vh - 250px);
     overflow-y: auto;
+   &__page {
+    padding: 0 30px;
+  max-width: 1098px;
+  min-width: 765px;
+  width: 75vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+   }
+
+    
   }
 }
 </style>

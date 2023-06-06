@@ -18,3 +18,4 @@ export function formatCount (count: number): string {
 
   return result + unit
 }
+

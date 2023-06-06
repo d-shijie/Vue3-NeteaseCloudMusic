@@ -30,6 +30,11 @@ const router = createRouter({
               name: 'ExclusiveCustom',
               component: () => import('@/views/findMusic/exclusiveCustom.vue')
             },
+            {
+              path: '/index/find-music/find-music-playlist',
+              name: 'FindMusicPlaylist',
+              component: () => import('@/views/findMusic/findMusicPlaylist.vue')
+            },
           ]
         },
         {

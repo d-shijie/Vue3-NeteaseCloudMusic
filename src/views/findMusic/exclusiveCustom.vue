@@ -48,15 +48,7 @@ useScroll(scrollRef, () => {
 
 <style scoped lang="scss">
 .exclusive-custom {
-  padding: 0 30px;
-  max-width: 1098px;
-  min-width: 765px;
-  width: 75vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
+
  
   .play-list {
     display: flex;

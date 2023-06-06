@@ -215,14 +215,6 @@ getRecommendMV()
 
 <style scoped lang="scss">
 .personalized-recommendations {
-  padding: 0 30px;
-  max-width: 1098px;
-  min-width: 765px;
-  width: 75vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
   .banner-wrapper {
     width: 100%;
@@ -239,7 +231,6 @@ getRecommendMV()
       border-radius: 50%;
     }
   }
-
 }
 
 .book {
