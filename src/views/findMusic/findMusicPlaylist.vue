@@ -1,50 +1,60 @@
 <template>
   <div class="find-music-playlist">
-    <div class="category" v-if="hotPlaylistCategory.length">
-
-      <div class="name">
-        <el-popover ref="popoverRef" style="background:red" trigger="click" width="880px" :show-arrow="false"
-          placement="bottom-start">
-          <div class="popover-title">
-            <a @click="getAllPlaylist('全部歌单')"> 全部歌单</a>
-          </div>
-          <div class="popover-content">
-            <div class="popover-content__item" v-for="(item, index) in playlistCategory" :key="index">
-              <div class="icon">
-                <svg-icon style="font-size: 26px;margin-right: 5px;" :name="item.label"></svg-icon> {{ item.label }}
+    <!-- TODO axios实例增加请求时骨架屏 -->
+    <el-skeleton style="width: 100%" :loading="loading" animated>
+      <template #template>
+        <div style="display: flex;flex-wrap: wrap;justify-content: space-between;">
+          <el-skeleton-item v-for="item in 20" :key="item" variant="image"
+            style="width: 21%;;margin: 15px;height: 168px" />
+        </div>
+      </template>
+      <template #default>
+        <div class="category" v-if="hotPlaylistCategory.length">
+          <div class="name">
+            <el-popover ref="popoverRef" style="background:red" trigger="click" width="880px" :show-arrow="false"
+              placement="bottom-start">
+              <div class="popover-title">
+                <a @click="getAllPlaylist('全部歌单')"> 全部歌单</a>
               </div>
-              <div class="categories">
-                <div class="item" v-for="(i, index) in item.data " :key="index">
-                  <a @click="getAllPlaylist(i)" :class="{ 'active': currentIndexName === i }">
-                    {{ i }}
-                  </a>
+              <div class="popover-content">
+                <div class="popover-content__item" v-for="(item, index) in playlistCategory" :key="index">
+                  <div class="icon">
+                    <svg-icon style="font-size: 26px;margin-right: 5px;" :name="item.label"></svg-icon> {{ item.label }}
+                  </div>
+                  <div class="categories">
+                    <div class="item" v-for="(i, index) in item.data " :key="index">
+                      <a @click="getAllPlaylist(i)" :class="{ 'active': currentIndexName === i }">
+                        {{ i }}
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
+              <template #reference>
+                {{ currentIndexName }}
+                <svg-icon style="font-size: 14px;margin-left: 2px;" name="arrow_right"></svg-icon>
+              </template>
+            </el-popover>
+          </div>
+          <div class="tags">
+            <div :class="{ 'active': currentIndexName === item.name }" @click="changeCategory(index)" class="item"
+              v-for="(item, index) in hotPlaylistCategory" :key="index">
+              {{ item.name }}
             </div>
           </div>
-          <template #reference>
-            {{ currentIndexName }}
-            <svg-icon style="font-size: 14px;margin-left: 2px;" name="arrow_right"></svg-icon>
-          </template>
-        </el-popover>
-      </div>
-      <div class="tags">
-        <div :class="{ 'active': currentIndexName === item.name }" @click="changeCategory(index)" class="item"
-          v-for="(item, index) in hotPlaylistCategory" :key="index">
-          {{ item.name }}
-        </div>
-      </div>
 
-    </div>
-    <div class="play-list">
-      <div v-for="(item, index) in playlist" :key="index" class="item">
-        <playlistCover style="width: 100%;" :cover="item" />
-      </div>
-    </div>
-    <div class="pagination-wrapper">
-      <el-pagination @current-change="hanldCurrentChange" small background v-model:current-page="params.offset"
-        :page-size="60" layout="prev, pager, next" :total="total" />
-    </div>
+        </div>
+        <div class="play-list">
+          <div v-for="(item, index) in playlist" :key="index" class="item">
+            <playlistCover style="width: 100%;" :cover="item" />
+          </div>
+        </div>
+        <div class="pagination-wrapper">
+          <el-pagination @current-change="hanldCurrentChange" small background v-model:current-page="params.offset"
+            :page-size="60" layout="prev, pager, next" :total="total" />
+        </div>
+      </template>
+    </el-skeleton>
   </div>
 </template>
 
@@ -53,6 +63,7 @@ import { reactive, ref } from 'vue'
 import { getHotPlaylistCategoryApi, getPlaylistApi, getPlaylistCategoryApi } from '@/api/playlist'
 import playlistCover, { type PlaylistCover } from '@/components/playlist/playlistCover.vue'
 
+const loading = ref(false)
 // 歌单完整分类
 interface PlaylistCategoryItem {
   key: number | string
@@ -103,6 +114,7 @@ const playlist = ref<PlaylistCover[]>([])
 currentIndexName.value = hotPlaylistCategory.value[0].name
 params.cat = hotPlaylistCategory.value[0].name
 const getPlaylist = () => {
+  loading.value = true
   getPlaylistApi({
     offset: params.limit * params.offset - 1,
     limit: params.limit,
@@ -120,6 +132,8 @@ const getPlaylist = () => {
         path: '/index/playlist-detail'
       })
     })
+  }).finally(() => {
+    loading.value = false
   })
 }
 getPlaylist()
