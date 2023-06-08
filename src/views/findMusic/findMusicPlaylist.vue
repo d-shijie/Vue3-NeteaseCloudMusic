@@ -1,11 +1,35 @@
 <template>
   <div class="find-music-playlist">
     <div class="category" v-if="hotPlaylistCategory.length">
-      <div class="name">{{ hotPlaylistCategory[currentIndex].name }}
-        <svg-icon style="font-size: 14px;margin-left: 2px;" name="arrow_right"></svg-icon>
+
+      <div class="name">
+        <el-popover ref="popoverRef" style="background:red" trigger="click" width="880px" :show-arrow="false"
+          placement="bottom-start">
+          <div class="popover-title">
+            <a @click="getAllPlaylist('全部歌单')"> 全部歌单</a>
+          </div>
+          <div class="popover-content">
+            <div class="popover-content__item" v-for="(item, index) in playlistCategory" :key="index">
+              <div class="icon">
+                <svg-icon style="font-size: 26px;margin-right: 5px;" :name="item.label"></svg-icon> {{ item.label }}
+              </div>
+              <div class="categories">
+                <div class="item" v-for="(i, index) in item.data " :key="index">
+                  <a @click="getAllPlaylist(i)" :class="{ 'active': currentIndexName === i }">
+                    {{ i }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <template #reference>
+            {{ currentIndexName }}
+            <svg-icon style="font-size: 14px;margin-left: 2px;" name="arrow_right"></svg-icon>
+          </template>
+        </el-popover>
       </div>
       <div class="tags">
-        <div :class="{ 'active': currentIndex === index }" @click="changeCategory(index)" class="item"
+        <div :class="{ 'active': currentIndexName === item.name }" @click="changeCategory(index)" class="item"
           v-for="(item, index) in hotPlaylistCategory" :key="index">
           {{ item.name }}
         </div>
@@ -54,15 +78,12 @@ async function getPlaylistCategory () {
       }
     })
   })
-  console.log(playlistCategory.value);
-
-
 }
 await getPlaylistCategory()
 
 // 歌单热门分类
 const hotPlaylistCategory = ref<any[]>([])
-const currentIndex = ref(0)
+const currentIndexName = ref('')
 
 async function getHotPlaylistCategory () {
   const { data } = await getHotPlaylistCategoryApi()
@@ -79,8 +100,9 @@ const params = reactive({
 })
 const total = ref(0)
 const playlist = ref<PlaylistCover[]>([])
+currentIndexName.value = hotPlaylistCategory.value[0].name
+params.cat = hotPlaylistCategory.value[0].name
 const getPlaylist = () => {
-  params.cat = hotPlaylistCategory.value[currentIndex.value].name
   getPlaylistApi({
     offset: params.limit * params.offset - 1,
     limit: params.limit,
@@ -102,13 +124,21 @@ const getPlaylist = () => {
 }
 getPlaylist()
 const changeCategory = (index: number) => {
-  currentIndex.value = index
+  currentIndexName.value = hotPlaylistCategory.value[index].name
   params.cat = hotPlaylistCategory.value[index].name
   getPlaylist()
 }
 
 const hanldCurrentChange = (page: number) => {
   params.offset = page
+  getPlaylist()
+}
+
+const popoverRef = ref()
+const getAllPlaylist = (name: string) => {
+  popoverRef.value.hide()
+  params.cat = name
+  currentIndexName.value = name
   getPlaylist()
 }
 </script>
@@ -152,17 +182,7 @@ const hanldCurrentChange = (page: number) => {
 
       }
     }
-
-    .active {
-      background-color: rgb(68, 55, 55);
-      color: rgb(236, 65, 65);
-
-      &:hover {
-        color: rgb(236, 65, 65);
-      }
-    }
   }
-
 }
 
 .play-list {
@@ -209,6 +229,68 @@ const hanldCurrentChange = (page: number) => {
         background-color: rgb(236, 65, 65);
       }
     }
+  }
+}
+
+.popover-title {
+  color: var(--v-m-text-color);
+  cursor: default;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--v-m-dark-border-color);
+
+  a:hover {
+    color: rgb(236, 65, 65);
+  }
+}
+
+.popover-content {
+  margin-top: 15px;
+
+  &__item {
+    display: flex;
+    margin-bottom: 20px;
+
+    .icon {
+      width: 100px;
+      display: flex;
+      align-items: center;
+    }
+
+    .categories {
+      flex: 1;
+      color: var(--v-m-text-color);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+
+      .item {
+        margin-right: 10px;
+        font-size: 13px;
+        padding: 10px 0;
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        a {
+          padding: 3px 10px;
+          border-radius: 15px;
+        }
+
+        a:hover {
+          color: rgb(236, 65, 65) !important;
+        }
+      }
+    }
+  }
+}
+
+.active {
+  background-color: rgb(68, 55, 55);
+  color: rgb(236, 65, 65) !important;
+
+  &:hover {
+    color: rgb(236, 65, 65);
   }
 }
 </style>
