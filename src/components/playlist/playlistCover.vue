@@ -67,8 +67,10 @@ const gotoDetail = (g) => {
 .cover {
   position: relative;
   font-size: 14px;
+
   cursor: pointer;
   margin-bottom: 5px;
+
 
   .text {
     position: absolute;
@@ -86,6 +88,9 @@ const gotoDetail = (g) => {
   img {
     width: 100%;
     height: 100%;
+    max-width: 238px;
+    max-height: 238px;
+    background-size: 100% auto;
     border-radius: 0.25em;
   }
 
