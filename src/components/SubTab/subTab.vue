@@ -11,12 +11,13 @@
 <script setup lang="ts">
 import type { PropType } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-const router = useRouter()
-const route = useRoute()
 export interface Tab {
   tab: string
   path: string
 }
+
+const router = useRouter()
+const route = useRoute()
 defineProps({
   tabs: {
     type: Array as PropType<Tab[]>,

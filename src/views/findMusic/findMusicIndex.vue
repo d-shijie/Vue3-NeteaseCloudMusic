@@ -31,7 +31,7 @@ const tabs = ref<Tab[]>([
   },
   {
     tab: '排行榜',
-    path: '/index/3'
+    path: '/index/find-music/rank'
   },
   {
     tab: '歌手',
