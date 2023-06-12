@@ -1,4 +1,4 @@
-export function formatCount (count: number): string {
+export function formatCount(count: number): string {
   let unit = ''
   let result = ''
   switch (true) {
@@ -9,13 +9,12 @@ export function formatCount (count: number): string {
     case count >= 100000 && count < 100000000:
       result = (count / 10000).toFixed(0)
       unit = '万'
-      break;
+      break
     case count >= 100000000:
       result = (count / 100000000).toFixed(2)
       unit = '亿'
-      break;
+      break
   }
 
   return result + unit
 }
-

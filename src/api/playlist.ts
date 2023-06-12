@@ -73,7 +73,8 @@ export function getBoutiquePlaylistApi (limit: number, before?: number) {
     params: {
       limit,
       before
-    }
+    },
+    _fullLoading:true,
   })
 }
 // 歌单完整分类

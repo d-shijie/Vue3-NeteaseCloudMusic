@@ -7,7 +7,8 @@ export function getBannerApi (type: 0 | 1 | 2 | 3) {
     method: 'get',
     params: {
       type
-    }
+    },
+    _fullLoading:true,
   })
 }
 // 推荐歌单
