@@ -49,7 +49,7 @@ const props = defineProps({
 
 
 const router = useRouter()
-const gotoDetail = (g) => {
+const gotoDetail = () => {
   router.push({
     path: props.cover.path,
     query: {
