@@ -1,6 +1,6 @@
 <template>
   <div class="find-music-rank">
-    <div>
+    <div class="loading" v-loading="true">
       loading
     </div>
   </div>
@@ -10,6 +10,9 @@
 
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+.loading {
+  width: 200px;
+  height: 200px;
+}
 </style>
