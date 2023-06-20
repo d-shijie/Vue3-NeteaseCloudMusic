@@ -11,7 +11,7 @@
           <span> {{ formatAr(item.ar) }}</span>
         </li>
         <li class="find-all">
-          <a>查看全部</a>
+          <a @click="gotoDetail">查看全部</a>
         </li>
       </ul>
     </div>
@@ -23,6 +23,8 @@ import { ref } from 'vue'
 import { getPlaylistDetailApi } from '@/api/playlist'
 import { getMusicUrlApi } from '@/api/music'
 import { useGlobalStore } from '@/stores/modules/global'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const globalStore = useGlobalStore()
 interface RankType {
   coverImgUrl: string
@@ -56,6 +58,14 @@ const playMusic = (row: any) => {
   })
 }
 
+const gotoDetail = () => {
+  router.push({
+    path: '/index/playlist-detail',
+    query: {
+      id: props.content.id
+    }
+  })
+}
 const formatAr = (arr: any[]): string => {
   let res: string = ''
   arr.forEach((item, index) => {
