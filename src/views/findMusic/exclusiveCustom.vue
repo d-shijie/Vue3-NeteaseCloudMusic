@@ -40,6 +40,8 @@ const getBoutiquePlaylist = () => {
 }
 getBoutiquePlaylist()
 useScroll(scrollRef, () => {
+
+
   params.limit += 15
   getBoutiquePlaylist()
 })
@@ -48,6 +50,9 @@ useScroll(scrollRef, () => {
 
 <style scoped lang="scss">
 .exclusive-custom {
+  height: calc(100vh - 250px);
+  overflow-y: auto;
+
   .play-list {
     display: flex;
     flex-wrap: wrap;
