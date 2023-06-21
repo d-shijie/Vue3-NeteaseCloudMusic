@@ -1,0 +1,13 @@
+directories:
+  output: ./buileder
+  buildResources: build
+productName: netease-music
+files:
+  - filter:
+      - ./electron/main.js
+      - ./dist
+extraFiles:
+  - filter:
+      - ./videos
+      - ./cvideo
+electronVersion: 25.1.1

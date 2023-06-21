@@ -1,11 +1,11 @@
 import { fileURLToPath, URL } from 'node:url'
-import path from "path"
+import path from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import svgLoader from "vite-svg-loader"
-import { createSvgIconsPlugin } from "vite-plugin-svg-icons"
-// https://vitejs.dev/config/
+import svgLoader from 'vite-svg-loader'
+import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
+
 export default defineConfig({
   base: './',
   plugins: [
@@ -13,14 +13,16 @@ export default defineConfig({
     vueJsx(),
     svgLoader(),
     createSvgIconsPlugin({
-      iconDirs: [path.resolve(process.cwd(), "src/icons/svg")],
-      symbolId: "icon-[dir]-[name]"
-    }),],
+      iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')],
+      symbolId: 'icon-[dir]-[name]'
+    })
+  ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+
   css: {
     preprocessorOptions: {
       scss: {
@@ -42,7 +44,7 @@ export default defineConfig({
         target: 'http://localhost:3000',
         ws: true,
         changeOrigin: true,
-        rewrite: (path) => path.replace('/api', "")
+        rewrite: (path) => path.replace('/api', '')
       }
     }
   }

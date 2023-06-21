@@ -40,8 +40,6 @@ const getBoutiquePlaylist = () => {
 }
 getBoutiquePlaylist()
 useScroll(scrollRef, () => {
-
-
   params.limit += 15
   getBoutiquePlaylist()
 })

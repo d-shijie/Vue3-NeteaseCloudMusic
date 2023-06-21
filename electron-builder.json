@@ -1,0 +1,8 @@
+{
+  "productName": "netease-music",
+  "files": ["./electron/main.js", "./dist"],
+  "extraFiles": ["./videos", "./cvideo"], 
+  "directories": {
+    "output": "./buileder"
+  }
+}
