@@ -23,6 +23,18 @@ pnpm run dev
 pnpm run build
 ```
 
+### Compile and Hot-Reload for Electron
+
+```sh
+pnpm run electron
+```
+
+### Minify and Electron build
+
+```sh
+pnpm run electron:build
+```
+
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 ```sh
