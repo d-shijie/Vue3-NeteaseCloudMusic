@@ -6,8 +6,11 @@
         <li @click="playMusic(item)" :style="[{ background: (index % 2 ? 'transparent' : 'rgb(47, 47, 47)') }]"
           v-for="(item, index) in top5Music" :key="index">
           <span :style="[{ color: (index > 2 ? 'var(--v-m-text-dark-color)' : 'rgb(236, 57, 51)') }]"
-            style="margin-right: 12px">{{ index + 1 }}</span>
-          <span> {{ item.name }}</span>
+            style="margin-right: 12px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;">{{ index + 1
+            }}</span>
+          <span style="margin-right: 12px;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;width: 50%;"> {{
+            item.name
+          }}</span>
           <span> {{ formatAr(item.ar) }}</span>
         </li>
         <li class="find-all">
