@@ -5,12 +5,13 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import svgLoader from 'vite-svg-loader'
 import { createSvgIconsPlugin } from 'vite-plugin-svg-icons'
-
+import UnoCSS from 'unocss/vite'
 export default defineConfig({
   base: './',
   plugins: [
     vue(),
     vueJsx(),
+    UnoCSS(),
     svgLoader(),
     createSvgIconsPlugin({
       iconDirs: [path.resolve(process.cwd(), 'src/icons/svg')],
@@ -22,7 +23,6 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
-
   css: {
     preprocessorOptions: {
       scss: {

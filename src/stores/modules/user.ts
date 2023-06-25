@@ -1,12 +1,13 @@
-import { defineStore } from "pinia";
-import { ref } from "vue";
-import { setToken, removeToken } from "@/util/storage";
-import { logoutApi } from "@/api/login";
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import { setToken, removeToken } from '@/util/storage'
+import { logoutApi } from '@/api/login'
 export const useUserStore = defineStore(
-  'user', () => {
+  'user',
+  () => {
     const loginState = ref(false)
     const userInfo = ref<any>({})
-    const loginSuccess = <T extends Object> (profile: T, token: string): void => {
+    const loginSuccess = <T extends Object>(profile: T, token: string): void => {
       loginState.value = true
       userInfo.value = profile
       setToken(token)
@@ -21,5 +22,7 @@ export const useUserStore = defineStore(
     }
     return { loginState, userInfo, loginSuccess, logout }
   },
-
+  {
+    persist: true
+  }
 )

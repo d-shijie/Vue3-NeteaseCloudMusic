@@ -1,5 +1,8 @@
+@import 'normalize.css';
 @import url(./root.css);
 @import url(./element.css);
+
+
 #app {
   max-width: 100vw;
   max-height: 100vh;
