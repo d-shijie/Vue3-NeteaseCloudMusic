@@ -1,41 +1,44 @@
 <template>
-  <div class="find-music-singer" ref="scrollRef">
-    <div class="search-wrapper container">
-      <div class="flex items-center  flex-wrap">
-        <span class="text-sm mb-15px">语种：</span>
-        <span @click="selectParams('area', index)" style="font-size: 13px;"
-          class="custom relative cursor-pointer flex items-center px-10px py-3px mx-10px mb-15px"
-          :class="{ 'active': index === current.area }" v-for="(item, index) in searchParams.area" :key="index">
-          {{ item.name }}
-        </span>
-      </div>
-      <div class="flex items-center  flex-wrap">
-        <span class="text-sm mb-15px">分类：</span>
-        <div class="flex-1 flex items-center">
-          <span @click="selectParams('type', index)" style="font-size: 13px;"
-            class="custom relative cursor-pointer flex items-center px-10px py-3px mx-10px mb-15px "
-            :class="{ 'active': index === current.type }" v-for="(item, index) in searchParams.type" :key="index">
+  <div class="find-music-singer">
+    <div class="scroll" ref="scrollRef">
+      <div class="search-wrapper container">
+        <div class="flex items-center  flex-wrap">
+          <span class="text-sm mt-15px">语种：</span>
+          <span @click="selectParams('area', index)" style="font-size: 13px;"
+            class="custom relative cursor-pointer flex items-center px-10px py-3px mx-10px mt-15px"
+            :class="{ 'active': index === current.area }" v-for="(item, index) in searchParams.area" :key="index">
             {{ item.name }}
           </span>
         </div>
+        <div class="flex items-center  flex-wrap">
+          <span class="text-sm mt-15px">分类：</span>
+          <div class="flex-1 flex items-center">
+            <span @click="selectParams('type', index)" style="font-size: 13px;"
+              class="custom relative cursor-pointer flex items-center px-10px py-3px mx-10px mt-15px "
+              :class="{ 'active': index === current.type }" v-for="(item, index) in searchParams.type" :key="index">
+              {{ item.name }}
+            </span>
+          </div>
 
+        </div>
+        <div class="flex flex-wrap">
+          <span class="text-sm mt-15px">筛选：</span>
+          <div class="flex-1 flex items-center flex-wrap">
+            <span @click="selectParams('initial', index)" style="font-size: 13px;"
+              class="custom relative cursor-pointer flex items-center  px-10px py-3px mx-10px mt-15px"
+              :class="{ 'active': index === current.initial }" v-for="(item, index) in searchParams.initial" :key="index">
+              {{ item.name }}
+            </span>
+          </div>
+        </div>
       </div>
-      <div class="flex flex-wrap">
-        <span class="text-sm mb-15px">筛选：</span>
-        <div class="flex-1 flex items-center flex-wrap">
-          <span @click="selectParams('initial', index)" style="font-size: 13px;"
-            class="custom relative cursor-pointer flex items-center  px-10px py-3px mx-10px mb-15px"
-            :class="{ 'active': index === current.initial }" v-for="(item, index) in searchParams.initial" :key="index">
-            {{ item.name }}
-          </span>
+      <div class="singer flex flex-wrap justify-between">
+        <div class="item mx-10px" v-for="(item, index) in singerList" :key="index">
+          <singerCover :content="item"></singerCover>
         </div>
       </div>
     </div>
-    <div class="singer flex flex-wrap justify-between">
-      <div class="item mx-10px" v-for="(item, index) in singerList" :key="index">
-        <singerCover :content="item"></singerCover>
-      </div>
-    </div>
+
   </div>
 </template>
 
@@ -251,9 +254,9 @@ useScroll(scrollRef, () => {
 </script>
 
 <style scoped lang="scss">
-.find-music-singer {
-  // height: calc(100vh - 250px);
-  // overflow-y: auto;
+.scroll {
+  height: calc(100vh - 250px);
+  overflow: auto;
 }
 
 .active {

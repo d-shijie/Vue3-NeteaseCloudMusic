@@ -54,8 +54,6 @@ const tabs = ref<Tab[]>([
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: calc(100vh - 250px);
-    overflow-y: auto;
 
     &__page {
       padding: 0 30px;
@@ -67,8 +65,6 @@ const tabs = ref<Tab[]>([
       justify-content: center;
       align-items: center;
     }
-
-
   }
 }
 </style>
