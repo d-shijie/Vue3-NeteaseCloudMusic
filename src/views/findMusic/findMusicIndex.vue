@@ -39,7 +39,7 @@ const tabs = ref<Tab[]>([
   },
   {
     tab: '最新音乐',
-    path: '/index/5'
+    path: '/index/find-music/new-music'
   },
 ])
 </script>

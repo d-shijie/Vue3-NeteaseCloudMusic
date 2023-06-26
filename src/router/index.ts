@@ -43,6 +43,11 @@ const router = createRouter({
               path: '/index/find-music/singer',
               name: 'FindMusicSinger',
               component: () => import('@/views/findMusic/findMusicSinger.vue')
+            },
+            {
+              path: '/index/find-music/new-music',
+              name: 'FindMusicNewMusic',
+              component: () => import('@/views/findMusic/findMusicNewMusic.vue')
             }
           ]
         },

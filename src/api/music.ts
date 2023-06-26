@@ -5,17 +5,17 @@ interface GetMusicUrl {
   id: string | number
   level?: currentMusicLevel
 }
-export function getMusicUrlApi (params: GetMusicUrl) {
+export function getMusicUrlApi(params: GetMusicUrl) {
   return request({
-    url: "/song/url/v1",
+    url: '/song/url/v1',
     method: 'get',
     params
   })
 }
 // 获取歌曲详情
-export function getMusicDetailApi (ids: string) {
+export function getMusicDetailApi(ids: string) {
   return request({
-    url: "/song/detail",
+    url: '/song/detail',
     method: 'get',
     params: {
       ids
@@ -23,10 +23,21 @@ export function getMusicDetailApi (ids: string) {
   })
 }
 // 每日推荐歌曲
-export function getDaylyRecommendSongsApi () {
+export function getDaylyRecommendSongsApi() {
   return request({
-    url: "/recommend/songs",
-    method: 'get',
+    url: '/recommend/songs',
+    method: 'get'
+  })
+}
 
+// 新歌速递
+export function getNewMusicsApi(type: string) {
+  return request({
+    url: '/recommend/songs',
+    method: 'get',
+    params: {
+      type
+    },
+    _fullLoading: true
   })
 }
