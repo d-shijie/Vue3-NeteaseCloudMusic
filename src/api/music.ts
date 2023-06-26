@@ -33,7 +33,7 @@ export function getDaylyRecommendSongsApi() {
 // 新歌速递
 export function getNewMusicsApi(type: string) {
   return request({
-    url: '/recommend/songs',
+    url: '/top/song',
     method: 'get',
     params: {
       type
