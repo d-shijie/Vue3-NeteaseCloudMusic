@@ -87,13 +87,16 @@ const currentMusicInfo = reactive({
   info: {} as any
 })
 globalStore.$subscribe(() => {
+
+
   clearInterval(timer.value)
-  getMusicDetailApi(globalStore.currentMusicId).then(res => {
+  getMusicDetailApi(globalStore.currentMusicId as string).then(res => {
     currentMusicInfo.info = res.data.songs[0]
     timer.value = setInterval(() => {
       currentTime.value = Number(globalStore.appAudio.currentTime.toFixed(0)) * 1000
       const w = (currentTime.value / currentMusicInfo.info.dt * 100).toFixed(2) + '%'
       timerRef.value.style.width = w
+
     }, 1000)
   })
 })

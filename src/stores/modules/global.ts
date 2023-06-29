@@ -12,6 +12,7 @@ export const useGlobalStore = defineStore(
   'global',
   () => {
     // TODO audio相关封装为hook
+    // TODO 修改为promise setAudioUrlAndId只用传递歌曲id/视频id不再手动调用audioPlay
     const currentMusicId = ref<string | number | undefined>(undefined)
     const currentMusicUrl = ref('')
     const currentVideoUrl = ref('')
