@@ -105,11 +105,27 @@ export function getPlaylistApi(params: GetPlaylistType) {
     params
   })
 }
-
+// 获取音乐分类排行榜
 export function getMusicCategoryRankApi() {
   return request({
     url: '/toplist',
     method: 'get',
+    _fullLoading: true
+  })
+}
+// 新碟上架
+export type AlbumArea = 'ALL' | 'ZH' | 'EA' | 'KR' | 'JP'
+interface GetNewAlbumType {
+  type: 'new' | 'hot'
+  area: AlbumArea
+  offset: number
+  limit: number
+}
+export function getNewAlbumApi(params: GetNewAlbumType) {
+  return request({
+    url: '/top/album',
+    method: 'get',
+    params,
     _fullLoading: true
   })
 }

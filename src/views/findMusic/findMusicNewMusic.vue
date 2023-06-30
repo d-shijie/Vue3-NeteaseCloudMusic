@@ -1,28 +1,26 @@
 <template>
   <div class="find-music-new-music">
-    <div class="tabs flex items-center rounded-3xl border-1 border-solid ">
+    <div class="tabs flex items-center rounded-3xl border-1 border-solid">
       <span @click="currentTab = 'music'"
         :style="{ color: currentTab === 'music' ? 'rgb(215,215,215)' : 'rgb(124,124,124' }"
-        :class="{ 'active': currentTab === 'music' }"
-        class=" rounded-3xl px-30px py-5px text-sm cursor-pointer">新歌速递</span>
-      <span @click="currentTab = 'ablum'" style="color:var(--v-m-text-dark-color)"
-        :style="{ color: [(currentTab === 'ablum' ? 'rgb(215,215,215)' : 'rgb(124,124,124')], }"
-        :class="{ 'active': currentTab === 'ablum' }"
-        class=" rounded-3xl px-30px py-5px text-sm cursor-pointer">新碟上架</span>
+        :class="{ active: currentTab === 'music' }" class="rounded-3xl px-30px py-5px text-sm cursor-pointer">新歌速递</span>
+      <span @click="currentTab = 'ablum'" style="color: var(--v-m-text-dark-color)"
+        :style="{ color: [currentTab === 'ablum' ? 'rgb(215,215,215)' : 'rgb(124,124,124'] }"
+        :class="{ active: currentTab === 'ablum' }" class="rounded-3xl px-30px py-5px text-sm cursor-pointer">新碟上架</span>
     </div>
     <div class="w-100%" v-show="currentTab === 'music'">
       <div class="tab w-100% mt-24px mb-15px flex items-center justify-between">
-        <div class="search-params flex ">
-          <span @click="current.musicType = item.value"
-            :style="{ color: current.musicType === item.value ? 'rgb(215,215,215)' : 'rgb(124,124,124' }"
-            class="mr-24px text-sm cursor-pointer" v-for="(item, index) in musicSearchParams" :key="index">
+        <div class="search-params flex">
+          <span @click="current.musicType = item.value" :style="{
+            color: current.musicType === item.value ? 'rgb(215,215,215)' : 'rgb(124,124,124'
+          }" class="mr-24px text-sm cursor-pointer" v-for="(item, index) in musicSearchParams" :key="index">
             {{ item.name }}
           </span>
         </div>
         <div class="music-list flex items-center">
-          <span class="play  mr-15px flex items-center px-10px py-5px text-13px  rounded-xl"><svg-icon name="play"
+          <span class="play mr-15px flex items-center px-10px py-5px text-13px rounded-xl"><svg-icon name="play"
               class="mr-3px"></svg-icon> 播放全部</span>
-          <span class="collect text-13px flex items-center px-10px py-5px  rounded-xl"><svg-icon name="collect"
+          <span class="collect text-13px flex items-center px-10px py-5px rounded-xl"><svg-icon name="collect"
               class="mr-3px"></svg-icon> 收藏全部</span>
         </div>
       </div>
@@ -32,9 +30,9 @@
             class="hover cursor-pointer py-12px px-12px flex flex-nowrap items-center" v-for="(item, index) in newMusics"
             :key="index">
             <span class="over-e mr-10px w-24px">{{ indexMethod(index) }}</span>
-            <span class="over-e mr-10px flex-1 flex items-center ">
+            <span class="over-e mr-10px flex-1 flex items-center">
               <img @click="handlePlay(item.mp3Url, item.id)" :src="item.album.picUrl" alt=""
-                class="w-68px h-68px rounded-sm mr-12px">
+                class="w-68px h-68px rounded-sm mr-12px" />
               {{ item.name }}</span>
             <span class="over-e mr-10px w-200px">{{ formatAr(item.artists) }}</span>
             <span class="over-e mr-10px w-200px">{{ item.album.name }}</span>
@@ -43,8 +41,23 @@
         </ul>
       </div>
     </div>
-    <div class="search" v-show="currentTab === 'ablum'">
-      2
+    <div class="w-100%" v-show="currentTab === 'ablum'">
+      <div class="tab w-100% mt-24px mb-15px flex items-center justify-between">
+        <div class="search-params flex">
+          <span @click="current.albumType = item.value" :style="{
+            color: current.albumType === item.value ? 'rgb(215,215,215)' : 'rgb(124,124,124'
+          }" class="mr-24px text-sm cursor-pointer" v-for="(item, index) in albumSearchParams" :key="index">
+            {{ item.name }}
+          </span>
+        </div>
+        <div class="album-list flex items-center">
+          <span @click="current.albumNewOrHot = 'hot'" :class="{ 'active-ablum': current.albumNewOrHot === 'hot' }"
+            class="recommend flex items-center px-10px py-5px text-13px rounded-xl">推荐</span>
+          <div style="color: rgb(53, 53, 53)" class="mx-10px">|</div>
+          <span @click="current.albumNewOrHot = 'new'" :class="{ 'active-ablum': current.albumNewOrHot === 'new' }"
+            class="all text-13px flex items-center px-10px py-5px rounded-xl">全部</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -52,6 +65,7 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue'
 import { getNewMusicsApi, getMusicUrlApi } from '@/api/music'
+import { getNewAlbumApi, type AlbumArea } from '@/api/playlist'
 import { formatAr, indexMethod } from '@/util/index'
 import { stampToMin } from '@/util/timeFormat'
 import { useGlobalStore } from '@/stores/modules/global'
@@ -64,19 +78,39 @@ const musicSearchParams = ref([
   { name: '日本', value: '8' },
   { name: '韩国', value: '16' }
 ])
+const albumSearchParams = ref([
+  { name: '全部', value: 'ALL' },
+  { name: '华语', value: 'ZH' },
+  { name: '欧美', value: 'EA' },
+  { name: '日本', value: 'JP' },
+  { name: '韩国', value: 'KR' }
+])
 const current = reactive({
   musicType: '0',
-  albumType: 'ALL'
+  offset: 0,
+  limit: 40,
+  albumType: 'ALL' as AlbumArea,
+  albumNewOrHot: 'hot' as 'new' | 'hot'
 })
 
 const newMusics = ref<any[]>([])
 const getNewMusics = () => {
-  getNewMusicsApi(current.musicType).then(res => {
-
+  getNewMusicsApi(current.musicType).then((res) => {
     newMusics.value = res.data.data
   })
 }
 getNewMusics()
+
+const getNewAlbum = () => {
+  getNewAlbumApi({
+    offset: current.offset * current.limit,
+    limit: current.limit,
+    type: current.albumNewOrHot,
+    area: current.albumType
+  }).then((res) => {
+    console.log(res)
+  })
+}
 
 const handlePlay = (url: string, id: number) => {
   getMusicUrlApi({
@@ -89,12 +123,23 @@ const handlePlay = (url: string, id: number) => {
 }
 
 watch(currentTab, (val) => {
-  console.log(val);
+  if (val === 'ablum') {
+    getNewAlbum()
+  } else {
+    getNewMusics()
+  }
 })
-watch(() => current.musicType, () => {
-  getNewMusics()
-})
-
+watch(
+  () => current,
+  (nVal, oVal) => {
+    if (nVal.musicType !== oVal.musicType) {
+      getNewMusics()
+    } else {
+      getNewAlbum()
+    }
+  },
+  { deep: true }
+)
 </script>
 
 <style scoped lang="scss">
@@ -139,12 +184,31 @@ watch(() => current.musicType, () => {
   white-space: nowrap;
 }
 
+.album-list {
+  span {
+    color: var(--v-m-text-dark-color);
+
+    &:hover {
+      cursor: pointer;
+      color: var(--m-v-text-color) !important;
+    }
+  }
+}
+
 .hover:hover {
   background-color: var(--v-m-hover-bgc) !important;
 }
 
 .active {
   background-color: rgb(102, 102, 102);
+}
 
+.active-ablum {
+  background-color: rgb(53, 44, 44);
+  color: rgb(236, 65, 65) !important;
+
+  &:hover {
+    color: rgb(236, 65, 65) !important;
+  }
 }
 </style>
