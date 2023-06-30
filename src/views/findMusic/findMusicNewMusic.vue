@@ -64,7 +64,7 @@
           <div class="px-12px text-xl leading-none mb-10px text-center">本周新碟</div>
           <div class="time px-12px  text-4xl pb-32px text-center">06</div>
         </div>
-        <div class="flex-1 flex flex-wrap justify-between">
+        <div ref="ablumRef" class="flex-1 flex flex-wrap justify-between">
           <div class="item w-20% mx-10px" v-for="(item, index) in newAlbumList.weekData" :key="index">
             <newAlbum :cover="item.picUrl" :author="item.artist.name" :name="item.name" :info="item" />
           </div>
@@ -119,6 +119,7 @@ const getNewMusics = () => {
 }
 getNewMusics()
 
+
 const newAlbumList = reactive({
   weekData: [] as any[],
   monthData: [] as any[]
@@ -135,6 +136,18 @@ const getNewAlbum = () => {
     newAlbumList.monthData = res.data.monthData
   })
 }
+
+const ablumRef = ref<HTMLElement>()
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 1024) {
+    if (ablumRef.value) {
+      const nodes = ablumRef.value.children
+      for (let i = 0; i < nodes.length; i++) {
+        (nodes[i] as HTMLElement).style.width = '18%'
+      }
+    }
+  }
+})
 
 const handlePlay = (url: string, id: number) => {
   getMusicUrlApi({
