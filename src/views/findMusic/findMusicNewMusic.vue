@@ -57,6 +57,18 @@
           <span @click="current.albumNewOrHot = 'new'" :class="{ 'active-ablum': current.albumNewOrHot === 'new' }"
             class="all text-13px flex items-center px-10px py-5px rounded-xl">全部</span>
         </div>
+
+      </div>
+      <div class="list flex">
+        <div class="w-64px">
+          <div class="px-12px text-xl leading-none mb-10px text-center">本周新碟</div>
+          <div class="time px-12px  text-4xl pb-32px text-center">06</div>
+        </div>
+        <div class="flex-1 flex flex-wrap justify-between">
+          <div class="item w-20% mx-10px" v-for="(item, index) in newAlbumList.weekData" :key="index">
+            <newAlbum :cover="item.picUrl" :author="item.artist.name" :name="item.name" :info="item" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -69,6 +81,7 @@ import { getNewAlbumApi, type AlbumArea } from '@/api/playlist'
 import { formatAr, indexMethod } from '@/util/index'
 import { stampToMin } from '@/util/timeFormat'
 import { useGlobalStore } from '@/stores/modules/global'
+import newAlbum from './findMusicNewMusic/newAlbum.vue'
 const globalStore = useGlobalStore()
 const currentTab = ref<'music' | 'ablum'>('music')
 const musicSearchParams = ref([
@@ -78,7 +91,12 @@ const musicSearchParams = ref([
   { name: '日本', value: '8' },
   { name: '韩国', value: '16' }
 ])
-const albumSearchParams = ref([
+
+type AlbumSearchParams = {
+  name: string
+  value: AlbumArea
+}
+const albumSearchParams = ref<Array<AlbumSearchParams>>([
   { name: '全部', value: 'ALL' },
   { name: '华语', value: 'ZH' },
   { name: '欧美', value: 'EA' },
@@ -88,7 +106,7 @@ const albumSearchParams = ref([
 const current = reactive({
   musicType: '0',
   offset: 0,
-  limit: 40,
+  limit: 10,
   albumType: 'ALL' as AlbumArea,
   albumNewOrHot: 'hot' as 'new' | 'hot'
 })
@@ -101,6 +119,10 @@ const getNewMusics = () => {
 }
 getNewMusics()
 
+const newAlbumList = reactive({
+  weekData: [] as any[],
+  monthData: [] as any[]
+})
 const getNewAlbum = () => {
   getNewAlbumApi({
     offset: current.offset * current.limit,
@@ -108,7 +130,9 @@ const getNewAlbum = () => {
     type: current.albumNewOrHot,
     area: current.albumType
   }).then((res) => {
-    console.log(res)
+
+    newAlbumList.weekData = res.data.weekData
+    newAlbumList.monthData = res.data.monthData
   })
 }
 
@@ -192,6 +216,25 @@ watch(
       cursor: pointer;
       color: var(--m-v-text-color) !important;
     }
+  }
+}
+
+.time {
+  position: relative;
+
+  &::after {
+    content: '';
+    // background-color: rgb(250, 250, 252);
+    display: inline-block;
+    width: 0;
+    height: 0;
+    // border-bottom: 10px solid rgb(250, 250, 252);
+    border-left: 50px solid transparent;
+    border-bottom: 28px solid rgb(250, 250, 252);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
   }
 }
 
