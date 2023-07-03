@@ -65,7 +65,7 @@
           <div class="time px-12px  text-4xl pb-32px text-center">06</div>
         </div>
         <div ref="ablumRef" class="ablum-container flex-1 flex flex-wrap justify-between ">
-          <div class="item mx-10px " v-for="(item, index) in newAlbumList.weekData" :key="index">
+          <div class="album-item mx-10px " v-for="(item, index) in newAlbumList.weekData" :key="index">
             <newAlbum :cover="item.picUrl" :author="item.artist.name" :name="item.name" :info="item" />
           </div>
         </div>
@@ -167,35 +167,72 @@ watch(
   },
   { deep: true }
 )
+
+window.addEventListener('resize', () => {
+
+  const ablumItems = document.querySelectorAll('.album-item')
+
+  for (let i = 0; i < ablumItems.length; i++) {
+    (ablumItems[i] as HTMLElement).style.animation = 'bounce-in 0.5s ease-in-out'
+    setTimeout(function () {
+      (ablumItems[i] as HTMLElement).style.animation = "";
+    }, 300);
+  }
+
+})
 </script>
 
 <style scoped lang="scss">
 @media screen and (max-width: 1024px) {
+  .album-item {
+    animation: bounce-in 0.5s ease-in-out;
+  }
+
   .ablum-container {
 
-    .item:last-child {
+    .album-item:last-child {
       margin-right: auto
     }
   }
 
   .ablum-container>* {
     flex-basis: 25%;
+    animation: bounce-in 0.5s ease-in-out;
   }
 }
 
 @media screen and (min-width: 1024px) {
+  .album-item {
+    animation: bounce-in 0.5s ease-in-out;
+  }
+
   .ablum-container {
-
-
-    .item:last-child {
+    .album-item :last-child {
       margin-right: auto
     }
   }
 
   .ablum-container>* {
     flex-basis: 18%;
+    animation: bounce-in 0.5s ease-in-out;
   }
 }
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.7);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+
 
 .tabs {
   border-color: rgb(85, 85, 85);
