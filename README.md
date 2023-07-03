@@ -1,5 +1,7 @@
 ## [线上 DEMO](https://www.dshijie.fun/#/index/find-music/personalized-recommendations)
+
 首次加载可能需要手动刷新浏览器一次
+
 ### [接口](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
 线上服务部分接口存在问题
@@ -35,30 +37,28 @@ pnpm run electron
 pnpm run electron:build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## 部分页面截图
 
-```sh
-pnpm run test:unit
-```
+### 发现音乐->歌单
 
-### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
+![发现音乐->歌单](./docs/assets/find_music_new_music.png)
 
-```sh
-pnpm run test:e2e:dev
-```
+### 发现音乐->排行榜
 
-This runs the end-to-end tests against the Vite development server.
-It is much faster than the production build.
+![发现音乐->排行榜](./docs/assets/find_music_rank.png)
 
-But it's still recommended to test the production build with `test:e2e` before deploying (e.g. in CI environments):
+### 发现音乐->歌手
 
-```sh
-pnpm run build
-pnpm run test:e2e
-```
+![发现音乐->排行榜](./docs/assets/find_music_singer.png)
 
-### Lint with [ESLint](https://eslint.org/)
+### 发现音乐->最新音乐
 
-```sh
-pnpm run lint
-```
+![发现音乐->排行榜](./docs/assets/find_music_new_music.png)
+
+### 歌单详情->歌曲列表
+
+![发现音乐->排行榜](./docs/assets/playlist_detail_musics.png)
+
+### 歌单详情->评论列表
+
+![歌单详情->评论列表](./docs/assets/playlist_detail_comment.png)

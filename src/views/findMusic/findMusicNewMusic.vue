@@ -65,7 +65,7 @@
           <div class="time px-12px  text-4xl pb-32px text-center">06</div>
         </div>
         <div ref="ablumRef" class="ablum-container flex-1 flex flex-wrap justify-between ">
-          <div class="album-item mx-10px " v-for="(item, index) in newAlbumList.weekData" :key="index">
+          <div class="album-item mx-10px " v-for="(item, index) in newAlbumList.monthData" :key="index">
             <newAlbum :cover="item.picUrl" :author="item.artist.name" :name="item.name" :info="item" />
           </div>
         </div>
