@@ -165,7 +165,6 @@ const gotoDetail = () => {
 }
 
 .desc {
-
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -174,7 +173,6 @@ const gotoDetail = () => {
   -webkit-line-clamp: 2;
   word-wrap: break-all;
   font-size: 14px;
-
 
   &:hover {
     color: #fff;

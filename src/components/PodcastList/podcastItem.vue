@@ -124,5 +124,4 @@ const coverClick = () => {
       }
     }
   }
-}
-</style>
+}</style>

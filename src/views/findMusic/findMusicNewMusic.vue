@@ -64,8 +64,8 @@
           <div class="px-12px text-xl leading-none mb-10px text-center">本周新碟</div>
           <div class="time px-12px  text-4xl pb-32px text-center">06</div>
         </div>
-        <div ref="ablumRef" class="ablum-container flex-1 flex flex-wrap justify-between">
-          <div class="item mx-10px mr-auto " v-for="(item, index) in newAlbumList.weekData" :key="index">
+        <div ref="ablumRef" class="ablum-container flex-1 flex flex-wrap justify-between ">
+          <div class="item mx-10px " v-for="(item, index) in newAlbumList.weekData" :key="index">
             <newAlbum :cover="item.picUrl" :author="item.artist.name" :name="item.name" :info="item" />
           </div>
         </div>
@@ -171,12 +171,27 @@ watch(
 
 <style scoped lang="scss">
 @media screen and (max-width: 1024px) {
+  .ablum-container {
+
+    .item:last-child {
+      margin-right: auto
+    }
+  }
+
   .ablum-container>* {
-    flex-basis: 23%;
+    flex-basis: 25%;
   }
 }
 
 @media screen and (min-width: 1024px) {
+  .ablum-container {
+
+
+    .item:last-child {
+      margin-right: auto
+    }
+  }
+
   .ablum-container>* {
     flex-basis: 18%;
   }
@@ -232,6 +247,9 @@ watch(
       color: var(--m-v-text-color) !important;
     }
   }
+
+
+
 }
 
 .time {
