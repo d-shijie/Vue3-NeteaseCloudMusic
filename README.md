@@ -62,3 +62,7 @@ pnpm run electron:build
 ### 歌单详情->评论列表
 
 ![歌单详情->评论列表](./docs/assets/playlist_detail_comment.png)
+
+## 演示视频
+
+![演示视频](./docs/assets/demo.mp4)
