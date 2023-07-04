@@ -18,7 +18,7 @@
           </span>
         </div>
         <div class="playlist-detail-header-info-actions">
-          <div class="action-btn play">
+          <div @click="playAll" class="action-btn play">
             <svg-icon style="font-size: 18px;margin-right: 6px;" name="play"></svg-icon> 播放全部
             <svg-icon style="font-size: 18px;margin-left: 6px;" name="plus_white"></svg-icon>
           </div>
@@ -84,7 +84,8 @@ import { getPlaylistDetailApi, getPlaylistCommentsApi, subscribePlaylistApi } fr
 import { commentApi } from '@/api/comment'
 import { useRoute } from 'vue-router';
 import { ElMessage } from 'element-plus';
-
+import { useGlobalStore } from '@/stores/modules/global';
+const globalStore = useGlobalStore()
 const route = useRoute()
 // 歌单详情
 const playlist = ref()
@@ -157,6 +158,7 @@ const hanldCurrentChange = (page: number) => {
   getComments()
 }
 
+
 // 发送评论
 const commentPlaylist = (content: string) => {
   commentApi({
@@ -189,6 +191,10 @@ const subscribePlaylist = () => {
   })
 }
 
+// 播放全部
+const playAll = () => {
+  globalStore.setCurrentPlaylist(Number(route.query.id))
+}
 
 </script>
 
