@@ -41,14 +41,13 @@ export const useGlobalStore = defineStore(
 
     // 播放列表相关
     const currentPlaylistId = ref()
-    const currentPlaylist = ref<any>([])
+    const currentPlaylist = ref<any[]>([])
     const setCurrentPlaylist = async (id: number) => {
       currentPlaylistId.value = id
       currentPlaylist.value = await getCurrentPlaylist()
       // TODO此处需判断播放顺序 暂时为顺序播放
-      currentMusicId.value = currentPlaylist.value[0].id
-      currentMusicUrl.value = await getCurrentMusicUrl()
-
+      const url = await getCurrentMusicUrl(currentPlaylist.value[0].id)
+      setAudioUrlAndId(url, currentPlaylist.value[0].id)
       audioPlay()
     }
 
@@ -80,9 +79,9 @@ async function getCurrentPlaylist() {
   return res
 }
 
-async function getCurrentMusicUrl() {
+async function getCurrentMusicUrl(id: number) {
   const data = await getMusicUrlApi({
-    id: useGlobalStore().currentMusicId as number,
+    id,
     level: useGlobalStore().currentMusicLevel
   }).catch(() => {
     ElMessage.error('出错啦!')
