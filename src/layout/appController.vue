@@ -88,7 +88,8 @@
 </template>
 
 <script setup lang="ts">
-import { useGlobalStore, type currentMusicLevel } from '@/stores/modules/global'
+import { useGlobalStore } from '@/stores/modules/global'
+import type { currentMusicLevel } from '@/stores/types/global'
 import { getMusicDetailApi } from '@/api/music'
 import { computed, reactive, ref } from 'vue'
 import { stampToMin } from '@/util/timeFormat'

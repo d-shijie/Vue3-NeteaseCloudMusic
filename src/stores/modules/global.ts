@@ -3,22 +3,14 @@ import { ref } from 'vue'
 import { getPlaylistMusicApi } from '@/api/playlist'
 import { getMusicUrlApi } from '@/api/music'
 import { ElMessage } from 'element-plus'
-export type currentMusicLevel =
-  | 'standard'
-  | 'higher'
-  | 'exhigh'
-  | 'lossless'
-  | 'hires'
-  | 'jyeffect'
-  | 'sky'
-  | 'jymaster'
+import type { currentMusicLevel, PlayOrderType } from '../types/global'
+
 export const useGlobalStore = defineStore(
   'global',
   () => {
     // TODO audio相关封装为hook
     // TODO 修改为promise setAudioUrlAndId只用传递歌曲id/视频id不再手动调用audioPlay
-
-    // audio示例相关
+    // audio实例相关
     const appAudio = new Audio()
     const isPlay = ref<boolean>(false)
     appAudio.onended = function () {
@@ -46,6 +38,9 @@ export const useGlobalStore = defineStore(
     // 播放列表相关
     const currentPlaylistId = ref()
     const currentPlaylist = ref<any[]>([])
+    const currentPlayOrder = ref<PlayOrderType>('order')
+    console.log(currentPlayOrder.value)
+
     const setCurrentPlaylist = async (id: number) => {
       currentPlaylistId.value = id
       currentPlaylist.value = await getCurrentPlaylist()
