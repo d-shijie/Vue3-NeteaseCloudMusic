@@ -167,18 +167,15 @@ watch(
   },
   { deep: true }
 )
-
+// 窗口缩放加载动画
 window.addEventListener('resize', () => {
-
   const ablumItems = document.querySelectorAll('.album-item')
-
   for (let i = 0; i < ablumItems.length; i++) {
     (ablumItems[i] as HTMLElement).style.animation = 'bounce-in 0.5s ease-in-out'
     setTimeout(function () {
       (ablumItems[i] as HTMLElement).style.animation = "";
     }, 300);
   }
-
 })
 </script>
 

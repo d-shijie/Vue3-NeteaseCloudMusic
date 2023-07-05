@@ -20,6 +20,9 @@ export const useGlobalStore = defineStore(
     // audio示例相关
     const appAudio = new Audio()
     const isPlay = ref<boolean>(false)
+    appAudio.onended = function () {
+      nextPlay()
+    }
     const audioPlay = () => {
       isPlay.value = true
       appAudio.play()
@@ -40,7 +43,6 @@ export const useGlobalStore = defineStore(
     }
 
     // 播放列表相关
-
     const currentPlaylistId = ref()
     const currentPlaylist = ref<any[]>([])
     const setCurrentPlaylist = async (id: number) => {
@@ -50,7 +52,7 @@ export const useGlobalStore = defineStore(
       setAudioUrlAndId(url, currentPlaylist.value[0].id)
       audioPlay()
     }
-
+    // 播放上一首
     const prevPlay = async () => {
       // TODO此处需判断播放顺序 暂时为顺序播放
       const index = currentPlaylist.value.findIndex((item) => {
@@ -62,12 +64,13 @@ export const useGlobalStore = defineStore(
       setAudioUrlAndId(url, musicId)
       audioPlay()
     }
+    // 播放下一首
     const nextPlay = async () => {
       // TODO此处需判断播放顺序 暂时为顺序播放
       const index = currentPlaylist.value.findIndex((item) => {
         return item.id === currentMusicId.value
       })
-      const cIndex = index < currentPlaylist.value.length ? index + 1 : 0
+      const cIndex = index < currentPlaylist.value.length - 1 ? index + 1 : 0
       const musicId = currentPlaylist.value[cIndex].id
       const url = await getCurrentMusicUrl(currentPlaylist.value[cIndex].id)
       setAudioUrlAndId(url, musicId)
@@ -93,7 +96,7 @@ export const useGlobalStore = defineStore(
     persist: true
   }
 )
-
+// 获取当前播放列表
 async function getCurrentPlaylist() {
   const data = await getPlaylistMusicApi({
     id: useGlobalStore().currentPlaylistId
@@ -103,7 +106,7 @@ async function getCurrentPlaylist() {
   const res = data?.data.songs
   return res
 }
-
+// 获取当前播放音乐的url
 async function getCurrentMusicUrl(id: number) {
   const data = await getMusicUrlApi({
     id,

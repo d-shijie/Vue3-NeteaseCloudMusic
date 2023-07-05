@@ -24,14 +24,14 @@
         <div class="controll-item">
           <svg-icon class="svg" style="font-size: 16px;" name="play_order"></svg-icon>
         </div>
-        <div class="controll-item">
+        <div @click="globalStore.prevPlay" class="controll-item">
           <svg-icon class="svg" style="font-size: 16px;" name="prefix"></svg-icon>
         </div>
         <div class="controll-item play">
           <svg-icon @click="pause" v-if="globalStore.isPlay" class="svg" style="font-size: 22px;" name="pause"></svg-icon>
           <svg-icon @click="play" v-else class="svg" style="font-size: 22px;" name="play"></svg-icon>
         </div>
-        <div class="controll-item">
+        <div @click="globalStore.nextPlay" class="controll-item">
           <svg-icon class="svg" style="font-size: 16px;" name="suffix"></svg-icon>
         </div>
         <div class="controll-item">
