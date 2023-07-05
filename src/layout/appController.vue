@@ -51,7 +51,21 @@
     </div>
     <div class="setting">
       <div class="setting-item tone-quality">
-        标准
+        <el-popover placement="top" :show-arrow="false" :width="200" trigger="click">
+          <ui>
+            <li @click="shiftMusicQuality(item.value)" class="my-10px cursor-pointer text-#fefefe flex items-center"
+              v-for="(item, index) in musicQuality" :key="index">
+              <svg-icon :style="{ opacity: globalStore.currentMusicLevel === item.value ? '1' : '0' }" class="mr-3px"
+                name="correct"></svg-icon>
+              <span :style="{ color: globalStore.currentMusicLevel === item.value ? 'red' : '#fefefe' }">
+                {{ item.label }}
+              </span>
+            </li>
+          </ui>
+          <template #reference>
+            <div class="overflow-hidden text-ellipsis whitespace-nowrap"> {{ musicLevel?.label }}</div>
+          </template>
+        </el-popover>
       </div>
       <div class="setting-item">
         <svg-icon class="svg" style="font-size: 24px;" name="tone">
@@ -74,9 +88,9 @@
 </template>
 
 <script setup lang="ts">
-import { useGlobalStore } from '@/stores/modules/global'
+import { useGlobalStore, type currentMusicLevel } from '@/stores/modules/global'
 import { getMusicDetailApi } from '@/api/music'
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { stampToMin } from '@/util/timeFormat'
 const globalStore = useGlobalStore()
 
@@ -86,9 +100,8 @@ const currentTime = ref()
 const currentMusicInfo = reactive({
   info: {} as any
 })
+// 触发pinia订阅事件
 globalStore.$subscribe(() => {
-
-
   clearInterval(timer.value)
   getMusicDetailApi(globalStore.currentMusicId as string).then(res => {
     currentMusicInfo.info = res.data.songs[0]
@@ -103,7 +116,7 @@ globalStore.$subscribe(() => {
 const play = () => {
   if (globalStore.currentMusicUrl) {
     if (!globalStore.appAudio.paused) {
-      globalStore.setAudioUrlAndId(globalStore.currentMusicUrl, globalStore.currentMusicId)
+      globalStore.setAudioUrlAndId(globalStore.currentMusicUrl, globalStore.currentMusicId as string)
     }
     globalStore.audioPlay()
   }
@@ -113,6 +126,56 @@ const pause = () => {
     globalStore.audioPause()
   }
 }
+
+const musicQuality = ref<{ label: string, value: currentMusicLevel }[]>([
+  {
+    label: '标准音质',
+    value: 'standard'
+  },
+  {
+    label: '较高音质',
+    value: 'higher'
+  },
+  {
+    label: '极高音质',
+    value: 'exhigh'
+  },
+  {
+    label: '无损音质',
+    value: 'lossless'
+  },
+  {
+    label: 'Hi-Res音质',
+    value: 'hires'
+  },
+  {
+    label: '沉浸环绕声音质',
+    value: 'sky'
+  },
+  {
+    label: '高清环绕声音质',
+    value: 'jyeffect'
+  },
+  {
+    label: '超清母带音质',
+    value: 'jymaster'
+  },
+])
+
+const musicLevel = computed(() => {
+  const level = musicQuality.value.find(item => {
+    return item.value === globalStore.currentMusicLevel
+  })
+  return level
+})
+const shiftMusicQuality = (levle: currentMusicLevel) => {
+  globalStore.currentMusicLevel = levle
+  if (globalStore.currentMusicUrl) {
+    globalStore.setAudioUrlAndId(globalStore.currentMusicUrl, globalStore.currentMusicId as string)
+    globalStore.audioPlay()
+  }
+}
+
 const formatAr = (arr: any[]): string => {
   if (!arr) return ''
   let res: string = ''
@@ -126,6 +189,7 @@ const formatAr = (arr: any[]): string => {
 
 <style scoped lang="scss">
 .app-controller {
+
   display: flex;
   align-items: center;
   height: 68px;

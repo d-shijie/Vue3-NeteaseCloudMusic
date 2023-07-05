@@ -10,6 +10,7 @@ export type currentMusicLevel =
   | 'lossless'
   | 'hires'
   | 'jyeffect'
+  | 'sky'
   | 'jymaster'
 export const useGlobalStore = defineStore(
   'global',
