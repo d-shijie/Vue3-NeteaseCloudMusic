@@ -4,7 +4,7 @@ import { getPlaylistMusicApi } from '@/api/playlist'
 import { getMusicUrlApi } from '@/api/music'
 import { ElMessage } from 'element-plus'
 import type { currentMusicLevel, PlayOrderType } from '../types/global'
-
+import { getRandomInt } from '@/util'
 export const useGlobalStore = defineStore(
   'global',
   () => {
@@ -76,6 +76,12 @@ export const useGlobalStore = defineStore(
         } else {
           audioPause()
         }
+      } else if (currentPlayOrder.value === 'random') {
+        const cIndex = getRandomInt(0, currentPlaylist.value.length - 1)
+        const musicId = currentPlaylist.value[cIndex].id
+        const url = await getCurrentMusicUrl(currentPlaylist.value[cIndex].id)
+        setAudioUrlAndId(url, musicId)
+        audioPlay()
       }
     }
     // 播放下一首
@@ -107,6 +113,12 @@ export const useGlobalStore = defineStore(
         } else {
           audioPause()
         }
+      } else if (currentPlayOrder.value === 'random') {
+        const cIndex = getRandomInt(0, currentPlaylist.value.length - 1)
+        const musicId = currentPlaylist.value[cIndex].id
+        const url = await getCurrentMusicUrl(currentPlaylist.value[cIndex].id)
+        setAudioUrlAndId(url, musicId)
+        audioPlay()
       }
     }
 

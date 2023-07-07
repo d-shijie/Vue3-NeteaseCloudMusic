@@ -37,3 +37,9 @@ export const indexMethod = (index: number) => {
   }
   return res
 }
+// 获取范围随机数
+export function getRandomInt(min: number, max: number) {
+  min = Math.ceil(min) // 向上取整，确保最小值为整数
+  max = Math.floor(max) // 向下取整，确保最大值为整数
+  return Math.floor(Math.random() * (max - min + 1)) + min
+}
