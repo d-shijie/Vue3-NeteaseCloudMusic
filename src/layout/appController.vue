@@ -22,7 +22,14 @@
     <div class="main">
       <div class="controll-wrapper">
         <div class="controll-item">
-          <svg-icon class="svg" style="font-size: 16px;" name="play_order"></svg-icon>
+          <svg-icon @click="globalStore.currentPlayOrder = 'single'" v-if="globalStore.currentPlayOrder === 'order'"
+            class="svg" style="font-size: 16px;" name="play_order"></svg-icon>
+          <svg-icon @click="globalStore.currentPlayOrder = 'random'" v-if="globalStore.currentPlayOrder === 'single'"
+            class="svg" style="font-size: 16px;" name="play_single"></svg-icon>
+          <svg-icon @click="globalStore.currentPlayOrder = 'list'" v-if="globalStore.currentPlayOrder === 'random'"
+            class="svg" style="font-size: 16px;" name="play_random"></svg-icon>
+          <svg-icon @click="globalStore.currentPlayOrder = 'order'" v-if="globalStore.currentPlayOrder === 'list'"
+            class="svg" style="font-size: 16px;" name="play_list"></svg-icon>
         </div>
         <div @click="globalStore.prevPlay" class="controll-item">
           <svg-icon class="svg" style="font-size: 16px;" name="prefix"></svg-icon>

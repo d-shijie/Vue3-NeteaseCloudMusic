@@ -39,7 +39,6 @@ export const useGlobalStore = defineStore(
     const currentPlaylistId = ref()
     const currentPlaylist = ref<any[]>([])
     const currentPlayOrder = ref<PlayOrderType>('order')
-    console.log(currentPlayOrder.value)
 
     const setCurrentPlaylist = async (id: number) => {
       currentPlaylistId.value = id
@@ -80,6 +79,7 @@ export const useGlobalStore = defineStore(
       currentMusicUrl,
       currentMusicLevel,
       currentPlaylistId,
+      currentPlayOrder,
       setCurrentPlaylist,
       setAudioUrlAndId,
       nextPlay,
