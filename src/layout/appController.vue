@@ -59,7 +59,7 @@
     <div class="setting">
       <div class="setting-item tone-quality">
         <el-popover placement="top" :show-arrow="false" :width="200" trigger="click">
-          <ui>
+          <ul>
             <li @click="shiftMusicQuality(item.value)" class="my-10px cursor-pointer text-#fefefe flex items-center"
               v-for="(item, index) in musicQuality" :key="index">
               <svg-icon :style="{ opacity: globalStore.currentMusicLevel === item.value ? '1' : '0' }" class="mr-3px"
@@ -68,7 +68,7 @@
                 {{ item.label }}
               </span>
             </li>
-          </ui>
+          </ul>
           <template #reference>
             <div class="overflow-hidden text-ellipsis whitespace-nowrap"> {{ musicLevel?.label }}</div>
           </template>
@@ -117,7 +117,6 @@ globalStore.$subscribe(() => {
       currentTime.value = Number(globalStore.appAudio.currentTime.toFixed(0)) * 1000
       const w = (currentTime.value / currentMusicInfo.info.dt * 100).toFixed(2) + '%'
       timerRef.value.style.width = w
-
     }, 1000)
   })
 })
