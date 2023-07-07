@@ -49,8 +49,7 @@ export const useGlobalStore = defineStore(
     }
     // 播放上一首
     const prevPlay = async () => {
-      // TODO此处需判断播放顺序 暂时为顺序播放
-      if (currentPlayOrder.value === 'order') {
+      if (currentPlayOrder.value === 'list') {
         const index = currentPlaylist.value.findIndex((item) => {
           return item.id === currentMusicId.value
         })
@@ -59,12 +58,29 @@ export const useGlobalStore = defineStore(
         const url = await getCurrentMusicUrl(currentPlaylist.value[cIndex].id)
         setAudioUrlAndId(url, musicId)
         audioPlay()
+      } else if (currentPlayOrder.value === 'single') {
+        const url = await getCurrentMusicUrl(currentMusicId.value as number)
+        setAudioUrlAndId(url, currentMusicId.value as number)
+        audioPlay()
+      } else if (currentPlayOrder.value === 'order') {
+        const index = currentPlaylist.value.findIndex((item) => {
+          return item.id === currentMusicId.value
+        })
+        let cIndex
+        if (index !== 0) {
+          cIndex = index - 1
+          const musicId = currentPlaylist.value[cIndex].id
+          const url = await getCurrentMusicUrl(currentPlaylist.value[cIndex].id)
+          setAudioUrlAndId(url, musicId)
+          audioPlay()
+        } else {
+          audioPause()
+        }
       }
     }
     // 播放下一首
     const nextPlay = async () => {
-      // TODO此处需判断播放顺序 暂时为顺序播放
-      if (currentPlayOrder.value === 'order') {
+      if (currentPlayOrder.value === 'list') {
         const index = currentPlaylist.value.findIndex((item) => {
           return item.id === currentMusicId.value
         })
@@ -77,6 +93,20 @@ export const useGlobalStore = defineStore(
         const url = await getCurrentMusicUrl(currentMusicId.value as number)
         setAudioUrlAndId(url, currentMusicId.value as number)
         audioPlay()
+      } else if (currentPlayOrder.value === 'order') {
+        const index = currentPlaylist.value.findIndex((item) => {
+          return item.id === currentMusicId.value
+        })
+        let cIndex
+        if (index < currentPlaylist.value.length - 1) {
+          cIndex = index + 1
+          const musicId = currentPlaylist.value[cIndex].id
+          const url = await getCurrentMusicUrl(currentPlaylist.value[cIndex].id)
+          setAudioUrlAndId(url, musicId)
+          audioPlay()
+        } else {
+          audioPause()
+        }
       }
     }
 
