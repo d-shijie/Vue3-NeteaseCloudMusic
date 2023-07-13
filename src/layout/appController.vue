@@ -124,7 +124,14 @@
         <svg-icon class="svg" style="font-size: 24px" name="tone"> </svg-icon>
       </div>
       <div class="setting-item">
-        <svg-icon class="svg" style="font-size: 24px" name="volume"> </svg-icon>
+        <el-popover placement="top" :show-arrow="false" width="10px" trigger="click">
+          <div class="flex justify-center items-center">
+            <el-slider @change="changeVolume" v-model="currentVolume" :show-tooltip="false" vertical height="108px" />
+          </div>
+          <template #reference>
+            <svg-icon class="svg" style="font-size: 24px" name="volume"> </svg-icon>
+          </template>
+        </el-popover>
       </div>
       <div class="setting-item">
         <svg-icon class="svg" style="font-size: 24px" name="listen_together"> </svg-icon>
@@ -230,14 +237,25 @@ const shiftMusicQuality = (levle: currentMusicLevel) => {
 
 const controllTimeRef = ref()
 const adjustTime = ($event: PointerEvent) => {
+  // 鼠标距离浏览器左侧距离
   const clientX = $event.clientX
+  // 时间wrapper元素距离浏览器左侧距离
   const left = (controllTimeRef.value as HTMLElement).getBoundingClientRect().left
+  // 鼠标距离wrapper左侧距离
   const controllTimeWidth = (controllTimeRef.value as HTMLElement).offsetWidth
   const currentWidth = clientX - left
   const percent = Number(currentWidth.toFixed(0)) / Number(controllTimeWidth.toFixed(0))
   const seconds = Math.floor(currentMusicInfo.info.dt / 1000)
   const currentTime = seconds * Number(percent.toFixed(2))
   globalStore.appAudio.currentTime = currentTime
+}
+
+const currentVolume=ref()
+currentVolume.value=globalStore.appAudio.volume*100
+
+
+const changeVolume=()=>{
+  globalStore.appAudio.volume=currentVolume.value/100
 }
 
 const formatAr = (arr: any[]): string => {
@@ -366,5 +384,8 @@ const formatAr = (arr: any[]): string => {
       cursor: pointer;
     }
   }
+}
+:deep(.el-slider__button) {
+  display: none !important;
 }
 </style>
