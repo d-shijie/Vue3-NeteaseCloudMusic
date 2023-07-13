@@ -2,9 +2,9 @@
   <div class="content">
     <div class="count-wrapper">
       <div class="counts">
-        <span> 0 </span>
-        <span> 2 </span>
-        <span> 3 </span>
+        <span> {{ events }} </span>
+        <span> {{ follows }} </span>
+        <span> {{ fans }} </span>
       </div>
       <div class="sign-in">
         <el-button color="rgb(64,64,64)" style="color: rgb(215, 215, 215); background: rgb(54, 54, 54)" :icon="Coin" plain
@@ -32,6 +32,7 @@ import { ref } from 'vue'
 import { Coin } from '@element-plus/icons-vue'
 import profileItem from './profileItem.vue';
 import { useUserStore } from '@/stores/modules/user';
+import {getUserFollowsApi,getUserFansApi,getUserEventApi} from '@/api/user'
 const userStore = useUserStore()
 const profileItmes = ref([
   {
@@ -99,14 +100,38 @@ const profileItemClick = (url: string) => {
   }
   // TODO router url
 }
+
+// 获取用户动态列表\关注列表\粉丝列表
+const events=ref(0)
+const fans=ref(0)
+const follows=ref(0)
+const getUserEvent=()=>{
+  getUserEventApi(userStore.userInfo.userId).then(res=>{
+    console.log(res);
+    events.value=res.data.size
+   })
+}
+getUserEvent()
+const getUserFans=()=>{
+   getUserFansApi(userStore.userInfo.userId).then(res=>{
+     fans.value=res.data.size
+   })
+}
+getUserFans()
+const getUserFollows=()=>{
+  getUserFollowsApi(userStore.userInfo.userId).then(res=>{
+    follows.value=res.data.follow.length
+   })
+}
+getUserFollows()
+
+
 </script>
 
 <style scoped lang="scss">
 @import url('@/styles/root.css');
 
 .content {
-
-
   .count-wrapper {
 
     .counts {

@@ -186,6 +186,7 @@ const pause = () => {
   }
 }
 
+// 调整音质
 const musicQuality = ref<{ label: string; value: currentMusicLevel }[]>([
   {
     label: '标准音质',
@@ -220,7 +221,6 @@ const musicQuality = ref<{ label: string; value: currentMusicLevel }[]>([
     value: 'jymaster'
   }
 ])
-
 const musicLevel = computed(() => {
   const level = musicQuality.value.find((item) => {
     return item.value === globalStore.currentMusicLevel
@@ -235,6 +235,7 @@ const shiftMusicQuality = (levle: currentMusicLevel) => {
   }
 }
 
+// 控制时间
 const controllTimeRef = ref()
 const adjustTime = ($event: PointerEvent) => {
   // 鼠标距离浏览器左侧距离
@@ -250,6 +251,7 @@ const adjustTime = ($event: PointerEvent) => {
   globalStore.appAudio.currentTime = currentTime
 }
 
+// 调整音量
 const currentVolume=ref()
 currentVolume.value=globalStore.appAudio.volume*100
 
