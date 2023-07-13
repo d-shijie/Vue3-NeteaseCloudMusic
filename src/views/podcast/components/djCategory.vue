@@ -5,7 +5,7 @@
     </div>
     <div class="flex-1 relative">
       <ul class="flex  flex-wrap absolute ">
-        <li v-for="(item, index) in page" :key="index">{{ item }}</li>
+        <li v-for="(item, index) in 3" :key="index">{{ item }}</li>
       </ul>
     </div>
     <div class="flex items-center mx-8px cursor-pointer">
@@ -29,10 +29,9 @@ const props = withDefaults(defineProps<Props>(), {
   row: 2,
   column: 4
 })
+console.log(props);
 
-const page = () => {
-  return 3
-}
+
 </script>
 
 <style scoped lang="scss"></style>
