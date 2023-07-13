@@ -1,9 +1,9 @@
 import { request } from '@/util/request'
 
 // 电台详情
-export function getDjDetailApi (rid: number) {
+export function getDjDetailApi(rid: number) {
   return request({
-    url: "/dj/detail",
+    url: '/dj/detail',
     method: 'get',
     params: {
       rid
@@ -18,21 +18,29 @@ interface GetDjProgramType {
   offset: number
   asc: boolean
 }
-export function getDjProgramApi (params: GetDjProgramType) {
+export function getDjProgramApi(params: GetDjProgramType) {
   return request({
-    url: "/dj/program",
+    url: '/dj/program',
     method: 'get',
     params
   })
 }
 
 // 电台分类推荐
-export function getDjCateRecommendApi (type: number) {
+export function getDjCateRecommendApi(type: number) {
   return request({
-    url: "/dj/recommend/type",
+    url: '/dj/recommend/type',
     method: 'get',
     params: {
       type
     }
+  })
+}
+
+// 电台分类
+export function getDjCategoryApi() {
+  return request({
+    url: '/dj/catelist',
+    method: 'get'
   })
 }
