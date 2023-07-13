@@ -80,9 +80,11 @@ const getPlaylistMusic = () => {
   loading.value = true
   if (!route.query.id && !props.id) {
     tableData.value = props.data
+    globalStore.currentPlaylist= props.data
     loading.value = false
     return
   }
+  globalStore.setCurrentPlaylist(Number(route.query.id) || props.id as number)
   getPlaylistMusicApi({ id: String(route.query.id || props.id) }).then(res => {
     tableData.value = res.data.songs
   }).finally(() => {
@@ -98,7 +100,6 @@ watch(props, () => {
 getPlaylistMusic()
 
 const playMusic = (row: any) => {
-
   getMusicUrlApi({
     id: row.id,
     level: globalStore.currentMusicLevel

@@ -128,6 +128,7 @@ export const useGlobalStore = defineStore(
       currentMusicId,
       currentMusicUrl,
       currentMusicLevel,
+      currentPlaylist,
       currentPlaylistId,
       currentPlayOrder,
       setCurrentPlaylist,
