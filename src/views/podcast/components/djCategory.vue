@@ -1,36 +1,67 @@
 <template>
   <div class="h-100% flex">
-    <div class="flex items-center mx-8px cursor-pointer">
-      <svg-icon style="font-size: 20px;" name="left"></svg-icon>
+    <div class="flex w-20px items-center mx-8px cursor-pointer">
+      <svg-icon v-show="currentIndex!==0" @click="prev" style="font-size: 20px;" name="left"></svg-icon>
     </div>
-    <div class="flex-1 relative">
-      <ul class="flex  flex-wrap absolute ">
-        <li v-for="(item, index) in 3" :key="index">{{ item }}</li>
+    <div class="flex-1 relative overflow-hidden">
+      <ul ref="categoryWrapperRef" class="flex w-300% absolute overflow-hidden">
+        <li ref="categoryPageRef" class="w-100% " v-for="(item, index) in pages" :key="index">{{ item }}</li>
       </ul>
     </div>
-    <div class="flex items-center mx-8px cursor-pointer">
-      <svg-icon style="font-size: 20px;" name="right"></svg-icon>
+    <div class="flex w-20px items-center mx-8px cursor-pointer">
+      <svg-icon v-show="currentIndex!==pages-1" @click="next" style="font-size: 20px;" name="right"></svg-icon>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 interface Item {
   name: string
   [propName: string]: any
 }
 interface Props {
-  row: number
-  column: number
-  modelValue: Array<Item>
+  row?: number
+  column?: number
+  modelValue?: Array<Item>
 }
 const props = withDefaults(defineProps<Props>(), {
   modelValue: () => [],
   row: 2,
   column: 4
 })
-console.log(props);
+const pages=computed(()=>Math.ceil(props.modelValue.length/(props.row*props.column)) )
 
+
+const categoryWrapperRef = ref<HTMLElement>()
+const categoryPageRef = ref()
+const currentWidth = ref(0)
+const currentIndex = ref(0)
+const prev = () => {
+  const width = categoryPageRef.value[0].clientWidth
+  let w=width * currentIndex.value 
+  currentWidth.value = width * (currentIndex.value-1)
+  currentIndex.value -= 1
+  setInterval(()=>{
+    if(w>currentWidth.value){
+      w-=10
+      categoryWrapperRef.value.style.transform = `translateX(${-w}px)`
+    }
+  },10)
+}
+
+const next = () => {
+  const width = categoryPageRef.value[0].clientWidth
+  let w=width *currentIndex.value 
+  currentWidth.value = width * (currentIndex.value + 1)
+  currentIndex.value += 1
+  setInterval(()=>{
+    if(w<currentWidth.value){
+      w+=10
+      categoryWrapperRef.value.style.transform = `translateX(${-w}px)`
+    }
+  },10)
+}
 
 </script>
 
