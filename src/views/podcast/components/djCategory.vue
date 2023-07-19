@@ -5,7 +5,15 @@
     </div>
     <div class="flex-1 relative overflow-hidden">
       <ul ref="categoryWrapperRef" class="flex w-300% absolute overflow-hidden">
-        <li ref="categoryPageRef" class="w-100% " v-for="(item, index) in pages" :key="index">{{ item }}</li>
+        <li ref="categoryPageRef" class="w-100% " v-for="(item, index) in pages" :key="index">
+      <div  class="flex flex-wrap">
+        <div v-for="(i,index1) in currentItem(index)" :key="index1"  class="w-25% flex flex-col justify-center items-center mb-12px cursor-pointer" >
+           <img  class="w-50% mb-5px" :src="i.pic56x56Url" alt="">
+           <div style="font-size: 12px;">{{ i.name }}</div>
+        </div>
+      </div>
+      
+      </li>
       </ul>
     </div>
     <div class="flex w-20px items-center mx-8px cursor-pointer">
@@ -31,7 +39,11 @@ const props = withDefaults(defineProps<Props>(), {
   column: 4
 })
 const pages=computed(()=>Math.ceil(props.modelValue.length/(props.row*props.column)) )
-
+const currentItem=computed(()=>(index:number)=>{
+  const prefix=index*(props.row*props.column)
+  const suffix=(index+1)*(props.row*props.column)
+ return props.modelValue.slice(prefix,suffix)
+})
 
 const categoryWrapperRef = ref<HTMLElement>()
 const categoryPageRef = ref()
