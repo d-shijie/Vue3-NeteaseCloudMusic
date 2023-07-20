@@ -21,14 +21,19 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-const titles = ['情感故事', '新闻资讯', '真实故事', '每日必听', '搞笑段子', '音乐推荐', '听见好书', '热门翻唱']
+const titles = ref(['情感故事', '新闻资讯', '真实故事', '每日必听', '搞笑段子', '音乐推荐', '听见好书', '热门翻唱'])
 const currentIndex = ref(0)
+const index = ref(0)
+
 const show = ref(true)
 const handleWheel = (event: WheelEvent) => {
   // 获取滚动方向和滚动量
   const delta = Math.max(-1, Math.min(1, event.deltaY || -event.detail));
   if (delta > 0) {
-    if (currentIndex.value === titles.length - 5) return
+    if (currentIndex.value === titles.value.length - 5) {
+      titles.value.push(titles.value[index.value])
+      index.value += 1
+    }
     currentIndex.value += 1
     show.value = false
     setTimeout(() => {
