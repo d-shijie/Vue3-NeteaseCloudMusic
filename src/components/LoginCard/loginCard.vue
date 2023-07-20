@@ -380,10 +380,6 @@ qrLogin()
   }
 }
 
-
-
-
-
 .qrcode-enter-active {
   transition: all 0.3s ease-out;
 }

@@ -6,11 +6,13 @@
         <svg-icon class="absolute start-10px top-50% translate-y--50%" style="font-size: 40px" name="point_to"></svg-icon>
       </div>
       <div @wheel="handleWheel($event)" class="h-100% overflow-hidden">
-        <ul class=" h-100% flex flex-col justify-between relative">
-          <li :class="{ 'active': index === 2, 'side': index === 0 || index === 4, 'mid': index === 1 || index === 3 }"
-            class="" v-for="(item, index) in titles.slice(currentIndex, (currentIndex + 1) * 5)" :key="item">{{ item }}
-          </li>
-        </ul>
+        <Transition name="slider">
+          <ul v-if="show" class=" h-100% flex flex-col justify-between relative">
+            <li :class="{ 'active': index === 2, 'side': index === 0 || index === 4, 'mid': index === 1 || index === 3 }"
+              class="" v-for="(item, index) in titles.slice(currentIndex, currentIndex + 5)" :key="item">{{ item }}
+            </li>
+          </ul>
+        </Transition>
       </div>
     </div>
     <div class="flex-1">2</div>
@@ -21,14 +23,24 @@
 import { ref } from 'vue';
 const titles = ['情感故事', '新闻资讯', '真实故事', '每日必听', '搞笑段子', '音乐推荐', '听见好书', '热门翻唱']
 const currentIndex = ref(0)
-
+const show = ref(true)
 const handleWheel = (event: WheelEvent) => {
   // 获取滚动方向和滚动量
   const delta = Math.max(-1, Math.min(1, event.deltaY || -event.detail));
   if (delta > 0) {
-    console.log("向上滚动");
+    if (currentIndex.value === titles.length - 5) return
+    currentIndex.value += 1
+    show.value = false
+    setTimeout(() => {
+      show.value = true
+    }, 0)
   } else {
-    console.log("向下滚动");
+    if (currentIndex.value === 0) return
+    currentIndex.value -= 1
+    show.value = false
+    setTimeout(() => {
+      show.value = true
+    }, 0)
   }
 }
 </script>
@@ -47,5 +59,18 @@ const handleWheel = (event: WheelEvent) => {
 .mid {
   font-size: 16px;
   color: rgb(167, 166, 165);
+}
+
+.slider-enter-active {
+  transition: all 0.3s ease-out;
+}
+
+.slider-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.slider-enter-from,
+.slider-leave-to {
+  transform: translateY(-50px);
 }
 </style>
