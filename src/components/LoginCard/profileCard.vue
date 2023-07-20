@@ -32,7 +32,7 @@ import { ref } from 'vue'
 import { Coin } from '@element-plus/icons-vue'
 import profileItem from './profileItem.vue';
 import { useUserStore } from '@/stores/modules/user';
-import {getUserFollowsApi,getUserFansApi,getUserEventApi} from '@/api/user'
+import { getUserFollowsApi, getUserFansApi, getUserEventApi } from '@/api/user'
 const userStore = useUserStore()
 const profileItmes = ref([
   {
@@ -102,26 +102,25 @@ const profileItemClick = (url: string) => {
 }
 
 // 获取用户动态列表\关注列表\粉丝列表
-const events=ref(0)
-const fans=ref(0)
-const follows=ref(0)
-const getUserEvent=()=>{
-  getUserEventApi(userStore.userInfo.userId).then(res=>{
-    console.log(res);
-    events.value=res.data.size
-   })
+const events = ref(0)
+const fans = ref(0)
+const follows = ref(0)
+const getUserEvent = () => {
+  getUserEventApi(userStore.userInfo.userId).then(res => {
+    events.value = res.data.size
+  })
 }
 getUserEvent()
-const getUserFans=()=>{
-   getUserFansApi(userStore.userInfo.userId).then(res=>{
-     fans.value=res.data.size
-   })
+const getUserFans = () => {
+  getUserFansApi(userStore.userInfo.userId).then(res => {
+    fans.value = res.data.size
+  })
 }
 getUserFans()
-const getUserFollows=()=>{
-  getUserFollowsApi(userStore.userInfo.userId).then(res=>{
-    follows.value=res.data.follow.length
-   })
+const getUserFollows = () => {
+  getUserFollowsApi(userStore.userInfo.userId).then(res => {
+    follows.value = res.data.follow.length
+  })
 }
 getUserFollows()
 
