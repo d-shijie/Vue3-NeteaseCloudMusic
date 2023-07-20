@@ -8,16 +8,13 @@
         <li ref="categoryPageRef" class="w-100% " v-for="(item, index) in pages" :key="index">
           <div class="flex flex-wrap h-100%">
             <div class="flex flex-col justify-between items-center" v-for="(i, index1) in props.row " :key="index1">
-
               <div class="flex  justify-between items-center h-100%">
                 <div class="flex flex-col justify-center items-center"
                   v-for="(i2, index3) in currentItem(index).slice((i - 1) * props.column, i * props.column) "
                   :key="index3">
-                  <img class="w-50% mb-5px" :src="i2.pic56x56Url" alt="">
-                  <div style="font-size: 12px;">{{ i2.name }}</div>
+                  <slot name="default" :row="i2"></slot>
                 </div>
               </div>
-
             </div>
           </div>
         </li>
@@ -55,31 +52,31 @@ const currentItem = computed(() => (index: number) => {
 })
 
 const categoryWrapperRef = ref<HTMLElement>()
-const categoryPageRef = ref()
+const categoryPageRef = ref<HTMLElement[]>()
 const currentWidth = ref(0)
 const currentIndex = ref(0)
 const prev = () => {
-  const width = categoryPageRef.value[0].clientWidth
+  const width = categoryPageRef.value![0].clientWidth
   let w = width * currentIndex.value
   currentWidth.value = width * (currentIndex.value - 1)
   currentIndex.value -= 1
   setInterval(() => {
     if (w > currentWidth.value) {
       w -= 10
-      categoryWrapperRef.value.style.transform = `translateX(${-w}px)`
+      categoryWrapperRef.value!.style.transform = `translateX(${-w}px)`
     }
   }, 10)
 }
 
 const next = () => {
-  const width = categoryPageRef.value[0].clientWidth
+  const width = categoryPageRef.value![0].clientWidth
   let w = width * currentIndex.value
   currentWidth.value = width * (currentIndex.value + 1)
   currentIndex.value += 1
   setInterval(() => {
     if (w < currentWidth.value) {
       w += 10
-      categoryWrapperRef.value.style.transform = `translateX(${-w}px)`
+      categoryWrapperRef.value!.style.transform = `translateX(${-w}px)`
     }
   }, 10)
 }
