@@ -42,12 +42,11 @@ const props = withDefaults(defineProps<Props>(), {
   row: 2,
   column: 4
 })
+const emits = defineEmits(['next', 'prev'])
 const pages = computed(() => Math.ceil(props.modelValue.length / (props.row * props.column)))
 const currentItem = computed(() => (index: number) => {
   const prefix = index * (props.row * props.column)
   const suffix = (index + 1) * (props.row * props.column)
-
-
   return props.modelValue.slice(prefix, suffix)
 })
 
@@ -66,6 +65,7 @@ const prev = () => {
       categoryWrapperRef.value!.style.transform = `translateX(${-w}px)`
     }
   }, 10)
+  emits('prev', currentIndex.value)
 }
 
 const next = () => {
@@ -79,6 +79,7 @@ const next = () => {
       categoryWrapperRef.value!.style.transform = `translateX(${-w}px)`
     }
   }, 10)
+  emits('next', currentIndex.value)
 }
 
 </script>
