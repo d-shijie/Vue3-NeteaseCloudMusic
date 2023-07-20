@@ -2,9 +2,11 @@
   <div class="podcast">
     <div class="page">
       <div class="flex w-100%">
-        <div style="flex: 3;background: rgb(13, 12, 12);" class="bg-red mr-12px h-148px rounded">1</div>
-        <div style="flex: 2;background:rgb(55, 45, 45)" class="ml-12px h-148px rounded">
-          <Scroller v-model="category">
+        <div style="flex: 3;background: rgb(55, 45, 45);" class="mr-12px h-156px rounded">
+          <CategoryScroller />
+        </div>
+        <div style="flex: 2;background:rgb(55, 45, 45)" class="ml-12px h-156px rounded">
+          <Scroller v-loading="loading" v-model="category">
             <template #default="scope">
               <img class="w-50% mb-5px" :src="scope.row.pic56x56Url" alt="">
               <div style="font-size: 12px;">{{ scope.row.name }}</div>
@@ -20,10 +22,15 @@
 import { ref } from 'vue'
 import { getDjCategoryApi } from '@/api/dj';
 import Scroller from '@/components/Scroller/appScroller.vue'
+import CategoryScroller from './components/categoryScroller.vue';
 const category = ref<any[]>([])
+const loading = ref(false)
 const getDjCategory = () => {
+  loading.value = true
   getDjCategoryApi().then(res => {
     category.value = res.data.categories
+  }).finally(() => {
+    loading.value = false
   })
 }
 getDjCategory()
