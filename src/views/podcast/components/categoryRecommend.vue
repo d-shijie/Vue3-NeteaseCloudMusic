@@ -3,8 +3,8 @@
     <SubTitle :title="props.name" />
     <section class="flex justify-between">
       <div class="item w-20% " v-for="(item, index) in recommends.slice(0, 5)" :key="index">
-        <img class="w-100% rounded" :src="item.picUrl" alt="">
-        <div class="name"><a class="category">{{ item.secondCategory }}</a> {{ item.name }}
+        <img class="w-100% rounded cursor-pointer" :src="item.picUrl" alt="">
+        <div class="name cursor-pointer leading-20px"><a class="category">{{ item.secondCategory }}</a> {{ item.name }}
         </div>
       </div>
     </section>
@@ -54,11 +54,15 @@ getDjCategoryRecommendApi(props.cid).then(res => {
   font-size: 14px;
   margin-top: 10px;
   padding: 1px 0;
+
+  &:hover {
+    color: var(--v-m-text-active-color);
+  }
 }
 
 .category {
   border: 1px solid rgb(128, 128, 128);
   color: rgb(128, 128, 128);
   font-size: 12px;
-
-}</style>
+}
+</style>

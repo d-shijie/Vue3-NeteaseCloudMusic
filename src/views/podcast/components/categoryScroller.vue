@@ -5,7 +5,7 @@
         <img class="h-156px w-66px relative start--12px" src="@/assets/ruler.png" alt="">
         <svg-icon class="absolute start-10px top-50% translate-y--50%" style="font-size: 40px" name="point_to"></svg-icon>
       </div>
-      <div @wheel="handleWheel($event)" class="h-100% overflow-hidden">
+      <div @wheel.prevent.stop="handleWheel($event)" class="h-100% overflow-hidden">
         <Transition name="slider">
           <ul v-if="show" class=" h-100% flex flex-col justify-between relative">
             <li :class="{ 'active': index === 2, 'side': index === 0 || index === 4, 'mid': index === 1 || index === 3 }"
