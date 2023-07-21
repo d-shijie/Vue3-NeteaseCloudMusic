@@ -3,7 +3,7 @@
     <SubTitle :title="props.name" />
     <section class="flex justify-between">
       <div class="item w-20% " v-for="(item, index) in recommends.slice(0, 5)" :key="index">
-        <img class="w-100% rounded cursor-pointer" :src="item.picUrl" alt="">
+        <img @click="gotoDetail(item.id)" class="w-100% rounded cursor-pointer" :src="item.picUrl" alt="">
         <div class="name cursor-pointer leading-20px"><a class="category">{{ item.secondCategory }}</a> {{ item.name }}
         </div>
       </div>
@@ -15,19 +15,29 @@
 import { ref } from 'vue';
 import SubTitle from '@/components/SubTitle/subTitle.vue';
 import { getDjCategoryRecommendApi } from '@/api/dj'
+import router from '@/router';
 interface Props {
   name: string
-  cid: number
+  rid: number
 }
 const props = withDefaults(defineProps<Props>(), {
   name: '',
-  cid: 0
+  rid: 0
 })
 
 const recommends = ref<any[]>([])
-getDjCategoryRecommendApi(props.cid).then(res => {
+getDjCategoryRecommendApi(props.rid).then(res => {
   recommends.value = res.data.djRadios
 })
+
+const gotoDetail = (id: number) => {
+  router.push({
+    path: '/index/dj-detail',
+    query: {
+      id
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

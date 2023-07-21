@@ -1,6 +1,6 @@
 <template>
   <div class="topic-djs">
-    <div class="item" v-for="item in list" :key="item.id">
+    <div @click="gotoDetail(item.id)" class="item" v-for="item in list" :key="item.id">
       <div class="cover">
         <img :src="item.coverImg" alt="">
         <div>{{ item.category }}</div>
@@ -10,7 +10,7 @@
 </template>
 
 <script setup lang="ts">
-
+import router from '@/router';
 interface Item {
   coverImg: string
   id: number
@@ -24,6 +24,14 @@ interface Props {
 withDefaults(defineProps<Props>(), {
   list: () => []
 })
+const gotoDetail = (id: number) => {
+  router.push({
+    path: '/index/dj-detail',
+    query: {
+      id
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

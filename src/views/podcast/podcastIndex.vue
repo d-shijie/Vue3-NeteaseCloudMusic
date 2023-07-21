@@ -16,7 +16,7 @@
       </div>
 
       <div v-for="(item, index) in category" :key="index">
-        <CategoryRecommend :name="item.name" :cid="item.id" />
+        <CategoryRecommend :name="item.name" :rid="item.id" />
       </div>
     </div>
   </div>
