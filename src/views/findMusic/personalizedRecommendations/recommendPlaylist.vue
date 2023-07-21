@@ -39,10 +39,7 @@ const nowDay = new Date().getDate()
   flex-wrap: wrap;
   justify-content: space-between;
 
-
-
   .item {
-
     width: 18% !important;
   }
 

@@ -39,8 +39,6 @@ defineProps({
 
   .title {
     display: flex;
-
-
   }
 
 }
@@ -59,6 +57,7 @@ defineProps({
     height: 16px;
     position: relative;
     left: 2px;
+    top: 4px;
     display: inline-block;
     font-size: 10px;
     background: url('@/icons/svg/arrow_right.svg') no-repeat;

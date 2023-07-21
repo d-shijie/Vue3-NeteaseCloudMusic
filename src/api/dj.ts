@@ -52,3 +52,22 @@ export function getDjRecommendProgramApi() {
     method: 'get'
   })
 }
+
+// 推荐电台
+export function getRecommendDjApi() {
+  return request({
+    url: '/dj/recommend',
+    method: 'get'
+  })
+}
+
+// 电台分类推荐
+export function getDjCategoryRecommendApi(type:number) {
+  return request({
+    url: '/dj/recommend/type',
+    method: 'get',
+    params:{
+      type
+    }
+  })
+}

@@ -14,6 +14,10 @@
           </Scroller>
         </div>
       </div>
+
+      <div v-for="(item, index) in category" :key="index">
+        <CategoryRecommend :name="item.name" :cid="item.id" />
+      </div>
     </div>
   </div>
 </template>
@@ -23,6 +27,8 @@ import { ref } from 'vue'
 import { getDjCategoryApi, getDjRecommendProgramApi } from '@/api/dj';
 import Scroller from '@/components/Scroller/appScroller.vue'
 import CategoryScroller, { type Program } from './components/categoryScroller.vue';
+import CategoryRecommend from './components/categoryRecommend.vue';
+
 const category = ref<any[]>([])
 const loading = ref(false)
 const getDjCategory = () => {
