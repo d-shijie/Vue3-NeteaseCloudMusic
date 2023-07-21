@@ -18,8 +18,10 @@
         </Transition>
       </div>
     </div>
-    <div class="right-content flex-1 flex items-center justify-center">
-      <img class="w-90% h-90% rounded" :src="titles[currentIndex + 2].coverUrl" alt="">
+    <div class="right-content flex-1 flex items-center justify-center overflow-hidden">
+      <Transition name="slider">
+        <img v-if="show" class="w-90% h-90% rounded" :src="titles[currentIndex + 2].coverUrl" alt="">
+      </Transition>
     </div>
   </div>
 </template>
