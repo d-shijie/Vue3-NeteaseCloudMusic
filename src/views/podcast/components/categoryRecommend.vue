@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SubTitle :title="props.name" />
+    <SubTitle @click="gotoDjList" :title="props.name" />
     <section class="flex justify-between">
       <div class="item w-20% " v-for="(item, index) in recommends.slice(0, 5)" :key="index">
         <img @click="gotoDetail(item.id)" class="w-100% rounded cursor-pointer" :src="item.picUrl" alt="">
@@ -18,17 +18,26 @@ import { getDjCategoryRecommendApi } from '@/api/dj'
 import router from '@/router';
 interface Props {
   name: string
-  rid: number
+  cid: number
 }
 const props = withDefaults(defineProps<Props>(), {
   name: '',
-  rid: 0
+  cid: 0
 })
 
 const recommends = ref<any[]>([])
-getDjCategoryRecommendApi(props.rid).then(res => {
+getDjCategoryRecommendApi(props.cid).then(res => {
   recommends.value = res.data.djRadios
 })
+
+const gotoDjList = () => {
+  router.push({
+    path: '/index/dj-list',
+    query: {
+      id: props.cid
+    }
+  })
+}
 
 const gotoDetail = (id: number) => {
   router.push({
@@ -38,6 +47,7 @@ const gotoDetail = (id: number) => {
     }
   })
 }
+
 </script>
 
 <style scoped lang="scss">

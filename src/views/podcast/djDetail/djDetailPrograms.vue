@@ -115,7 +115,6 @@ watch(route, () => {
 
 const playPragram = (row: any) => {
   getOldMusicUrlApi({ id: row.id }).then(res => {
-    console.log(res);
     if (res.data.data[0].url) {
       ElMessage.info('暂未适配')
     } else {
