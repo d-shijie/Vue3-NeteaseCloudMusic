@@ -71,3 +71,18 @@ export function getDjCategoryRecommendApi(type:number) {
     }
   })
 }
+
+// 获取类别热门电台
+interface GetCategoryLististDjType {
+  offset?:number
+  limit?:number
+  cateId:number
+}
+export function getCategoryLististDjApi(params:GetCategoryLististDjType) {
+  return request({
+    url: '/dj/radio/hot',
+    method: 'get',
+    params,
+    _fullLoading:true
+  })
+}

@@ -8,7 +8,8 @@
         <div style="flex: 2;background:rgb(55, 45, 45)" class="ml-12px h-156px rounded">
           <Scroller v-loading="loading" v-model="category">
             <template #default="scope">
-              <img class="w-50% mb-5px" :src="scope.row.pic56x56Url" alt="">
+              <img @click="gotoDjList(scope.row.id)" class="w-50% mb-5px cursor-pointer" :src="scope.row.pic56x56Url"
+                alt="">
               <div style="font-size: 12px;">{{ scope.row.name }}</div>
             </template>
           </Scroller>
@@ -28,6 +29,7 @@ import { getDjCategoryApi, getDjRecommendProgramApi } from '@/api/dj';
 import Scroller from '@/components/Scroller/appScroller.vue'
 import CategoryScroller, { type Program } from './components/categoryScroller.vue';
 import CategoryRecommend from './components/categoryRecommend.vue';
+import router from '@/router';
 
 const category = ref<any[]>([])
 const loading = ref(false)
@@ -55,6 +57,16 @@ const getDjRecommendProgram = () => {
   })
 }
 getDjRecommendProgram()
+
+const gotoDjList = (id: number) => {
+  console.log(id);
+  router.push({
+    path: '/index/dj-list',
+    query: {
+      id
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

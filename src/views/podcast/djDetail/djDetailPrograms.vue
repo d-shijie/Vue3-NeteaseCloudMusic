@@ -20,8 +20,8 @@
         <el-table-column prop="name">
           <template #default="scope">
             <div style="display: flex;align-items: center;">
-              <img style="width: 56px;height:56px;border-radius: 10px;margin-right: 12px;" :src="scope.row.coverUrl"
-                alt="">
+              <img @click="playPragram(scope.row)" class="cursor-pointer"
+                style="width: 56px;height:56px;border-radius: 10px;margin-right: 12px;" :src="scope.row.coverUrl" alt="">
               <span style="color:var(--v-m-text-color)">{{ scope.row.name }}</span>
             </div>
           </template>
@@ -69,9 +69,11 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from 'vue';
 import { getDjProgramApi } from '@/api/dj';
+import { getOldMusicUrlApi } from '@/api/music'
 import { useRoute } from 'vue-router';
 import { formatCount } from '@/util';
 import { stampToMin, formatDayTime } from '@/util/timeFormat';
+import { ElMessage } from 'element-plus';
 const route = useRoute()
 
 const params = reactive({
@@ -110,6 +112,17 @@ const sortPrograms = (asc: boolean) => {
 watch(route, () => {
   getDjProgram()
 })
+
+const playPragram = (row: any) => {
+  getOldMusicUrlApi({ id: row.id }).then(res => {
+    console.log(res);
+    if (res.data.data[0].url) {
+      ElMessage.info('暂未适配')
+    } else {
+      ElMessage.info('无播放地址')
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

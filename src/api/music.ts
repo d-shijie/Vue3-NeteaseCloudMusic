@@ -1,5 +1,5 @@
 import { request } from '@/util/request'
-import type { currentMusicLevel } from '@/stores/modules/global'
+import type { currentMusicLevel } from '@/stores/types/global'
 // 获取音乐url
 interface GetMusicUrl {
   id: string | number
@@ -8,6 +8,13 @@ interface GetMusicUrl {
 export function getMusicUrlApi(params: GetMusicUrl) {
   return request({
     url: '/song/url/v1',
+    method: 'get',
+    params
+  })
+}
+export function getOldMusicUrlApi(params: GetMusicUrl) {
+  return request({
+    url: '/song/url',
     method: 'get',
     params
   })

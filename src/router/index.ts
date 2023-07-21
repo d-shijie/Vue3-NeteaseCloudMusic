@@ -48,7 +48,8 @@ const router = createRouter({
               path: '/index/find-music/new-music',
               name: 'FindMusicNewMusic',
               component: () => import('@/views/findMusic/findMusicNewMusic.vue')
-            }
+            },
+           
           ]
         },
         {
@@ -89,8 +90,13 @@ const router = createRouter({
         {
           path: '/index/dj-detail',
           name: 'DjDetail',
-          component: () => import('@/views/djDetail/djDetailIndex.vue')
-        }
+          component: () => import('@/views/podcast/djDetail/djDetailIndex.vue')
+        },
+        {
+          path: '/index/dj-list',
+          name: 'DjList',
+          component: () => import('@/views/podcast/djList/listIndex.vue')
+        },
       ]
     }
   ]
