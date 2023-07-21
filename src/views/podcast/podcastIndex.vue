@@ -15,8 +15,7 @@
           </Scroller>
         </div>
       </div>
-
-      <div v-for="(item, index) in category" :key="index">
+      <div class="w-100%" v-for="(item, index) in category" :key="index">
         <CategoryRecommend :name="item.name" :cid="item.id" />
       </div>
     </div>

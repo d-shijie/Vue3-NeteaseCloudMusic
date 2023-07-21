@@ -1,8 +1,11 @@
 <template>
-  <div>
-    <SubTitle @click="gotoDjList" :title="props.name" />
+  <div v-if="recommends.length > 4">
+    <div>
+      <SubTitle @click="gotoDjList" :title="props.name" />
+    </div>
+
     <section class="flex justify-between">
-      <div class="item w-20% " v-for="(item, index) in recommends.slice(0, 5)" :key="index">
+      <div class="item w-20% " v-for="( item, index ) in  recommends.slice(0, 5) " :key="index">
         <img @click="gotoDetail(item.id)" class="w-100% rounded cursor-pointer" :src="item.picUrl" alt="">
         <div class="name cursor-pointer leading-20px"><a class="category">{{ item.secondCategory }}</a> {{ item.name }}
         </div>
