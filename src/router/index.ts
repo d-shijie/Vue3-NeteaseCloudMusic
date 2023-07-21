@@ -60,7 +60,20 @@ const router = createRouter({
         {
           path: '/index/video',
           name: 'Video',
-          component: () => import('@/views/video/videoIndex.vue')
+          component: () => import('@/views/video/videoIndex.vue'),
+          redirect: '/index/video/video-index',
+          children:[
+            {
+              path: '/index/video/video-index',
+              name: 'VideoIndex',
+              component: () => import('@/views/video/video/videoIndex.vue')
+            },
+            {
+              path: '/index/video/mv-index',
+              name: 'MvIndex',
+              component: () => import('@/views/video/mv/mvIndex.vue')
+            },
+          ]
         },
         {
           path: '/index/follow',
