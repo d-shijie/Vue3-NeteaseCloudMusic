@@ -3,7 +3,7 @@
     <div class="page">
       <div class="flex w-100%">
         <div style="flex: 3;background: rgb(55, 45, 45);" class="mr-12px h-156px rounded">
-          <CategoryScroller />
+          <CategoryScroller :programs="programs" />
         </div>
         <div style="flex: 2;background:rgb(55, 45, 45)" class="ml-12px h-156px rounded">
           <Scroller v-loading="loading" v-model="category">
@@ -20,9 +20,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { getDjCategoryApi } from '@/api/dj';
+import { getDjCategoryApi, getDjRecommendProgramApi } from '@/api/dj';
 import Scroller from '@/components/Scroller/appScroller.vue'
-import CategoryScroller from './components/categoryScroller.vue';
+import CategoryScroller, { type Program } from './components/categoryScroller.vue';
 const category = ref<any[]>([])
 const loading = ref(false)
 const getDjCategory = () => {
@@ -34,6 +34,21 @@ const getDjCategory = () => {
   })
 }
 getDjCategory()
+
+
+const programs = ref<Program[]>([])
+const getDjRecommendProgram = () => {
+  getDjRecommendProgramApi().then(res => {
+    res.data.programs.forEach((item: any) => {
+      programs.value.push({
+        name: item.name,
+        id: item.id,
+        coverUrl: item.coverUrl
+      })
+    })
+  })
+}
+getDjRecommendProgram()
 </script>
 
 <style scoped lang="scss">

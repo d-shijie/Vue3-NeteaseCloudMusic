@@ -44,3 +44,11 @@ export function getDjCategoryApi() {
     method: 'get'
   })
 }
+
+// 推荐节目
+export function getDjRecommendProgramApi() {
+  return request({
+    url: '/program/recommend',
+    method: 'get'
+  })
+}
