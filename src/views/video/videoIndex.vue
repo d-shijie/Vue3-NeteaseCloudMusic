@@ -1,7 +1,7 @@
 <template>
   <div class="video">
     <div class="page">
-      <div class="w-100% flex justify-start">
+      <div class="w-100% flex justify-start mb-24px">
         <SubTab :tabs="tabs" />
       </div>
       <RouterView />
@@ -27,6 +27,7 @@ const tabs = ref<Tab[]>([{
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .page {
     padding: 30px;
     max-width: 1098px;
