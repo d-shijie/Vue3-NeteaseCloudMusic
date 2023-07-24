@@ -27,7 +27,6 @@ const tabs = ref<Tab[]>([{
   display: flex;
   flex-direction: column;
   align-items: center;
-
   .page {
     padding: 30px;
     max-width: 1098px;

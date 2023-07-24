@@ -62,7 +62,7 @@
       <div class="list flex">
         <div class="w-64px">
           <div class="px-12px text-xl leading-none mb-10px text-center">本周新碟</div>
-          <div class="time px-12px  text-4xl pb-32px text-center">06</div>
+          <div class="time px-12px  text-4xl pb-32px text-center">{{ getNowDay() }}</div>
         </div>
         <div ref="ablumRef" class="ablum-container flex-1 flex flex-wrap justify-between ">
           <div class="album-item mx-10px " v-for="(item, index) in newAlbumList.monthData" :key="index">
@@ -147,6 +147,14 @@ const handlePlay = (url: string, id: number) => {
     globalStore.setAudioUrlAndId(res.data.data[0].url, id)
     globalStore.audioPlay()
   })
+}
+
+const getNowDay = (): string => {
+  let str = ''
+  const date = new Date()
+  const day = date.getDate() + ''
+  str = day.length > 1 ? day : '0' + day
+  return str
 }
 
 watch(currentTab, (val) => {
