@@ -61,7 +61,7 @@ const emits = defineEmits(['likeComment'])
 const likeComment = () => {
   const t = props.comment.lieked ? 0 : 1
   likeCommentApi({
-    id: Number(route.query.id),
+    id: String(route.query.id),
     cid: props.comment.commentId,
     type: props.type,
     t

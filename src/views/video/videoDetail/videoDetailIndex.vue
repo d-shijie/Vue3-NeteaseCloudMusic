@@ -36,12 +36,12 @@
           </section>
 
           <section class="action-btns flex mt-15px items-center">
-            <div style="border:1px solid rgb(75, 75, 75);font-size: 14px;"
+            <div @click="likeVideo" style="border:1px solid rgb(75, 75, 75);font-size: 14px;"
               class="cursor-pointer flex items-center px-20px py-6px rounded-2xl mr-10px">
               <svg-icon class="mr-3px" name="dianzan"></svg-icon> 赞({{ videoInfo.praisedCount
               }})
             </div>
-            <div style="border:1px solid rgb(75, 75, 75);font-size: 14px;"
+            <div @click="subscribeVideo" style="border:1px solid rgb(75, 75, 75);font-size: 14px;"
               class="cursor-pointer flex items-center px-20px py-6px rounded-2xl mr-10px">
               <svg-icon class="mr-3px" name="collect"></svg-icon>收藏({{
                 videoInfo.subscribeCount }})
@@ -58,11 +58,11 @@
             </span>
           </section>
 
-          <AppComment class="my-30px" @hanlde-comment="commentVideo" @like-comment="getComments" :type="2"
+          <AppComment class="my-30px" @hanlde-comment="commentVideo" @like-comment="getComments" :type="5"
             :hot-comments="hotComments" :comments="videoComments">
             <template v-slot:pagination>
               <el-pagination @current-change="hanldCurrentChange" small background v-model:current-page="params.offset"
-                :page-size="60" layout="prev, pager, next" :total="total" />
+                :page-size="params.limit" layout="prev, pager, next" :total="total" />
             </template>
           </AppComment>
         </div>
@@ -79,7 +79,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue';
 import { useRoute, useRouter } from 'vue-router'
-import { getVideoUrlApi, getVideoDetailApi, getRelatedVideoApi, getVideoCommentApi } from '@/api/video'
+import { getVideoUrlApi, getVideoDetailApi, getRelatedVideoApi, getVideoCommentApi, likeVideoApi, subscribeVideoApi } from '@/api/video'
 import { commentApi } from '@/api/comment'
 import { formatCount, formatDayTime } from '@/util';
 import AppComment, { type Comments } from '@/components/Comment/appComment.vue';
@@ -124,7 +124,7 @@ const total = ref(0)
 const params = reactive({
   id: route.query.id,
   offset: 1,
-  limit: 60
+  limit: 20
 })
 const getComments = () => {
   getVideoCommentApi({
@@ -133,20 +133,24 @@ const getComments = () => {
     limit: params.limit
   }).then(res => {
     videoComments.value = []
-    hotComments.value = []
+
     total.value = res.data.total
-    res.data.hotComments.slice(0, 9).forEach((item: any) => {
-      hotComments.value.push({
-        avatarUrl: item.user.avatarUrl,
-        content: item.content,
-        likeCount: item.likedCount,
-        time: item.time,
-        lieked: item.lieked,
-        nickname: item.user.nickname,
-        commentId: item.commentId,
-        userId: item.user.userId
+    if (res.data.hotComments) {
+      hotComments.value = []
+      res.data.hotComments.slice(0, 9).forEach((item: any) => {
+        hotComments.value.push({
+          avatarUrl: item.user.avatarUrl,
+          content: item.content,
+          likeCount: item.likedCount,
+          time: item.time,
+          lieked: item.lieked,
+          nickname: item.user.nickname,
+          commentId: item.commentId,
+          userId: item.user.userId
+        })
       })
-    })
+    }
+
 
     res.data.comments.forEach((item: any) => {
       videoComments.value.push({
@@ -181,6 +185,25 @@ const commentVideo = (content: string) => {
     }
   })
 }
+
+const likeVideo = () => {
+  likeVideoApi({ id: String(route.query.id), t: 1, type: type ? 1 : 5 }).then(res => {
+    if (res.data.code === 200) {
+      ElMessage.info('已赞')
+      getVideoDetail()
+    }
+  })
+}
+
+const subscribeVideo = () => {
+  subscribeVideoApi({ id: String(route.query.id), t: 1 }).then(res => {
+    ElMessage.info(res.data.message)
+    getVideoDetail()
+  }).catch((err) => {
+    ElMessage.info(err.response.data.message)
+  })
+}
+
 </script>
 
 <style scoped lang="scss">

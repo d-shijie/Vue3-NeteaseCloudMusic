@@ -33,7 +33,7 @@ export function getFloorCommentApi (params: FloorCommentType) {
 }
 // 评论点赞
 interface likeCommentType {
-  id: number
+  id: number|string
   cid: number
   // 1点赞 0取消点赞
   t: 1 | 0

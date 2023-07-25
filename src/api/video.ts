@@ -68,3 +68,39 @@ export function getVideoCommentApi(params:GetVideoCommentParams){
     params
   })
 }
+
+// 点赞视频
+interface LikeVideoData {
+  id:string|number
+  t:1|0
+  type:1|5
+}
+export function likeVideoApi(data:LikeVideoData){
+  return request({
+    url: '/resource/like',
+    method: 'post',
+    data
+  })
+}
+
+// 获取点赞过的视频
+export function likedVideoApi(){
+  return request({
+    url: '/playlist/mylike',
+    method: 'get',
+    
+  })
+}
+// 收藏视频
+interface SubscribeVideoData {
+  id:number|string
+  t:1|0
+}
+export function subscribeVideoApi(data:SubscribeVideoData){
+  return request({
+    url: '/video/sub',
+    method: 'post',
+    data
+    
+  })
+}
