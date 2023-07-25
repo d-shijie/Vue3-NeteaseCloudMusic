@@ -1,9 +1,5 @@
 <template>
   <div class="app-index">
-
-    <div class="header">
-      <appHeader />
-    </div>
     <div class="main">
       <div class="menu">
         <appMenus />
@@ -21,7 +17,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import appController from '@/layout/appController.vue';
-import appHeader from '@/layout/appHeader.vue';
+
 import appMenus from '@/layout/appMenus.vue';
 
 </script>
@@ -30,9 +26,7 @@ import appMenus from '@/layout/appMenus.vue';
 .app-index {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-
-
+  height: calc(100vh - 56px);
 
   .main {
     flex: 1;

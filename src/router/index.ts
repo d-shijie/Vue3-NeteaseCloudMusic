@@ -111,6 +111,11 @@ const router = createRouter({
           component: () => import('@/views/podcast/djList/listIndex.vue')
         },
       ]
+    },
+    {
+      path:'/video-detail',
+      name: 'VideoDetail',
+      component: () => import('@/views/video/videoDetail/videoDetailIndex.vue'),
     }
   ]
 })

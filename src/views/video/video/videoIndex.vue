@@ -30,15 +30,16 @@
     <section class="flex flex-wrap justify-between">
       <div class="w-31% mb-15px" v-for="(item, index) in realVideos" :key="index">
         <template v-if="item.data">
-          <div @mouseenter="changeImgUrl(item.data.previewUrl, index)" @mouseout="changeImgUrl(item.data.coverUrl, index)"
-            class="cover w-100% relative cursor-pointer">
+          <div @click="gotoVideoDetail(item.id)" @mouseenter="changeImgUrl(item.data.previewUrl, index)"
+            @mouseout="changeImgUrl(item.data.coverUrl, index)" class="cover w-100% relative cursor-pointer">
             <img ref="videoImgUrlRefs" class="w-100% h-146px rounded" :src="item.data.coverUrl" alt="">
             <span class="absolute top-5px end-5px flex items-center"> <svg-icon name="play"></svg-icon> {{
               formatCount(item.data.playTime)
             }}</span>
             <span class="absolute bottom-5px end-5px">{{ stampToMin(item.data.durationms) }}</span>
           </div>
-          <div class="cursor-pointer video-title my-5px w-100% overflow-hidden whitespace-nowrap text-ellipsis">
+          <div @click="gotoVideoDetail(item.id)"
+            class="cursor-pointer video-title my-5px w-100% overflow-hidden whitespace-nowrap text-ellipsis">
             {{ item.data.title }}
           </div>
           <div class="nickname cursor-pointer">
@@ -55,6 +56,7 @@ import { computed, ref, watch } from 'vue';
 import { getVideoGroupApi, getVideoByGroupApi } from '@/api/video'
 import { stampToMin } from '@/util/timeFormat';
 import { formatCount } from '@/util';
+import router from '@/router';
 const videoGroup = ref<any>([])
 const currentIndex = ref(0)
 const getVideoGroup = () => {
@@ -88,6 +90,15 @@ const realVideos = computed(() => {
 const videoImgUrlRefs = ref()
 const changeImgUrl = (url: string, index: number) => {
   videoImgUrlRefs.value[index].src = url
+}
+
+const gotoVideoDetail = (id: number) => {
+  router.push({
+    path: '/video-detail',
+    query: {
+      id
+    }
+  })
 }
 
 watch(currentIndex, () => {
