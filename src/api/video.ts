@@ -23,9 +23,20 @@ export function getVideoByGroupApi(params:GetVideoByGroupType){
 }
 
 // 视频url
-export function getVideoUrlApi(id:number){
+export function getVideoUrlApi(id:string){
   return request({
     url: '/video/url',
+    method: 'get',
+    params:{
+      id
+    }
+  })
+}
+
+// 视频详情
+export function getVideoDetailApi(id:string){
+  return request({
+    url: '/video/detail',
     method: 'get',
     params:{
       id
