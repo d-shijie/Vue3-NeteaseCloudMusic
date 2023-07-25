@@ -2,10 +2,25 @@
   <div class="w-100%">
     <section v-if="videoGroup.length" class="w-100% flex items-center justify-between mb-24px">
       <div class="title flex items-center px-24px py-6px ">
-        {{ videoGroup[currentIndex].name }}
-        <svg-icon name="arrow_right" class="ml-3px"></svg-icon>
+        <el-popover :popper-style="{ height: '400px', overflow: 'auto' }" placement="bottom-end" :show-arrow="false"
+          :width="648" trigger="click">
+          <div class="flex flex-wrap p-15px pt-0">
+            <div @click="currentIndex = index" :class="{ 'active': currentIndex === index }"
+              class="group w-96px py-5px cursor-pointer mt-15px text-center" v-for="(item, index) in videoGroup"
+              :key="index">
+              {{ item.name }}
+            </div>
+          </div>
+          <template #reference>
+            <div class="flex items-center">
+              {{ videoGroup[currentIndex].name }}
+              <svg-icon name="arrow_right" class="ml-3px"></svg-icon>
+            </div>
+
+          </template>
+        </el-popover>
       </div>
-      <ul class="flex">
+      <ul class=" flex">
         <li @click="currentIndex = index" :class="{ 'active-group': currentIndex === index }"
           class="group-item mx-3px py-3px px-8px" v-for="(item, index) in videoGroup.slice(0, 9)" :key="index">
           {{ item.name }}
@@ -127,6 +142,17 @@ watch(currentIndex, () => {
   &:hover {
     color: rgb(102, 102, 102);
   }
+}
+
+.group {
+  color: var(--v-m-text-color);
+  border-radius: 1em;
+
+}
+
+.active {
+  color: rgb(236, 65, 65);
+  background-color: rgb(72, 54, 54);
 }
 
 .active-group {
