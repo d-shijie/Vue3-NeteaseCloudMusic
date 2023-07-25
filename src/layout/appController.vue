@@ -1,32 +1,22 @@
 <template>
   <div class="app-controller">
     <div class="cover">
-      <img
-        :src="
-          currentMusicInfo.info.al?.picUrl ||
-          'https://img1.baidu.com/it/u=950943067,1138707327&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
-        "
-        alt=""
-      />
+      <img :src="currentMusicInfo.info.al?.picUrl ||
+        'https://img1.baidu.com/it/u=950943067,1138707327&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'
+        " alt="" />
       <div class="music-info">
         <div style="font-size: 14px">
-          <span
-            style="
+          <span style="
               display: inline-block;
               white-space: nowrap;
               text-overflow: ellipsis;
               overflow: hidden;
               max-width: 168px;
-            "
-            >{{ currentMusicInfo.info.name || '' }}</span
-          >
-          <svg-icon
-            v-if="currentMusicInfo.info.name"
-            style="font-size: 20px; cursor: pointer; position: relative; top: 4px"
-            name="like_outline"
-          ></svg-icon>
+            ">{{ currentMusicInfo.info.name || '' }}</span>
+          <svg-icon v-if="currentMusicInfo.info.name"
+            style="font-size: 20px; cursor: pointer; position: relative; top: 4px" name="like_outline"></svg-icon>
         </div>
-        <div style="font-size: 13px">
+        <div class="whitespace-nowrap overflow-hidden text-ellipsis" style="font-size: 13px">
           {{ formatAr(currentMusicInfo.info.ar) }}
         </div>
       </div>
@@ -34,46 +24,20 @@
     <div class="main">
       <div class="controll-wrapper">
         <div class="controll-item">
-          <svg-icon
-            @click="globalStore.currentPlayOrder = 'single'"
-            v-if="globalStore.currentPlayOrder === 'order'"
-            class="svg"
-            style="font-size: 16px"
-            name="play_order"
-          ></svg-icon>
-          <svg-icon
-            @click="globalStore.currentPlayOrder = 'random'"
-            v-if="globalStore.currentPlayOrder === 'single'"
-            class="svg"
-            style="font-size: 16px"
-            name="play_single"
-          ></svg-icon>
-          <svg-icon
-            @click="globalStore.currentPlayOrder = 'list'"
-            v-if="globalStore.currentPlayOrder === 'random'"
-            class="svg"
-            style="font-size: 16px"
-            name="play_random"
-          ></svg-icon>
-          <svg-icon
-            @click="globalStore.currentPlayOrder = 'order'"
-            v-if="globalStore.currentPlayOrder === 'list'"
-            class="svg"
-            style="font-size: 16px"
-            name="play_list"
-          ></svg-icon>
+          <svg-icon @click="globalStore.currentPlayOrder = 'single'" v-if="globalStore.currentPlayOrder === 'order'"
+            class="svg" style="font-size: 16px" name="play_order"></svg-icon>
+          <svg-icon @click="globalStore.currentPlayOrder = 'random'" v-if="globalStore.currentPlayOrder === 'single'"
+            class="svg" style="font-size: 16px" name="play_single"></svg-icon>
+          <svg-icon @click="globalStore.currentPlayOrder = 'list'" v-if="globalStore.currentPlayOrder === 'random'"
+            class="svg" style="font-size: 16px" name="play_random"></svg-icon>
+          <svg-icon @click="globalStore.currentPlayOrder = 'order'" v-if="globalStore.currentPlayOrder === 'list'"
+            class="svg" style="font-size: 16px" name="play_list"></svg-icon>
         </div>
         <div @click="globalStore.prevPlay" class="controll-item">
           <svg-icon class="svg" style="font-size: 16px" name="prefix"></svg-icon>
         </div>
         <div class="controll-item play">
-          <svg-icon
-            @click="pause"
-            v-if="globalStore.isPlay"
-            class="svg"
-            style="font-size: 22px"
-            name="pause"
-          ></svg-icon>
+          <svg-icon @click="pause" v-if="globalStore.isPlay" class="svg" style="font-size: 22px" name="pause"></svg-icon>
           <svg-icon @click="play" v-else class="svg" style="font-size: 22px" name="play"></svg-icon>
         </div>
         <div @click="globalStore.nextPlay" class="controll-item">
@@ -85,7 +49,7 @@
       </div>
       <div class="time">
         <span class="current-time">{{ stampToMin(currentTime) }}</span>
-        <div class="controll-time" ref="controllTimeRef" @click="adjustTime">
+        <div class="controll-time" ref="controllTimeRef" @click="adjustTime($event)">
           <div ref="timerRef" class="timer"></div>
         </div>
         <span class="end-time">{{ stampToMin(currentMusicInfo.info.dt) }}</span>
@@ -95,20 +59,11 @@
       <div class="setting-item tone-quality">
         <el-popover placement="top" :show-arrow="false" :width="200" trigger="click">
           <ul>
-            <li
-              @click="shiftMusicQuality(item.value)"
-              class="my-10px cursor-pointer text-#fefefe flex items-center"
-              v-for="(item, index) in musicQuality"
-              :key="index"
-            >
-              <svg-icon
-                :style="{ opacity: globalStore.currentMusicLevel === item.value ? '1' : '0' }"
-                class="mr-3px"
-                name="correct"
-              ></svg-icon>
-              <span
-                :style="{ color: globalStore.currentMusicLevel === item.value ? 'red' : '#fefefe' }"
-              >
+            <li @click="shiftMusicQuality(item.value)" class="my-10px cursor-pointer text-#fefefe flex items-center"
+              v-for="(item, index) in musicQuality" :key="index">
+              <svg-icon :style="{ opacity: globalStore.currentMusicLevel === item.value ? '1' : '0' }" class="mr-3px"
+                name="correct"></svg-icon>
+              <span :style="{ color: globalStore.currentMusicLevel === item.value ? 'red' : '#fefefe' }">
                 {{ item.label }}
               </span>
             </li>
@@ -237,7 +192,7 @@ const shiftMusicQuality = (levle: currentMusicLevel) => {
 
 // 控制时间
 const controllTimeRef = ref()
-const adjustTime = ($event: PointerEvent) => {
+const adjustTime = ($event: any) => {
   // 鼠标距离浏览器左侧距离
   const clientX = $event.clientX
   // 时间wrapper元素距离浏览器左侧距离
@@ -252,12 +207,12 @@ const adjustTime = ($event: PointerEvent) => {
 }
 
 // 调整音量
-const currentVolume=ref()
-currentVolume.value=globalStore.appAudio.volume*100
+const currentVolume = ref()
+currentVolume.value = globalStore.appAudio.volume * 100
 
 
-const changeVolume=()=>{
-  globalStore.appAudio.volume=currentVolume.value/100
+const changeVolume = () => {
+  globalStore.appAudio.volume = currentVolume.value / 100
 }
 
 const formatAr = (arr: any[]): string => {
@@ -387,6 +342,7 @@ const formatAr = (arr: any[]): string => {
     }
   }
 }
+
 :deep(.el-slider__button) {
   display: none !important;
 }
