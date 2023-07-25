@@ -43,3 +43,28 @@ export function getVideoDetailApi(id:string){
     }
   })
 }
+
+// 相关视频
+export function getRelatedVideoApi(id:string){
+  return request({
+    url: '/related/allvideo',
+    method: 'get',
+    params:{
+      id
+    }
+  })
+}
+// 视频评论
+interface GetVideoCommentParams {
+  id:string
+  limit:number
+  offset:number
+  before?:number
+}
+export function getVideoCommentApi(params:GetVideoCommentParams){
+  return request({
+    url: '/comment/video',
+    method: 'get',
+    params
+  })
+}

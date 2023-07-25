@@ -5,9 +5,9 @@ interface CommentType {
   // 1 发送, 2 回复
   t: 1 | 2
   type: CType
-  id: number
+  id: number|string
   content: string
-  commentId?: number
+  commentId?: number|string
 }
 export function commentApi (data: CommentType) {
   return request({

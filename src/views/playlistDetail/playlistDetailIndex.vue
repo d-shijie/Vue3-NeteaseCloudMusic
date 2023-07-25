@@ -63,8 +63,8 @@
     <!-- <component :is="activeComponent" /> -->
     <PlaylistMusics v-if="activeTab === 'musicList'" />
     <Collectors v-if="activeTab === 'collectors'" />
-    <Comment @like-comment="getComments" :type="2" @hanlde-comment="commentPlaylist" :hot-comments="hotComments"
-      :comments="playlistComments" v-if="activeTab === 'comment'">
+    <Comment class="py-20px px-30px" @like-comment="getComments" :type="2" @hanlde-comment="commentPlaylist"
+      :hot-comments="hotComments" :comments="playlistComments" v-if="activeTab === 'comment'">
       <template v-slot:pagination>
         <el-pagination @current-change="hanldCurrentChange" small background v-model:current-page="params.offset"
           :page-size="60" layout="prev, pager, next" :total="total" />

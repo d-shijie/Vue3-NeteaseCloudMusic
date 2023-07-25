@@ -60,7 +60,7 @@ const likeComment = () => {
 
 <style scoped lang="scss">
 .comment {
-  padding: 0 30px 20px;
+  // padding: 0 30px 20px;
 
   :deep(.el-textarea) {
 

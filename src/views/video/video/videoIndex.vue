@@ -93,8 +93,6 @@ const changeImgUrl = (url: string, index: number) => {
 }
 
 const gotoVideoDetail = (id: number) => {
-  console.log(id);
-
   router.push({
     path: '/video-detail',
     query: {
