@@ -30,7 +30,7 @@
     <section class="flex flex-wrap justify-between">
       <div class="w-31% mb-15px" v-for="(item, index) in realVideos" :key="index">
         <template v-if="item.data">
-          <div @click="gotoVideoDetail(item.id)" @mouseenter="changeImgUrl(item.data.previewUrl, index)"
+          <div @click="gotoVideoDetail(item.data.vid)" @mouseenter="changeImgUrl(item.data.previewUrl, index)"
             @mouseout="changeImgUrl(item.data.coverUrl, index)" class="cover w-100% relative cursor-pointer">
             <img ref="videoImgUrlRefs" class="w-100% h-146px rounded" :src="item.data.coverUrl" alt="">
             <span class="absolute top-5px end-5px flex items-center"> <svg-icon name="play"></svg-icon> {{
@@ -38,7 +38,7 @@
             }}</span>
             <span class="absolute bottom-5px end-5px">{{ stampToMin(item.data.durationms) }}</span>
           </div>
-          <div @click="gotoVideoDetail(item.id)"
+          <div @click="gotoVideoDetail(item.data.vid)"
             class="cursor-pointer video-title my-5px w-100% overflow-hidden whitespace-nowrap text-ellipsis">
             {{ item.data.title }}
           </div>
@@ -93,10 +93,13 @@ const changeImgUrl = (url: string, index: number) => {
 }
 
 const gotoVideoDetail = (id: number) => {
+  console.log(id);
+
   router.push({
     path: '/video-detail',
     query: {
-      id
+      id,
+      type: 0
     }
   })
 }

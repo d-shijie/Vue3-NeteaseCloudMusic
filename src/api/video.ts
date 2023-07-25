@@ -17,6 +17,18 @@ export function getVideoByGroupApi(params:GetVideoByGroupType){
   return request({
     url: '/video/group',
     method: 'get',
-    params
+    params,
+    _fullLoading:true
+  })
+}
+
+// 视频url
+export function getVideoUrlApi(id:number){
+  return request({
+    url: '/video/url',
+    method: 'get',
+    params:{
+      id
+    }
   })
 }
