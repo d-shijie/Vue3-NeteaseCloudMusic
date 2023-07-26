@@ -86,3 +86,17 @@ export function getMvByExclusiveApi () {
     }
   })
 }
+
+// mv排行
+interface GetMvByRankParams {
+  limit:number
+  area?:string
+  offset?:number
+}
+export function getMvByRankApi (params:GetMvByRankParams) {
+  return request({
+    url: '/top/mv',
+    method: 'get',
+    params
+  })
+}

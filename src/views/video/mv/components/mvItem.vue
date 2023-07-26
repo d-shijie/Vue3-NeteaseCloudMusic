@@ -19,7 +19,7 @@ interface Props {
   coverUrl: string
   title: string
   playCount: number
-  artist?: Artist | Artist[]
+  artist?: Artist[]
 }
 type Artist = {
   name: string

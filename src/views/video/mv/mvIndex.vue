@@ -41,8 +41,10 @@
       <div class="flex items-center">
         <h4 class="flex items-center cursor-pointer">MV排行榜 <svg-icon name="arrow_right"></svg-icon></h4>
       </div>
-      <div class="flex flex-wrap justify-between">
-        content
+      <div class="flex justify-between flex-wrap">
+        <MvRankItem @handleClick="gotoDetail(item.id)" class="rank-item w-50% h-130px" :cover="item.cover"
+          :artist="item.artists" :title="item.name" :index="index" :playCount="item.playCount"
+          v-for="(item, index) in rankMvs" :key="item" />
       </div>
     </section>
   </div>
@@ -50,8 +52,9 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { getNewMVByAreaApi, getMvByOrderApi, getMvByExclusiveApi } from '@/api/mv'
+import { getNewMVByAreaApi, getMvByOrderApi, getMvByExclusiveApi, getMvByRankApi } from '@/api/mv'
 import MvItem from './components/mvItem.vue'
+import MvRankItem from './components/mvRankItem.vue'
 import { useRouter } from 'vue-router';
 const router = useRouter()
 const currentArea = ref('内地')
@@ -95,6 +98,15 @@ const gotoDetail = (id: number) => {
   })
 }
 
+const rankMvs = ref<any[]>([])
+const getMvByRank = () => {
+  getMvByRankApi({
+    limit: 10
+  }).then(res => {
+    rankMvs.value = res.data.data
+  })
+}
+getMvByRank()
 watch(currentArea, () => {
   getNewMVByArea()
 })
@@ -105,5 +117,22 @@ watch(currentArea, () => {
   background-color: #3f2d2d;
 
   color: rgb(236, 65, 65)
+}
+
+.rank-item {
+  box-shadow: 0px 1px 1px #363636;
+
+  &:nth-child(odd) {
+    box-shadow: 1px 1px 1px #363636;
+  }
+
+}
+
+.rank-item:nth-last-child(2) {
+  box-shadow: 1px 0px 0px #363636;
+}
+
+.rank-item:nth-last-child(1) {
+  box-shadow: 0px 0px 0px #363636;
 }
 </style>
