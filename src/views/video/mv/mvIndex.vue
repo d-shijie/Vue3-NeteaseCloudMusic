@@ -16,12 +16,41 @@
           :coverUrl="item.cover" :title="item.name" :playCount="item.playCount" :artist="item.artists" />
       </div>
     </section>
+
+    <section>
+      <div class="flex items-center">
+        <h4 class="flex items-center cursor-pointer">最热MV <svg-icon name="arrow_right"></svg-icon></h4>
+      </div>
+      <div class="flex flex-wrap justify-between">
+        <MvItem @handleClick="gotoDetail(item.id)" class="w-32%" v-for="(item, index) in hotMvs" :key="index"
+          :coverUrl="item.cover" :title="item.name" :playCount="item.playCount" :artist="item.artists" />
+      </div>
+    </section>
+
+    <section>
+      <div class="flex items-center">
+        <h4 class="flex items-center cursor-pointer">网易出品 <svg-icon name="arrow_right"></svg-icon></h4>
+      </div>
+      <div class="flex flex-wrap justify-between">
+        <MvItem @handleClick="gotoDetail(item.id)" class="w-32%" v-for="(item, index) in exclusiveMvs" :key="index"
+          :coverUrl="item.cover" :title="item.name" :playCount="item.playCount" />
+      </div>
+    </section>
+
+    <section>
+      <div class="flex items-center">
+        <h4 class="flex items-center cursor-pointer">MV排行榜 <svg-icon name="arrow_right"></svg-icon></h4>
+      </div>
+      <div class="flex flex-wrap justify-between">
+        content
+      </div>
+    </section>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import { getNewMVByAreaApi } from '@/api/mv'
+import { getNewMVByAreaApi, getMvByOrderApi, getMvByExclusiveApi } from '@/api/mv'
 import MvItem from './components/mvItem.vue'
 import { useRouter } from 'vue-router';
 const router = useRouter()
@@ -40,6 +69,22 @@ const getNewMVByArea = () => {
 }
 getNewMVByArea()
 
+const hotMvs = ref<any[]>([])
+const getMvByOrder = () => {
+  getMvByOrderApi({ order: '最热', limit: 6 }).then(res => {
+
+    hotMvs.value = res.data.data
+  })
+}
+getMvByOrder()
+
+const exclusiveMvs = ref<any[]>([])
+const getMvByExclusive = () => {
+  getMvByExclusiveApi().then(res => {
+    exclusiveMvs.value = res.data.data
+  })
+}
+getMvByExclusive()
 const gotoDetail = (id: number) => {
   router.push({
     path: '/video-detail',
@@ -49,6 +94,7 @@ const gotoDetail = (id: number) => {
     }
   })
 }
+
 watch(currentArea, () => {
   getNewMVByArea()
 })
