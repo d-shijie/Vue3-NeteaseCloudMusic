@@ -20,7 +20,7 @@
           </template>
         </el-popover>
       </div>
-      <ul class=" flex">
+      <ul class="flex">
         <li @click="currentIndex = index" :class="{ 'active-group': currentIndex === index }"
           class="group-item mx-3px py-3px px-8px" v-for="(item, index) in videoGroup.slice(0, 9)" :key="index">
           {{ item.name }}
