@@ -110,6 +110,16 @@ const router = createRouter({
           name: 'DjList',
           component: () => import('@/views/podcast/djList/listIndex.vue')
         },
+        {
+          path: '/index/all-mv',
+          name: 'AllMv',
+          component: () => import('@/views/video/mv/allMv.vue')
+        },
+        {
+          path: '/index/mv-rank',
+          name: 'MvRank',
+          component: () => import('@/views/video/mv/mvRank.vue')
+        },
       ]
     },
     {

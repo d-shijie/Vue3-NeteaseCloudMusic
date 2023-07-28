@@ -2,7 +2,8 @@
   <div class="w-100%">
     <section>
       <div class="flex items-center">
-        <h4 class="flex items-center cursor-pointer">最新MV <svg-icon name="arrow_right"></svg-icon></h4>
+        <h4 @click="goto('/index/all-mv')" class="flex items-center cursor-pointer">最新MV <svg-icon
+            name="arrow_right"></svg-icon></h4>
         <ul class="flex items-center flex-1 justify-end">
           <li @click="currentArea = item" style="font-size: 12px;" :class="{ 'active-group': currentArea === item }"
             class="rounded-xl mx-3px py-3px px-8px cursor-default text-#666666 hover:text-#d0d0d0"
@@ -19,7 +20,8 @@
 
     <section>
       <div class="flex items-center">
-        <h4 class="flex items-center cursor-pointer">最热MV <svg-icon name="arrow_right"></svg-icon></h4>
+        <h4 @click="goto('/index/all-mv')" class="flex items-center cursor-pointer">最热MV <svg-icon
+            name="arrow_right"></svg-icon></h4>
       </div>
       <div class="flex flex-wrap justify-between">
         <MvItem @handleClick="gotoDetail(item.id)" class="w-32%" v-for="(item, index) in hotMvs" :key="index"
@@ -29,7 +31,8 @@
 
     <section>
       <div class="flex items-center">
-        <h4 class="flex items-center cursor-pointer">网易出品 <svg-icon name="arrow_right"></svg-icon></h4>
+        <h4 @click="goto('/index/all-mv')" class="flex items-center cursor-pointer">网易出品 <svg-icon
+            name="arrow_right"></svg-icon></h4>
       </div>
       <div class="flex flex-wrap justify-between">
         <MvItem @handleClick="gotoDetail(item.id)" class="w-32%" v-for="(item, index) in exclusiveMvs" :key="index"
@@ -39,7 +42,8 @@
 
     <section>
       <div class="flex items-center">
-        <h4 class="flex items-center cursor-pointer">MV排行榜 <svg-icon name="arrow_right"></svg-icon></h4>
+        <h4 @click="goto('/index/mv-rank')" class="flex items-center cursor-pointer">MV排行榜 <svg-icon
+            name="arrow_right"></svg-icon></h4>
       </div>
       <div class="flex justify-between flex-wrap">
         <MvRankItem @handleClick="gotoDetail(item.id)" class="rank-item w-50% h-130px" :cover="item.cover"
@@ -107,6 +111,13 @@ const getMvByRank = () => {
   })
 }
 getMvByRank()
+
+const goto = (path: string) => {
+  router.push({
+    path
+  })
+}
+
 watch(currentArea, () => {
   getNewMVByArea()
 })
