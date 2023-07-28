@@ -29,7 +29,7 @@ const tabs = ref<Tab[]>([{
   align-items: center;
 
   .page {
-    padding: 30px;
+    padding: 20px 30px;
     max-width: 1098px;
     min-width: 765px;
     width: 75vw;

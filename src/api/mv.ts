@@ -93,10 +93,11 @@ interface GetMvByRankParams {
   area?:string
   offset?:number
 }
-export function getMvByRankApi (params:GetMvByRankParams) {
+export function getMvByRankApi (params:GetMvByRankParams,loading?:boolean=false) {
   return request({
     url: '/top/mv',
     method: 'get',
-    params
+    params,
+    _fullLoading:loading
   })
 }

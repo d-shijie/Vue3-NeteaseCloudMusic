@@ -9,7 +9,7 @@
     </div>
     <div class="w-50% h-90px flex flex-col items-start">
       <div @click="handleClick" style="font-size: 14px;"
-        class=" hover:text-#fff mb-24px w-100% cursor-pointer text-ellipsis whitespace-nowrap overflow-hidden">{{
+        class=" hover:text-#fff mb-24px w-60% cursor-pointer text-ellipsis whitespace-nowrap overflow-hidden">{{
           props.title
         }}</div>
       <div style="font-size: 13px;" class="cursor-pointer text-#666666 hover:text-#8ea8af">{{ formatAr(props.artist) }}
