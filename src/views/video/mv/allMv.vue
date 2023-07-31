@@ -177,7 +177,6 @@ watch(() => params, () => {
 .filter-item {
   &:not(:last-child) {
     border-right: 1px solid #353535;
-
   }
 
   padding: 0 5px;

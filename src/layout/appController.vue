@@ -6,13 +6,8 @@
         " alt="" />
       <div class="music-info">
         <div style="font-size: 14px">
-          <span style="
-              display: inline-block;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-              overflow: hidden;
-              max-width: 168px;
-            ">{{ currentMusicInfo.info.name || '' }}</span>
+          <span class="w-168px overflow-hidden whitespace-nowrap text-ellipsis mr-5px">{{ currentMusicInfo.info.name || ''
+          }}</span>
           <svg-icon v-if="currentMusicInfo.info.name"
             style="font-size: 20px; cursor: pointer; position: relative; top: 4px" name="like_outline"></svg-icon>
         </div>
