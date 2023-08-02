@@ -14,7 +14,7 @@
       </section>
     </section>
 
-    <section class="profile w-232px p-30px">
+    <section class="profile w-232px ">
       <UserInfo />
     </section>
   </div>

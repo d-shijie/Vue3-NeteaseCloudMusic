@@ -46,7 +46,7 @@ export function getUserFansApi(uid: number) {
   })
 }
 
-//
+// 用户详情
 export function getUserDetailApi(uid: number) {
   return request({
     url: '/user/detail',
@@ -54,5 +54,17 @@ export function getUserDetailApi(uid: number) {
     params: {
       uid
     }
+  })
+}
+// 热门话题
+interface GetHotTopicType {
+  limit?:number
+  offset?:number
+}
+export function getHotTopicApi(params: GetHotTopicType) {
+  return request({
+    url: '/hot/topic',
+    method: 'get',
+    params
   })
 }
