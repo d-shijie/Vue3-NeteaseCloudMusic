@@ -45,3 +45,14 @@ export function getUserFansApi(uid: number) {
     }
   })
 }
+
+//
+export function getUserDetailApi(uid: number) {
+  return request({
+    url: '/user/detail',
+    method: 'get',
+    params: {
+      uid
+    }
+  })
+}
