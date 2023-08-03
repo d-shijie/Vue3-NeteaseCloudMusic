@@ -9,8 +9,9 @@
         </span>
       </section>
 
-      <section class="mt-72px w-100% ">
+      <section class="mt-72px w-100% relative">
         <EventList />
+     
       </section>
     </section>
 
