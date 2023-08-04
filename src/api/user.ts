@@ -68,3 +68,13 @@ export function getHotTopicApi(params: GetHotTopicType) {
     params
   })
 }
+// 删除用户动态
+export function deleteUserEventApi(evId: number) {
+  return request({
+    url: '/event/del',
+    method: 'post',
+    data:{
+      evId
+    }
+  })
+}

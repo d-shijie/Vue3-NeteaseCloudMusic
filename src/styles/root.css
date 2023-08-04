@@ -5,4 +5,10 @@
   --v-m-text-color:rgb(215,215,215);
   --v-m-text-active-color:rgb(255,255,255);
   --v-m-dark-border-color:rgb(75, 75, 75);
+  --v-m-red-color:#ec4141
+}
+.app-red-tag {
+  border: 1px solid var(--v-m-red-color);
+  color:  var(--v-m-red-color);
+  font-size: 12px;
 }

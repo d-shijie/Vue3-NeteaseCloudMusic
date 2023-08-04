@@ -1,5 +1,6 @@
 import axios, { type AxiosInstance, type AxiosRequestConfig } from 'axios'
 import {FullLoading} from './loading'
+import { ElMessage } from 'element-plus';
 declare module "axios" {
   export interface AxiosRequestConfig {
     _fullLoading?: boolean;
@@ -18,9 +19,13 @@ function createInstance () {
 
   instance.interceptors.response.use((response) =>{
     response.config?._fullLoading&& fullLoading.endLoading()
+  
     return response
   } , (error) => {
     error.config?._fullLoading&& fullLoading.endLoading()
+    ElMessage.info(error.response.data.msg)
+   
+    
     return Promise.reject(error)
   })
   
