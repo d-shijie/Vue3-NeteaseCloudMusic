@@ -1,13 +1,13 @@
 <template>
   <div class="fm">
     <div class="page">
-     1
+     <FmPlayer/>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-
+import FmPlayer from './components/fmPlayer.vue'
 </script>
 
 <style scoped lang="scss">

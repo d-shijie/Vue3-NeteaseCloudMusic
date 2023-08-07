@@ -40,12 +40,17 @@ export const useGlobalStore = defineStore(
     const currentPlaylist = ref<any[]>([])
     const currentPlayOrder = ref<PlayOrderType>('order')
 
-    const setCurrentPlaylist = async (id: number) => {
-      currentPlaylistId.value = id
-      currentPlaylist.value = await getCurrentPlaylist()
-      const url = await getCurrentMusicUrl(currentPlaylist.value[0].id)
-      setAudioUrlAndId(url, currentPlaylist.value[0].id)
-      audioPlay()
+    const setCurrentPlaylist = async (val: number|Array<any>) => {
+      if(Array.isArray(val)){
+        currentPlaylistId.value = val[0].id
+        currentPlaylist.value=val
+      }else {
+        currentPlaylistId.value = val
+        currentPlaylist.value = await getCurrentPlaylist()
+      }
+      // const url = await getCurrentMusicUrl(currentPlaylist.value[0].id)
+      // setAudioUrlAndId(url, currentPlaylist.value[0].id)
+      // audioPlay()
     }
     // 播放上一首
     const prevPlay = async () => {

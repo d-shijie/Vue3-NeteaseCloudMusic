@@ -48,3 +48,11 @@ export function getNewMusicsApi(type: string) {
     _fullLoading: true
   })
 }
+// 私人fm
+export function getPrivateFmApi() {
+  return request({
+    url: '/personal_fm',
+    method: 'get',
+    _fullLoading: true
+  })
+}
