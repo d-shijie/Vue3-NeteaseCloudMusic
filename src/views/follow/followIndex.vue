@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <section class="flex-1 px-30px overflow-hidden">
-      <section class="fixed-button pt-20px flex items-center fixed bg-#2b2b2b ">
+      <section class="fixed-button pt-20px flex items-center fixed bg-#2b2b2b z-1000">
         <h3 class="p-0 m-0 mr-15px">动态</h3>
         <span class="flex items-center bg-#ec4141 px-18px py-8px rounded-2xl hover:bg-#d73535 cursor-default">
           <svg-icon name="send_event" class="mr-3px"></svg-icon>

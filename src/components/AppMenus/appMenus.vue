@@ -86,12 +86,12 @@ const mainMenus = ref([
     title: '关注',
     url: '/index/follow'
   },
+  // {
+  //   title: '直播',
+  //   url: '/index/live-broadcast'
+  // },
   {
-    title: '直播',
-    url: '/index/live-broadcast'
-  },
-  {
-    title: '私人FM',
+    title: '私人漫游',
     url: '/index/private-fm'
   },
 ])

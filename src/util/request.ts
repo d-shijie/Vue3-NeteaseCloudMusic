@@ -16,16 +16,12 @@ function createInstance () {
     }
     return config
   }, (error) => Promise.reject(error))
-
   instance.interceptors.response.use((response) =>{
     response.config?._fullLoading&& fullLoading.endLoading()
-  
     return response
   } , (error) => {
     error.config?._fullLoading&& fullLoading.endLoading()
     ElMessage.info(error.response.data.msg)
-   
-    
     return Promise.reject(error)
   })
   
