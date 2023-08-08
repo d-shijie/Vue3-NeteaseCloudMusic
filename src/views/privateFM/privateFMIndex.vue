@@ -1,7 +1,7 @@
 <template>
   <div class="fm">
     <div class="page">
-     <FmPlayer/>
+      <FmPlayer />
     </div>
   </div>
 </template>
@@ -19,7 +19,7 @@ import FmPlayer from './components/fmPlayer.vue'
   .page {
     padding: 20px 30px;
     max-width: 860px;
-  
+
     min-width: 665px;
     width: 75vw;
     display: flex;
