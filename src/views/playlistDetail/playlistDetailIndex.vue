@@ -120,8 +120,6 @@ const getComments = () => {
     offset: (params.offset - 1) * params.limit,
     limit: params.limit
   }).then(res => {
-
-
     playlistComments.value = []
     hotComments.value = []
     total.value = res.data.total
@@ -157,7 +155,6 @@ const hanldCurrentChange = (page: number) => {
   params.offset = page
   getComments()
 }
-
 
 // 发送评论
 const commentPlaylist = (content: string) => {

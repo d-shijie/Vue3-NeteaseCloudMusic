@@ -46,3 +46,17 @@ export function likeCommentApi (data: likeCommentType) {
     data
   })
 }
+// 歌曲评论
+interface GetMusicCommentParams {
+  id:number
+  limit?:number
+  offset?:number
+  before?:number
+}
+export function getMusicCommentApi (params: GetMusicCommentParams) {
+  return request({
+    url: "/comment/music",
+    method: 'get',
+    params
+  })
+}
