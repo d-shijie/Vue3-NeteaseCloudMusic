@@ -1,7 +1,7 @@
 <template>
   <div>
     <section v-if="detailInfo">
-      <h2>{{ detailInfo.name }}</h2>
+      <h2 class="overflow-hidden text-ellipsis text-nowrap w-100%">{{ detailInfo.name }}</h2>
       <div class="flex justify-between text-13px text-#a9a9a9">
         <span class="overflow-hidden text-ellipsis text-nowrap w-40%">
           专辑：<a class="text-#8a8a8a cursor-pointer">{{ detailInfo.al.name }}</a>
@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { getMusicDetailApi, getMusicLyricApi } from '@/api/music'
 import { formatAr } from '@/util'
 import { useGlobalStore } from '@/stores/modules/global';
@@ -64,10 +64,7 @@ getMusicLyric()
 const timer = ref()
 globalStore.$subscribe(() => {
   if (globalStore.currentMusicId === props.id) {
-
     clearInterval(timer.value)
-    console.log(globalStore.isPlay);
-
     if (globalStore.isPlay) {
       timer.value = setInterval(() => {
         console.log(globalStore.appAudio.currentTime);

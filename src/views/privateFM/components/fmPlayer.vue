@@ -4,12 +4,12 @@
       <section class="flex-1 mr-20px my-50px">
         <div class="relative">
           <img class="w-300px h-300px rounded-l" :src="fms[currentIndex].album.picUrl" alt="">
-          <span @click="playFm" v-if="!playing"
-            class="bg-#fff -translate-x-50% -translate-y-50% cursor-pointer opacity-80 absolute start-50% top-50% flex items-center justify-center w-50px h-50px rounded-full">
+          <span v-show="!playing" ref="playBtnRef" @click="playFm"
+            class="play-btn bg-#fff -translate-x-50% -translate-y-50% cursor-pointer opacity-80 absolute start-50% top-50% flex items-center justify-center w-50px h-50px rounded-full">
             <svg-icon class="text-20px relative start-2px" name="play_red"></svg-icon>
           </span>
-          <span v-else @click="pauseFm"
-            class="bg-#fff cursor-pointer opacity-80 absolute end-10px bottom-10px flex items-center justify-center w-40px h-40px rounded-full">
+          <span v-show="playing" ref="pauseBtnRef" @click="pauseFm"
+            class="play-btn bg-#fff cursor-pointer opacity-80 absolute end-10px bottom-10px flex items-center justify-center w-40px h-40px rounded-full">
             <svg-icon class="text-20px" name="pause_red"></svg-icon>
           </span>
         </div>
@@ -136,9 +136,16 @@ const commentMusic = (content: string) => {
 }
 
 // 歌词
-const playing = ref(false)
 
+const playing = ref(false)
+const playBtnRef = ref()
+const pauseBtnRef = ref()
 const playFm = () => {
+  playBtnRef.value.classList.add('play')
+  pauseBtnRef.value.classList.remove('pause')
+  setTimeout(() => {
+    playing.value = !playing.value
+  }, 1000)
   if (globalStore.currentMusicId === fms.value[currentIndex.value].id) {
     globalStore.audioPlay()
     return
@@ -149,17 +156,53 @@ const playFm = () => {
   }).then(res => {
     globalStore.setAudioUrlAndId(res.data.data[0].url, fms.value[currentIndex.value].id)
     globalStore.audioPlay()
-    playing.value = true
   })
 }
 
 const pauseFm = () => {
   globalStore.audioPause()
-  playing.value = false
+  pauseBtnRef.value.classList.add('pause')
+  playBtnRef.value.classList.remove('play')
+  setTimeout(() => {
+    playing.value = !playing.value
+  }, 1000)
 }
 watch(() => params.id, () => {
   getMusicComment()
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.play {
+  animation: play-out 1s ease;
+}
+
+@keyframes play-out {
+  0% {
+    transform: translate(0px, 0px);
+    scale: (1);
+  }
+
+  100% {
+    transform: translate(120px, 120px);
+    scale: (0.8);
+  }
+}
+
+.pause {
+  animation: pause-out 1s ease;
+}
+
+@keyframes pause-out {
+  0% {
+    transform: translate(0px, 0px);
+    scale: (1);
+  }
+
+  100% {
+    transform: translate(-100px, -100px);
+    scale: (1.2);
+
+  }
+}
+</style>
