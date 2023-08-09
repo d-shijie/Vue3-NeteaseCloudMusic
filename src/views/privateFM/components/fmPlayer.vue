@@ -1,7 +1,7 @@
 <template>
   <div class="w-100% flex justify-center flex-col items-center">
     <section class="flex w-600px " v-if="fms.length">
-      <section class="flex-1 mr-15px">
+      <section class="flex-1 mr-15px my-50px">
         <div class="relative">
           <img class="w-300px h-300px rounded-l" :src="fms[currentIndex].album.picUrl" alt="">
           <span
@@ -33,7 +33,7 @@
         </div>
       </section>
       <section class="flex-1 ml-15px">
-        <div>1</div>
+        <AppLyric :id="fms[currentIndex].id" />
       </section>
     </section>
     <section>
@@ -54,6 +54,7 @@ import { getPrivateFmApi } from '@/api/music';
 import { getMusicCommentApi, commentApi } from '@/api/comment'
 import { useGlobalStore } from '@/stores/modules/global';
 import AppComment, { type Comments } from '@/components/Comment/appComment.vue';
+import AppLyric from '@/components/AppLyric/appLyric.vue'
 import { ElMessage } from 'element-plus';
 const globalStore = useGlobalStore()
 const fms = ref<any[]>([])
@@ -98,8 +99,6 @@ const getMusicComment = () => {
         })
       })
     }
-
-
     res.data.comments.forEach((item: any) => {
       playlistComments.value.push({
         avatarUrl: item.user.avatarUrl,
