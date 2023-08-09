@@ -1,14 +1,14 @@
 <template>
   <div class="w-100% flex justify-center flex-col items-center">
-    <section class="flex w-600px " v-if="fms.length">
-      <section class="flex-1 mr-15px my-50px">
+    <section class="flex  w-600px " v-if="fms.length">
+      <section class="flex-1 mr-20px my-50px">
         <div class="relative">
           <img class="w-300px h-300px rounded-l" :src="fms[currentIndex].album.picUrl" alt="">
-          <span
+          <span @click="playFm" v-if="!playing"
             class="bg-#fff -translate-x-50% -translate-y-50% cursor-pointer opacity-80 absolute start-50% top-50% flex items-center justify-center w-50px h-50px rounded-full">
             <svg-icon class="text-20px relative start-2px" name="play_red"></svg-icon>
           </span>
-          <span
+          <span v-else @click="pauseFm"
             class="bg-#fff cursor-pointer opacity-80 absolute end-10px bottom-10px flex items-center justify-center w-40px h-40px rounded-full">
             <svg-icon class="text-20px" name="pause_red"></svg-icon>
           </span>
@@ -32,7 +32,7 @@
           </span>
         </div>
       </section>
-      <section class="flex-1 ml-15px">
+      <section class="flex-1 ml-20px">
         <AppLyric :id="fms[currentIndex].id" />
       </section>
     </section>
@@ -50,13 +50,15 @@
 
 <script setup lang="ts">
 import { ref, reactive, watch } from 'vue'
-import { getPrivateFmApi } from '@/api/music';
+import { getPrivateFmApi, getMusicUrlApi } from '@/api/music';
 import { getMusicCommentApi, commentApi } from '@/api/comment'
 import { useGlobalStore } from '@/stores/modules/global';
 import AppComment, { type Comments } from '@/components/Comment/appComment.vue';
 import AppLyric from '@/components/AppLyric/appLyric.vue'
 import { ElMessage } from 'element-plus';
+
 const globalStore = useGlobalStore()
+
 const fms = ref<any[]>([])
 const currentIndex = ref(0)
 const getPrivateFm = () => {
@@ -131,6 +133,29 @@ const commentMusic = (content: string) => {
       ElMessage.info('请登录')
     }
   })
+}
+
+// 歌词
+const playing = ref(false)
+
+const playFm = () => {
+  if (globalStore.currentMusicId === fms.value[currentIndex.value].id) {
+    globalStore.audioPlay()
+    return
+  }
+  getMusicUrlApi({
+    id: fms.value[currentIndex.value].id,
+    level: globalStore.currentMusicLevel
+  }).then(res => {
+    globalStore.setAudioUrlAndId(res.data.data[0].url, fms.value[currentIndex.value].id)
+    globalStore.audioPlay()
+    playing.value = true
+  })
+}
+
+const pauseFm = () => {
+  globalStore.audioPause()
+  playing.value = false
 }
 watch(() => params.id, () => {
   getMusicComment()

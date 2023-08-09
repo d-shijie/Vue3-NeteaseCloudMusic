@@ -121,21 +121,22 @@ const getComments = () => {
     limit: params.limit
   }).then(res => {
     playlistComments.value = []
-    hotComments.value = []
     total.value = res.data.total
-    res.data.hotComments.slice(0, 9).forEach((item: any) => {
-      hotComments.value.push({
-        avatarUrl: item.user.avatarUrl,
-        content: item.content,
-        likeCount: item.likedCount,
-        time: item.time,
-        lieked: item.lieked,
-        nickname: item.user.nickname,
-        commentId: item.commentId,
-        userId: item.user.userId
+    if (res.data.hotComments) {
+      hotComments.value = []
+      res.data.hotComments.slice(0, 9).forEach((item: any) => {
+        hotComments.value.push({
+          avatarUrl: item.user.avatarUrl,
+          content: item.content,
+          likeCount: item.likedCount,
+          time: item.time,
+          lieked: item.lieked,
+          nickname: item.user.nickname,
+          commentId: item.commentId,
+          userId: item.user.userId
+        })
       })
-    })
-
+    }
     res.data.comments.forEach((item: any) => {
       playlistComments.value.push({
         avatarUrl: item.user.avatarUrl,
