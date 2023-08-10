@@ -12,7 +12,8 @@
       </div>
       <section>
         <ul class="h-400px overflow-auto mt-20px">
-          <li class="py-10px text-#606060 text-14px leading-24px" v-for="item in lyric" :key="item.time">
+          <li :class="{ 'active-lyric': item.time === currentTime }" class="py-10px text-#606060 text-14px leading-24px"
+            v-for="item in lyric" :key="item.time">
             {{ item.text }}
           </li>
         </ul>
@@ -24,7 +25,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getMusicDetailApi, getMusicLyricApi } from '@/api/music'
-import { formatAr } from '@/util'
+import { formatAr, minToSecond } from '@/util'
 import { useGlobalStore } from '@/stores/modules/global';
 const globalStore = useGlobalStore()
 interface Props {
@@ -51,8 +52,9 @@ const getMusicLyric = () => {
     arr.forEach((item: string) => {
       const matches = item.match(regex);
       if (item.replace(regex, '').trim()) {
+        const minStr = matches ? matches[0].replace(/^\[|\]$/g, "").replace(/[:.]\d+$/, '') : '00:00'
         lyric.value.push({
-          time: matches ? matches[0].replace(/^\[|\]$/g, "") : 0,
+          time: minToSecond(minStr),
           text: item.replace(regex, '').trim()
         })
       }
@@ -61,17 +63,25 @@ const getMusicLyric = () => {
 }
 getMusicLyric()
 
+const currentTime = ref(0)
+// 通过props.id globalStore.currentMusicId 判断是否当前为需要歌词的页面 
+// TODO 监听appAudio的时间改变进行歌词的时间对应 改变元素高度
 const timer = ref()
 globalStore.$subscribe(() => {
   if (globalStore.currentMusicId === props.id) {
     clearInterval(timer.value)
     if (globalStore.isPlay) {
       timer.value = setInterval(() => {
-        console.log(globalStore.appAudio.currentTime);
+        currentTime.value = Number(globalStore.appAudio.currentTime.toFixed(0))
       }, 1000)
     }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.active-lyric {
+  color: var(--v-m-text-color) !important;
+  font-weight: 600 !important;
+}
+</style>

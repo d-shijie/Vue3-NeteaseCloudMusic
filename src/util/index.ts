@@ -47,7 +47,8 @@ export function getRandomInt (min: number, max: number) {
 export {
   stampToMin,
   formatDayTime,
-  formateTime
+  formateTime,
+  minToSecond
 } from './timeFormat'
 
 export {

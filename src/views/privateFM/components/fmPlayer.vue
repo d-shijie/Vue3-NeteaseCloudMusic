@@ -49,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, onMounted } from 'vue'
 import { getPrivateFmApi, getMusicUrlApi } from '@/api/music';
 import { getMusicCommentApi, commentApi } from '@/api/comment'
 import { useGlobalStore } from '@/stores/modules/global';
@@ -141,8 +141,8 @@ const playing = ref(false)
 const playBtnRef = ref()
 const pauseBtnRef = ref()
 const playFm = () => {
-  playBtnRef.value.classList.add('play')
-  pauseBtnRef.value.classList.remove('pause')
+  pauseBtnRef.value?.classList.remove('pause')
+  playBtnRef.value?.classList.add('play')
   setTimeout(() => {
     playing.value = !playing.value
   }, 1000)
@@ -161,8 +161,8 @@ const playFm = () => {
 
 const pauseFm = () => {
   globalStore.audioPause()
-  pauseBtnRef.value.classList.add('pause')
-  playBtnRef.value.classList.remove('play')
+  playBtnRef.value?.classList.remove('play')
+  pauseBtnRef.value?.classList.add('pause')
   setTimeout(() => {
     playing.value = !playing.value
   }, 1000)
@@ -170,6 +170,8 @@ const pauseFm = () => {
 watch(() => params.id, () => {
   getMusicComment()
 })
+
+
 </script>
 
 <style scoped lang="scss">

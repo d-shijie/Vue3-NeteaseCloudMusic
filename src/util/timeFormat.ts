@@ -21,3 +21,10 @@ export const formateTime = (time: number | string | Date): string => {
   const date = new Date(time)
   return dayjs(date).format('YYYY年MM月DD日 HH:mm')
 }
+
+export const minToSecond=(minStr:string)=>{
+  const [minutes, seconds] = minStr.split(':');
+  const totalSeconds = parseInt(minutes) * 60 + parseInt(seconds);
+  return totalSeconds
+ 
+}
