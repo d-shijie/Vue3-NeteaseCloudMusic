@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section v-if="detailInfo">
+    <section class=" w-70%" v-if="detailInfo">
       <h2 class="overflow-hidden text-ellipsis text-nowrap w-100%">{{ detailInfo.name }}</h2>
       <div class="flex justify-between text-13px text-#a9a9a9">
         <span class="overflow-hidden text-ellipsis text-nowrap w-40%">
@@ -10,10 +10,11 @@
           歌手：<a class="text-#2e5b8e cursor-pointer hover:text-#306cb2">{{ formatAr(detailInfo.ar) }}</a>
         </span>
       </div>
-      <section>
-        <ul class="h-400px overflow-auto mt-20px">
-          <li :class="{ 'active-lyric': item.time === currentTime }" class="py-10px text-#606060 text-14px leading-24px"
-            v-for="item in lyric" :key="item.time">
+      <section class="h-400px overflow-auto mt-20px">
+        <ul ref="lyricRef">
+          <li :class="{ 'active-lyric': currentIndex === index }"
+            class="text-nowrap overflow-hidden text-ellipsis py-10px text-#606060 text-14px leading-24px"
+            v-for="(item, index) in lyric" :key="item.time">
             {{ item.text }}
           </li>
         </ul>
@@ -23,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { getMusicDetailApi, getMusicLyricApi } from '@/api/music'
 import { formatAr, minToSecond } from '@/util'
 import { useGlobalStore } from '@/stores/modules/global';
@@ -59,13 +60,18 @@ const getMusicLyric = () => {
         })
       }
     })
+    lyric.value.forEach((item, index) => {
+      item.index = index
+    })
   })
 }
 getMusicLyric()
 
 const currentTime = ref(0)
+const currentIndex = ref(0)
+const lyricRef = ref()
 // 通过props.id globalStore.currentMusicId 判断是否当前为需要歌词的页面 
-// TODO 监听appAudio的时间改变进行歌词的时间对应 改变元素高度
+// 监听appAudio的时间改变进行歌词的时间对应 改变元素高度
 const timer = ref()
 globalStore.$subscribe(() => {
   if (globalStore.currentMusicId === props.id) {
@@ -76,6 +82,16 @@ globalStore.$subscribe(() => {
       }, 1000)
     }
   }
+})
+watch(currentTime, (time) => {
+  for (let i = 0; i < lyric.value.length; i++) {
+    if (time === lyric.value[i].time) {
+      currentIndex.value = i
+    }
+  }
+
+  lyricRef.value.style.transform = `translateY(${100 - 44 * currentIndex.value}px)`
+
 })
 </script>
 
