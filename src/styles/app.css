@@ -9,18 +9,57 @@
   min-width: 100vw;
   min-height: 100vh;
   background-color: var(--v-m-bgc);
-  color:var(--v-m-text-color);
+  color: var(--v-m-text-color);
 }
+
 a {
   text-decoration: none;
 }
+
 ul {
   padding: 0;
   margin: 0;
-} 
+}
+
 li {
   list-style: none;
 }
+
 ::-webkit-scrollbar {
   display: none;
+}
+
+.tox-tinymce{
+  border: 1px solid #4a4a4a !important;
+  border-radius: 5px !important;
+}
+.tox-tinymce-aux {
+  z-index: 99999 !important;
+}
+
+.tinymce.ui.FloatPanel {
+  z-Index: 99;
+}
+
+.tox-dialog-wrap__backdrop{
+  background-color: transparent !important;
+}
+.tox-statusbar{
+  display: none !important;
+}
+
+/* 将tingMec key的警告先隐藏 */
+.tox-notification {
+  display: none !important;
+}
+.tox-toolbar__primary{
+  background-color: #363636 !important;
+}
+.tox-editor-header{
+  /* border-top: 1px solid #4a4a4a !important; */
+   border-top: none !important;
+  background-color: #363636 !important;
+}
+.tox .tox-tbtn svg{
+  fill:#8b8b8b !important
 }

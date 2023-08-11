@@ -4,6 +4,9 @@ dependencies:
   '@element-plus/icons-vue':
     specifier: ^2.1.0
     version: registry.npmmirror.com/@element-plus/icons-vue@2.1.0(vue@3.3.4)
+  '@tinymce/tinymce-vue':
+    specifier: ^5.1.0
+    version: registry.npmmirror.com/@tinymce/tinymce-vue@5.1.0(vue@3.3.4)
   '@types/lodash':
     specifier: ^4.14.195
     version: registry.npmmirror.com/@types/lodash@4.14.195
@@ -37,6 +40,9 @@ dependencies:
   sass:
     specifier: ^1.62.1
     version: registry.npmmirror.com/sass@1.62.1
+  tinymce:
+    specifier: ^6.6.2
+    version: registry.npmmirror.com/tinymce@6.6.2
   vite-plugin-svg-icons:
     specifier: ^2.0.1
     version: registry.npmmirror.com/vite-plugin-svg-icons@2.0.1(vite@4.3.4)
@@ -2985,6 +2991,18 @@ packages:
     dependencies:
       defer-to-connect: registry.npmmirror.com/defer-to-connect@2.0.1
     dev: true
+
+  registry.npmmirror.com/@tinymce/tinymce-vue@5.1.0(vue@3.3.4):
+    resolution: {integrity: sha512-Z4R8zaOKrAXBhHWsq+qUlwHY+rvze2RgxHDrZ5+qTYkGvRofW5880HLG9gvv6TRPVsNSQBNMdsaOjJ/eueccgA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@tinymce/tinymce-vue/-/tinymce-vue-5.1.0.tgz}
+    id: registry.npmmirror.com/@tinymce/tinymce-vue/5.1.0
+    name: '@tinymce/tinymce-vue'
+    version: 5.1.0
+    peerDependencies:
+      vue: ^3.0.0
+    dependencies:
+      tinymce: registry.npmmirror.com/tinymce@6.6.2
+      vue: registry.npmmirror.com/vue@3.3.4
+    dev: false
 
   registry.npmmirror.com/@tootallnate/once@2.0.0:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@tootallnate/once/-/once-2.0.0.tgz}
@@ -12205,6 +12223,12 @@ packages:
     name: tinybench
     version: 2.5.0
     dev: true
+
+  registry.npmmirror.com/tinymce@6.6.2:
+    resolution: {integrity: sha512-ShoaznNP3qI8dPtEnYt3ByhAJfMhzIY1K04CoFu1IPDeAxmAZCUJLgfiplo8etP4wN8zrBIxHEqpwYYb2IllOQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tinymce/-/tinymce-6.6.2.tgz}
+    name: tinymce
+    version: 6.6.2
+    dev: false
 
   registry.npmmirror.com/tinypool@0.4.0:
     resolution: {integrity: sha512-2ksntHOKf893wSAH4z/+JbPpi92esw8Gn9N2deXX+B0EO92hexAVI9GIZZPx7P5aYo5KULfeOSt3kMOmSOy6uA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/tinypool/-/tinypool-0.4.0.tgz}
