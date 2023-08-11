@@ -5,25 +5,37 @@
         <h3 class="p-0 m-0 mr-15px">动态</h3>
         <span class="flex items-center bg-#ec4141 px-18px py-8px rounded-2xl hover:bg-#d73535 cursor-default">
           <svg-icon name="send_event" class="mr-3px"></svg-icon>
-          <span style="font-size: 14px;">发动态</span>
+          <span style="font-size: 14px;" @click="showShareDialog = true">发动态</span>
         </span>
       </section>
-
       <section class="mt-72px w-100% relative">
         <EventList />
-     
       </section>
     </section>
-
-    <section class="profile w-232px ">
+    <section class="profile w-232px">
       <UserInfo />
     </section>
+
+    <el-dialog modal-class="modal" center v-model="showShareDialog" title="分享" width="468px">
+      <section>
+
+      </section>
+      <footer class="flex justify-between items-center">
+        <span class="flex justify-between items-center text-12px">同时分享到：<svg-icon class="text-30px" name="weibo">
+          </svg-icon></span>
+        <span
+          class="cursor-default bg-#913b3b w-80px h-30px text-center tracking-3px leading-30px rounded-2xl text-#9a9a9a">分享</span>
+      </footer>
+    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
 import EventList from './components/eventList.vue'
 import UserInfo from './components/userInfo.vue'
+
+const showShareDialog = ref(false)
 </script>
 
 <style scoped lang="scss">
@@ -36,5 +48,20 @@ import UserInfo from './components/userInfo.vue'
 
 .fixed-button {
   width: calc(100vw - 520px);
+}
+
+:deep(.el-dialog) {
+  background-color: #363636;
+  border-radius: 5px;
+}
+
+:deep(.el-dialog__title) {
+  color: var(--v-m-text-color);
+  font-size: 16px;
+  font-weight: 600;
+}
+
+:deep(.el-overlay) {
+  background-color: transparent
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <section class=" w-70%" v-if="detailInfo">
+    <section class="w-60%" v-if="detailInfo">
       <h2 class="overflow-hidden text-ellipsis text-nowrap w-100%">{{ detailInfo.name }}</h2>
       <div class="flex justify-between text-13px text-#a9a9a9">
         <span class="overflow-hidden text-ellipsis text-nowrap w-40%">
@@ -89,9 +89,7 @@ watch(currentTime, (time) => {
       currentIndex.value = i
     }
   }
-
   lyricRef.value.style.transform = `translateY(${100 - 44 * currentIndex.value}px)`
-
 })
 </script>
 

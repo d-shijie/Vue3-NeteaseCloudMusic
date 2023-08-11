@@ -58,8 +58,8 @@ export function getUserDetailApi(uid: number) {
 }
 // 热门话题
 interface GetHotTopicType {
-  limit?:number
-  offset?:number
+  limit?: number
+  offset?: number
 }
 export function getHotTopicApi(params: GetHotTopicType) {
   return request({
@@ -73,9 +73,22 @@ export function deleteUserEventApi(evId: number) {
   return request({
     url: '/event/del',
     method: 'post',
-    data:{
+    data: {
       evId
     }
   })
 }
 
+// 分享动态
+interface ShareEventData {
+  id: number
+  type?: 'song' | 'playlist' | 'mv' | 'djradio' | 'djprogram'
+  msg?: string
+}
+export function shareEventApi(data: ShareEventData) {
+  return request({
+    url: '/share/resource',
+    method: 'post',
+    data
+  })
+}
