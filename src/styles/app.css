@@ -24,14 +24,17 @@ ul {
 li {
   list-style: none;
 }
-
+iframe::-webkit-scrollbar {
+  display: none !important;
+}
 ::-webkit-scrollbar {
-  display: none;
+  display: none !important;
 }
 
 .tox-tinymce{
   border: 1px solid #4a4a4a !important;
-  border-radius: 5px !important;
+  border-radius: 5px 5px 0 0 !important;
+
 }
 .tox-tinymce-aux {
   z-index: 99999 !important;
@@ -57,7 +60,7 @@ li {
 }
 .tox-editor-header{
   /* border-top: 1px solid #4a4a4a !important; */
-   border-top: none !important;
+  border-top: none !important;
   background-color: #363636 !important;
 }
 .tox .tox-tbtn svg{

@@ -18,22 +18,32 @@
     </section>
 
     <el-dialog modal-class="modal" center v-model="showShareDialog" title="分享" width="468px">
-      <section>
+      <section class="editor">
         <Editor ref="editorRef" api-key="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc" :init="tinymceConfig"
           v-model="content" />
+      </section>
+      <section
+        class="rounded-b-md h-46px border-r-1px border-b-1px border-l-1px border-t-0px border-#4a4a4a border-solid">
+        <div class="hover:bg-#404040 cursor-pointer flex items-center h-100% w-100%">
+          <img class="mx-5px w-34px h-34px" src="@/assets/logo.png" alt="">
+          <span class="text-#d6d6d6">给动态配上音乐</span>
+          <span class="flex-1 flex items-center justify-end">
+            <svg-icon class="text-26px mr-5px" name="plus"></svg-icon>
+          </span>
+        </div>
       </section>
       <footer class="flex justify-between items-center mt-24px">
         <span class="flex justify-between items-center text-12px">同时分享到：<svg-icon class="text-30px" name="weibo">
           </svg-icon></span>
-        <span
-          class="cursor-default bg-#913b3b w-80px h-30px text-center tracking-3px leading-30px rounded-2xl text-#9a9a9a">分享</span>
+        <el-button :disabled="!content" class="cursor-pointer w-80px h-30px text-center tracking-3px leading-30px"
+          :style="sendBtnStyle">分享</el-button>
       </footer>
     </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import EventList from './components/eventList.vue'
 import UserInfo from './components/userInfo.vue'
 import Editor from '@tinymce/tinymce-vue'
@@ -50,8 +60,14 @@ const tinymceConfig = ref({
   height: 168,
   content_style: 'body { background-color: #363636;color:rgb(215,215,215) }',
 })
-
-
+const sendBtnStyle = computed(() => {
+  return reactive({
+    background: content.value ? '#ec4141' : '#913b3b',
+    borderRadius: '15px',
+    color: content.value ? '#fff' : '#9a9a9a',
+    border: 'none'
+  })
+})
 </script>
 
 <style scoped lang="scss">
@@ -80,5 +96,9 @@ const tinymceConfig = ref({
 
 :deep(.el-overlay) {
   background-color: transparent
+}
+
+.editor::-webkit-scrollbar {
+  display: none !important;
 }
 </style>
