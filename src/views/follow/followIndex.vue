@@ -51,8 +51,12 @@ const showShareDialog = ref(false)
 const content = ref('')
 const tinymceConfig = ref({
   language: 'zh_CN',
-  plugins: 'emoticons', // 启用表情插件
-  toolbar: 'emoticons', // 在工具栏上添加表情按钮
+  // automatic_uploads: true,
+  images_upload_url: '/upload',
+  convert_urls: false,
+  images_upload_base_path: '/',
+  plugins: 'emoticons image imagetools', // 启用表情插件
+  toolbar: 'emoticons image', // 在工具栏上添加表情按钮
   emoticons_append: ',smile1,laughing,tongue_out,wink,cry', // 自定义表情图标
   menubar: false,
   toolbar_location: 'bottom',
