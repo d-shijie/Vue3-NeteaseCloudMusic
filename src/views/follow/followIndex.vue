@@ -18,27 +18,45 @@
     </section>
 
     <el-dialog modal-class="modal" center v-model="showShareDialog" title="分享" width="468px">
-      <section class="editor">
-        <Editor ref="editorRef" api-key="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc" :init="tinymceConfig"
-          v-model="content" />
+      <section v-if="!showList" class="h-264px">
+        <section class="editor">
+          <Editor ref="editorRef" api-key="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc" :init="tinymceConfig"
+            v-model="content" />
+        </section>
+        <section @click="showList = !showList"
+          class="rounded-b-md h-46px border-r-1px border-b-1px border-l-1px border-t-0px border-#4a4a4a border-solid">
+          <div class="hover:bg-#404040 cursor-pointer flex items-center h-100% w-100%">
+            <img class="mx-5px w-34px h-34px" src="@/assets/logo.png" alt="">
+            <span class="text-#d6d6d6">给动态配上音乐</span>
+            <span class="flex-1 flex items-center justify-end">
+              <svg-icon class="text-26px mr-5px" name="plus"></svg-icon>
+            </span>
+          </div>
+        </section>
+        <footer class="flex justify-between items-center mt-24px">
+          <span class="flex justify-between items-center text-12px">同时分享到：<svg-icon class="text-30px" name="weibo">
+            </svg-icon></span>
+          <el-button :disabled="!content" class="cursor-pointer w-80px h-30px text-center tracking-3px leading-30px"
+            :style="sendBtnStyle">分享</el-button>
+        </footer>
       </section>
-      <section
-        class="rounded-b-md h-46px border-r-1px border-b-1px border-l-1px border-t-0px border-#4a4a4a border-solid">
-        <div class="hover:bg-#404040 cursor-pointer flex items-center h-100% w-100%">
-          <img class="mx-5px w-34px h-34px" src="@/assets/logo.png" alt="">
-          <span class="text-#d6d6d6">给动态配上音乐</span>
-          <span class="flex-1 flex items-center justify-end">
-            <svg-icon class="text-26px mr-5px" name="plus"></svg-icon>
-          </span>
-        </div>
+      <section v-else class="h-264px">
+        <el-input :prefix-icon="Search" placeholder="单曲/歌手/专辑/歌单/播客"></el-input>
+        <section class="px-10px">
+          <h4 class="m-0 my-10px">最近播放:</h4>
+          <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+          </ul>
+        </section>
+        <footer class="flex justify-center mt-30px">
+          <el-button :style="backBtnStyle" @click="showList = !showList">返回</el-button>
+        </footer>
+
       </section>
-      <footer class="flex justify-between items-center mt-24px">
-        <span class="flex justify-between items-center text-12px">同时分享到：<svg-icon class="text-30px" name="weibo">
-          </svg-icon></span>
-        <el-button :disabled="!content" class="cursor-pointer w-80px h-30px text-center tracking-3px leading-30px"
-          :style="sendBtnStyle">分享</el-button>
-      </footer>
     </el-dialog>
+
   </div>
 </template>
 
@@ -47,7 +65,10 @@ import { computed, reactive, ref } from 'vue';
 import EventList from './components/eventList.vue'
 import UserInfo from './components/userInfo.vue'
 import Editor from '@tinymce/tinymce-vue'
+import { Search } from '@element-plus/icons-vue';
+import { getRecentPlayApi } from '@/api/user'
 const showShareDialog = ref(false)
+const showList = ref(false)
 const content = ref('')
 const tinymceConfig = ref({
   language: 'zh_CN',
@@ -72,6 +93,22 @@ const sendBtnStyle = computed(() => {
     border: 'none'
   })
 })
+const backBtnStyle = computed(() => {
+  return reactive({
+    background: '#ec4141',
+    borderRadius: '15px',
+    color: '#fff',
+    padding: '0px 30px',
+    border: 'none'
+  })
+})
+const getRecentPlay = () => {
+  getRecentPlayApi('music', 5).then(res => {
+    console.log(res);
+
+  })
+}
+getRecentPlay()
 </script>
 
 <style scoped lang="scss">
@@ -104,5 +141,11 @@ const sendBtnStyle = computed(() => {
 
 .editor::-webkit-scrollbar {
   display: none !important;
+}
+
+:deep(.el-input__wrapper) {
+  background-color: #363636 !important;
+
+  box-shadow: 0 0 1px 1px #4b4b4b;
 }
 </style>

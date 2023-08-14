@@ -92,3 +92,22 @@ export function shareEventApi(data: ShareEventData) {
     data
   })
 }
+// 最近播放
+type RecentPlayUrl = 'music' | 'video' | 'playlist' | 'album' | 'dj' | 'voice'
+const recentPlayUrl = {
+  music: '/record/recent/song',
+  video: '/record/recent/voice',
+  playlist: '/record/recent/playlist',
+  album: '/record/recent/album',
+  dj: '/record/recent/dj',
+  voice: '/record/recent/voice'
+}
+export function getRecentPlayApi(type: RecentPlayUrl, limit?: number) {
+  return request({
+    url: recentPlayUrl[type],
+    method: 'get',
+    params: {
+      limit
+    }
+  })
+}

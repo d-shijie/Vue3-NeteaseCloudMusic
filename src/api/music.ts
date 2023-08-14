@@ -20,7 +20,7 @@ export function getOldMusicUrlApi(params: GetMusicUrl) {
   })
 }
 // 获取歌曲详情
-export function getMusicDetailApi(ids: string|number) {
+export function getMusicDetailApi(ids: string | number) {
   return request({
     url: '/song/detail',
     method: 'get',
@@ -58,11 +58,11 @@ export function getPrivateFmApi() {
 }
 
 // 歌词
-export function getMusicLyricApi(id:number) {
+export function getMusicLyricApi(id: number) {
   return request({
     url: '/lyric',
     method: 'get',
-    params:{
+    params: {
       id
     },
     _fullLoading: true
