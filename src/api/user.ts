@@ -93,9 +93,9 @@ export function shareEventApi(data: ShareEventData) {
   })
 }
 // 最近播放
-type RecentPlayUrl = 'music' | 'video' | 'playlist' | 'album' | 'dj' | 'voice'
+type RecentPlayUrl = 'song' | 'video' | 'playlist' | 'album' | 'dj' | 'voice'
 const recentPlayUrl = {
-  music: '/record/recent/song',
+  song: '/record/recent/song',
   video: '/record/recent/voice',
   playlist: '/record/recent/playlist',
   album: '/record/recent/album',

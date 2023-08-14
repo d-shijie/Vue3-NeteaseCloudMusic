@@ -66,6 +66,9 @@ const deleteEvent = (id: number) => {
     getUserEvent()
   })
 }
+defineExpose({
+  getUserEvent
+})
 </script>
 
 <style scoped></style>

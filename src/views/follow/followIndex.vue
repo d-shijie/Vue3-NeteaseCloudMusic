@@ -10,7 +10,7 @@
         </span>
       </section>
       <section class="mt-72px w-100% relative">
-        <EventList />
+        <EventList ref="eventListRef" />
       </section>
     </section>
     <section class="profile w-232px">
@@ -23,37 +23,47 @@
           <Editor ref="editorRef" api-key="qagffr3pkuv17a8on1afax661irst1hbr4e6tbv888sz91jc" :init="tinymceConfig"
             v-model="content" />
         </section>
-        <section @click="showList = !showList"
+        <section @click.stop.prevent="showList = !showList"
           class="rounded-b-md h-46px border-r-1px border-b-1px border-l-1px border-t-0px border-#4a4a4a border-solid">
-          <div class="hover:bg-#404040 cursor-pointer flex items-center h-100% w-100%">
+          <div v-if="!choosedMusic" class="hover:bg-#404040 cursor-pointer flex items-center h-100% w-100%">
             <img class="mx-5px w-34px h-34px" src="@/assets/logo.png" alt="">
             <span class="text-#d6d6d6">给动态配上音乐</span>
             <span class="flex-1 flex items-center justify-end">
               <svg-icon class="text-26px mr-5px" name="plus"></svg-icon>
             </span>
           </div>
+          <div @click.stop.prevent="showList = !showList" v-else
+            class="hover:bg-#404040 cursor-pointer flex items-center h-full">
+            <img class="w-35px h-35px mx-10px rounded" :src="choosedMusic.album.picUrl" alt="">
+            <span class=" text-13px text-#d6d6d6 overflow-hidden text-ellipsis text-nowrap">{{
+              choosedMusic.name }}</span>
+            <span class="text-12px overflow-hidden text-ellipsis text-nowrap">{{ '-' + formatAr(choosedMusic.artists)
+            }}</span>
+          </div>
         </section>
         <footer class="flex justify-between items-center mt-24px">
           <span class="flex justify-between items-center text-12px">同时分享到：<svg-icon class="text-30px" name="weibo">
             </svg-icon></span>
-          <el-button :disabled="!content" class="cursor-pointer w-80px h-30px text-center tracking-3px leading-30px"
-            :style="sendBtnStyle">分享</el-button>
+          <el-button :disabled="!choosedMusic" class="cursor-pointer w-80px h-30px text-center tracking-3px leading-30px"
+            :style="sendBtnStyle" @click.stop.prevent="shareEvent">分享</el-button>
         </footer>
       </section>
       <section v-else class="h-264px">
         <el-input :prefix-icon="Search" placeholder="单曲/歌手/专辑/歌单/播客"></el-input>
-        <section class="px-10px">
-          <h4 class="m-0 my-10px">最近播放:</h4>
+        <section>
+          <h4 class="m-0 ml-10px mt-10px mb-10px">最近播放:</h4>
           <ul>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
+            <li @click="chooseMusic(item)" class="rounded-l cursor-default hover:bg-#404040 flex items-center p-10px "
+              v-for="(item, index) in recentPlaylist" :key="index">
+              <svg-icon class="mr-5px" name="recent"></svg-icon>
+              <span class="text-13px text-#d6d6d6 overflow-hidden text-ellipsis text-nowrap">{{ item.name }}</span>
+              <span class="text-12px overflow-hidden text-ellipsis text-nowrap">{{ '-' + formatAr(item.artists) }}</span>
+            </li>
           </ul>
         </section>
-        <footer class="flex justify-center mt-30px">
+        <footer class="flex justify-center mt-10px">
           <el-button :style="backBtnStyle" @click="showList = !showList">返回</el-button>
         </footer>
-
       </section>
     </el-dialog>
 
@@ -66,7 +76,9 @@ import EventList from './components/eventList.vue'
 import UserInfo from './components/userInfo.vue'
 import Editor from '@tinymce/tinymce-vue'
 import { Search } from '@element-plus/icons-vue';
-import { getRecentPlayApi } from '@/api/user'
+import { shareEventApi } from '@/api/user'
+import { getNewMusicsApi } from '@/api/music'
+import { formatAr } from '@/util';
 const showShareDialog = ref(false)
 const showList = ref(false)
 const content = ref('')
@@ -87,9 +99,9 @@ const tinymceConfig = ref({
 })
 const sendBtnStyle = computed(() => {
   return reactive({
-    background: content.value ? '#ec4141' : '#913b3b',
+    background: choosedMusic.value ? '#ec4141' : '#913b3b',
     borderRadius: '15px',
-    color: content.value ? '#fff' : '#9a9a9a',
+    color: choosedMusic.value ? '#fff' : '#9a9a9a',
     border: 'none'
   })
 })
@@ -102,13 +114,33 @@ const backBtnStyle = computed(() => {
     border: 'none'
   })
 })
-const getRecentPlay = () => {
-  getRecentPlayApi('music', 5).then(res => {
-    console.log(res);
 
+const recentPlaylist = ref<Array<any>>([])
+const getRecentPlay = () => {
+  getNewMusicsApi('0').then((res: any) => {
+    recentPlaylist.value = res.data.data.slice(0, 5)
   })
 }
 getRecentPlay()
+const choosedMusic = ref()
+const chooseMusic = (item: any) => {
+  choosedMusic.value = item
+  showList.value = !showList.value
+}
+
+const eventListRef = ref()
+const shareEvent = () => {
+  shareEventApi({
+    id: choosedMusic.value.id,
+    msg: content.value.replace(/<\/?p>/g, '')
+  }).then(() => {
+    showList.value = false
+    showShareDialog.value = false
+    content.value = ''
+    choosedMusic.value = {}
+    eventListRef.value.getUserEvent()
+  })
+}
 </script>
 
 <style scoped lang="scss">
