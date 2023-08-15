@@ -18,7 +18,7 @@
           <el-popover :hide-after="60" :show-arrow="false" placement="bottom" :width="276" trigger="click">
             <template #reference>
               <div class="avatar">
-                <img
+                <img @click="gotoProfile"
                   :src="userStore.userInfo.avatarUrl || 'https://img1.baidu.com/it/u=950943067,1138707327&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'"
                   alt="">
                 <p>{{ userStore.userInfo.nickname || '未登录' }}</p>
@@ -54,6 +54,14 @@ const router = useRouter()
 
 const keywords = ref('')
 
+const gotoProfile = () => {
+  router.push({
+    path: '/index/profile',
+    query: {
+      id: userStore.userInfo.userId
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

@@ -48,8 +48,7 @@ const router = createRouter({
               path: '/index/find-music/new-music',
               name: 'FindMusicNewMusic',
               component: () => import('@/views/findMusic/findMusicNewMusic.vue')
-            },
-           
+            }
           ]
         },
         {
@@ -62,7 +61,7 @@ const router = createRouter({
           name: 'Video',
           component: () => import('@/views/video/videoIndex.vue'),
           redirect: '/index/video/video-index',
-          children:[
+          children: [
             {
               path: '/index/video/video-index',
               name: 'VideoIndex',
@@ -72,7 +71,7 @@ const router = createRouter({
               path: '/index/video/mv-index',
               name: 'MvIndex',
               component: () => import('@/views/video/mv/mvIndex.vue')
-            },
+            }
           ]
         },
         {
@@ -120,12 +119,17 @@ const router = createRouter({
           name: 'MvRank',
           component: () => import('@/views/video/mv/mvRank.vue')
         },
+        {
+          path: '/index/profile',
+          name: 'Profile',
+          component: () => import('@/views/profile/profileIndex.vue')
+        }
       ]
     },
     {
-      path:'/video-detail',
+      path: '/video-detail',
       name: 'VideoDetail',
-      component: () => import('@/views/video/videoDetail/videoDetailIndex.vue'),
+      component: () => import('@/views/video/videoDetail/videoDetailIndex.vue')
     }
   ]
 })

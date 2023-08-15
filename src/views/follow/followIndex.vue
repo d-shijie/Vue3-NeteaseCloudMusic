@@ -116,6 +116,7 @@ const backBtnStyle = computed(() => {
 })
 
 const recentPlaylist = ref<Array<any>>([])
+// 获取最近播放歌曲有时无数据 用另外的接口代替下
 const getRecentPlay = () => {
   getNewMusicsApi('0').then((res: any) => {
     recentPlaylist.value = res.data.data.slice(0, 5)
@@ -148,7 +149,6 @@ const shareEvent = () => {
   box-shadow: -1px 0px 1px #363636;
   min-height: calc(100vh - 112px);
   border-left: 1px solid #363636;
-
 }
 
 .fixed-button {
