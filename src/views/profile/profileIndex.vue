@@ -20,18 +20,41 @@
           </div>
         </section>
 
-        <div>
-          <span>
-            {{ userInfo.profile.eventCount }}
+        <div class="flex my-10px">
+          <span class="cursor-pointer flex flex-col justify-center items-center hover:text-#fff">
+            <div class="text-20px mb-3px">{{ userInfo.profile.eventCount }}</div>
+            <div class="text-12px text-#878787">动态</div>
           </span>
-          <span>
-            {{ userInfo.profile.follows }}
+          <span class="border-0 border-r-1px border-solid border-#444444 mx-25px"></span>
+          <span class="cursor-pointer flex flex-col justify-center items-center hover:text-#fff">
+            <div class="text-20px mb-3px">
+              {{ userInfo.profile.follows }}
+            </div>
+            <div class="text-12px text-#878787">关注</div>
           </span>
-          <span>
-            {{ userInfo.profile.followeds }}
+          <span class="border-0 border-r-1px border-solid border-#444444 mx-25px"></span>
+          <span class="cursor-pointer flex flex-col justify-center items-center hover:text-#fff">
+            <div class="text-20px mb-3px">
+              {{ userInfo.profile.followeds }}
+            </div>
+            <div class="text-12px text-#878787">粉丝</div>
           </span>
         </div>
+
+        <section class="text-15px">
+          <div class="flex items-center my-5px">所在地区:
+            <span class="text-14px ml-5px text-#878787">艾欧尼亚</span>
+          </div>
+          <div class="flex items-center my-5px">社交网络: <svg-icon class="text-20px ml-5px" name="weibo"></svg-icon>
+          </div>
+          <div class="flex items-center my-5px">个人介绍: <span class="text-14px ml-5px text-#878787">{{
+            userInfo.profile.signature
+          }}</span>
+          </div>
+        </section>
       </div>
+
+
     </section>
   </div>
 </template>
@@ -58,6 +81,8 @@ const getUserDetail = () => {
   })
 }
 getUserDetail()
+
+
 </script>
 
 <style scoped></style>
