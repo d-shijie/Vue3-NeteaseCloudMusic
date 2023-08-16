@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ opacity: props.name ? '1' : '0' }">
+  <div>
     <section class="cover relative cursor-pointer">
       <img class="w-full" :src="props.cover" alt="">
       <div class="absolute top-5px end-5px flex items-center text-13px">

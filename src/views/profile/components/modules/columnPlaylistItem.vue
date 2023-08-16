@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ display: props.name ? 'flex' : 'none' }" class="flex w-full">
+  <div class="flex w-full">
     <section @click="gotoDetail" class="mr-30px cursor-pointer">
       <img class="w-146px h-146px rounded" :src="props.cover" alt="">
     </section>

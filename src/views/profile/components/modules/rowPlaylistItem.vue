@@ -1,6 +1,5 @@
 <template>
-  <div :style="{ display: props.name ? 'flex' : 'none' }"
-    class="flex px-20px py-10px w-full bg-#2f2f2f cursor-default hover:bg-#373737">
+  <div class="flex px-20px py-10px w-full bg-#2f2f2f cursor-default hover:bg-#373737">
     <section class="flex-1 flex items-center">
       <span class="cover relative">
         <img class="w-54px h-54px rounded mr-10px" :src="props.cover" alt="">

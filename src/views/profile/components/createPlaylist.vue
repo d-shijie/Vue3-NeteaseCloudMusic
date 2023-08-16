@@ -5,7 +5,6 @@
         :key="index" :id="item.id" :cover="item.coverImgUrl" :name="item.name" :playCount="item.playCount"
         :musicCount="item.trackCount" />
     </template>
-
     <template v-if="props.currentLayout === 1">
       <RowPlaylistItem @click='gotoDetail(item.id)' class="row-item"
         :style="{ background: (index % 2) ? '#2b2b2b' : '#2f2f2f' }" v-for="(item, index) in playlist" :key="index"
@@ -46,12 +45,6 @@ const getUserPlaylist = () => {
     playlist.value = res.data.playlist.filter((item: any) => {
       return item.creator.userId === userId
     })
-    const num = 4 - (playlist.value.length % 4)
-    if (num) {
-      for (let i = 0; i < num; i++) {
-        playlist.value.push('')
-      }
-    }
   })
 }
 getUserPlaylist()
