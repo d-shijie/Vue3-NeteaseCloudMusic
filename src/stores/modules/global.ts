@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { getPlaylistMusicApi } from '@/api/playlist'
 import { getMusicUrlApi } from '@/api/music'
 import { ElMessage } from 'element-plus'
-import type { currentMusicLevel, PlayOrderType } from '../types/global'
+import type { currentMusicLevel, PlayOrderType, Playlist } from '../types/global'
 import { getRandomInt } from '@/util'
 export const useGlobalStore = defineStore(
   'global',
@@ -39,12 +39,12 @@ export const useGlobalStore = defineStore(
     const currentPlaylistId = ref()
     const currentPlaylist = ref<any[]>([])
     const currentPlayOrder = ref<PlayOrderType>('order')
-
-    const setCurrentPlaylist = async (val: number|Array<any>) => {
-      if(Array.isArray(val)){
+    // 可传递歌单列表/歌单id
+    const setCurrentPlaylist = async (val: number | Array<Playlist>) => {
+      if (Array.isArray(val)) {
         currentPlaylistId.value = val[0].id
-        currentPlaylist.value=val
-      }else {
+        currentPlaylist.value = val
+      } else {
         currentPlaylistId.value = val
         currentPlaylist.value = await getCurrentPlaylist()
       }

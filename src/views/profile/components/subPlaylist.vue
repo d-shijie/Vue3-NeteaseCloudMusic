@@ -12,7 +12,10 @@
         :cover="item.coverImgUrl" :name="item.name" :playCount="item.playCount" :musicCount="item.trackCount"
         :creator="item.creator?.nickname" />
     </template>
-
+    <template v-if="props.currentLayout === 2">
+      <ColumnPlaylistItem class="mb-30px" v-for="(item, index) in playlist" :key="index" :name="item.name"
+        :cover="item.coverImgUrl" :id="item.id" />
+    </template>
   </div>
 </template>
 
@@ -23,6 +26,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/modules/user'
 import DefaultPlaylistItem from './modules/defaultPlaylistItem.vue'
 import RowPlaylistItem from './modules/rowPlaylistItem.vue'
+import ColumnPlaylistItem from './modules/columnPlaylistItem.vue'
 interface Props {
   currentLayout: number
 }
