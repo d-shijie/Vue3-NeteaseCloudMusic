@@ -111,3 +111,18 @@ export function getRecentPlayApi(type: RecentPlayUrl, limit?: number) {
     }
   })
 }
+
+// 用户歌单
+interface GetUserPlaylist {
+  uid: number
+  limit?: number
+  offset?: number
+}
+export function getUserPlaylistApi(params: GetUserPlaylist) {
+  return request({
+    url: '/user/playlist',
+    method: 'get',
+    params,
+    _fullLoading: true
+  })
+}

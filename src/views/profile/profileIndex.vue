@@ -53,9 +53,9 @@
           </div>
         </section>
       </div>
-
-
     </section>
+
+    <SubTab :tabs="tabs" />
   </div>
 </template>
 
@@ -64,6 +64,7 @@ import { ref, reactive, computed } from 'vue'
 import { getUserDetailApi } from '@/api/user'
 import { useRoute } from 'vue-router'
 import { Edit } from '@element-plus/icons-vue'
+import SubTab, { type Tab } from '@/components/SubTab/subTab.vue'
 const route = useRoute()
 const uid = route.query.id
 
@@ -82,7 +83,16 @@ const getUserDetail = () => {
 }
 getUserDetail()
 
+const tabs = ref<Array<Tab>>([
+  {
+    tab: '创建的歌单',
 
+  },
+  {
+    tab: '收藏的歌单',
+
+  }
+])
 </script>
 
 <style scoped></style>

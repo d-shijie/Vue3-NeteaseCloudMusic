@@ -1,7 +1,7 @@
 <template>
   <div class="sub-tab">
-    <a @click="router.push(item.path)" v-for="(item, index)  in tabs" :key="index" class="tab"
-      :class="{ 'active': route.path.includes(item.path) }">
+    <a @click="handleClick(item, index)" v-for="(item, index)  in tabs" :key="index" class="tab"
+      :class="{ 'active': activeClass(item, index) }">
       {{ item.tab }}
     </a>
 
@@ -9,13 +9,13 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
 import type { PropType } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 export interface Tab {
   tab: string
-  path: string
+  path?: string
 }
-
 const router = useRouter()
 const route = useRoute()
 defineProps({
@@ -23,6 +23,28 @@ defineProps({
     type: Array as PropType<Tab[]>,
     default: () => []
   },
+})
+const emits = defineEmits(['handleClick'])
+
+// 根据是否传递path参数控制border-bottom
+const handleClick = (item: Tab, index: number) => {
+  if (item.path) {
+    router.push(item.path)
+  } else {
+    currentIndex.value = index
+  }
+  emits('handleClick', item.path, index)
+}
+
+const currentIndex = ref(0)
+const activeClass = computed(() => {
+  return (item: Tab, index: number) => {
+    if (item.path) {
+      return route.path.includes(item.path)
+    } else {
+      return currentIndex.value === index
+    }
+  }
 })
 </script>
 
