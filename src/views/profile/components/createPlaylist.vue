@@ -10,16 +10,25 @@ import { ref } from 'vue'
 import { getUserPlaylistApi } from '@/api/user'
 import DefaultPlaylistItem from './modules/defaultPlaylistItem.vue'
 import { useRoute } from 'vue-router'
+import { useUserStore } from '@/stores/modules/user'
 const route = useRoute()
-
+const userStore = useUserStore()
 const playlist = ref<any[]>([])
 const getUserPlaylist = () => {
   getUserPlaylistApi({
     uid: Number(route.query.id)
   }).then(res => {
+    const userId = userStore.userInfo.userId
+    playlist.value = res.data.playlist.filter((item: any) => {
+      return item.creator.userId === userId
+    })
 
-    playlist.value = res.data.playlist
-
+    const num = 4 - (playlist.value.length % 4)
+    if (num) {
+      for (let i = 0; i < num; i++) {
+        playlist.value.push('')
+      }
+    }
   })
 }
 getUserPlaylist()
