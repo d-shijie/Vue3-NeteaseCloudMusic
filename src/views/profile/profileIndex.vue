@@ -54,8 +54,20 @@
         </section>
       </div>
     </section>
+    <nav class="flex items-center mt-30px mb-10px justify-between">
+      <SubTab @handle-click="tabClick" :tabs="tabs" />
+      <div class="flex">
+        <span @click="currentBtnIndex = index" v-for="(item, index) in shiftLayoutBtns" :key="index"
+          :style="activeShiftLayoutBtnStyle(index)"
+          class="cursor-default w-20px h-20px bg-#363636 text-center leading-20px rounded-sm mr-2px">
+          <svg-icon class="text-12px" :name="item"></svg-icon>
+        </span>
 
-    <SubTab :tabs="tabs" />
+      </div>
+    </nav>
+    <section>
+      <component :is="components[currentComponentIndex]"></component>
+    </section>
   </div>
 </template>
 
@@ -65,6 +77,8 @@ import { getUserDetailApi } from '@/api/user'
 import { useRoute } from 'vue-router'
 import { Edit } from '@element-plus/icons-vue'
 import SubTab, { type Tab } from '@/components/SubTab/subTab.vue'
+import CreatePlaylist from './components/createPlaylist.vue'
+import SubPlaylist from './components/subPlaylist.vue'
 const route = useRoute()
 const uid = route.query.id
 
@@ -93,6 +107,21 @@ const tabs = ref<Array<Tab>>([
 
   }
 ])
+
+const components = [CreatePlaylist, SubPlaylist]
+const currentComponentIndex = ref(0)
+const tabClick = (index: number) => {
+  currentComponentIndex.value = index
+}
+
+const shiftLayoutBtns = ref(['layout_default', 'layout_row', 'layout_column'])
+const currentBtnIndex = ref(0)
+const activeShiftLayoutBtnStyle = computed(() => {
+  return (index: number) => reactive({
+    background: currentBtnIndex.value === index ? '#606060' : '',
+    color: currentBtnIndex.value === index ? '#fff' : ''
+  })
+}) 
 </script>
 
 <style scoped></style>

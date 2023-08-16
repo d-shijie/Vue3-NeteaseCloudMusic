@@ -30,10 +30,12 @@ const emits = defineEmits(['handleClick'])
 const handleClick = (item: Tab, index: number) => {
   if (item.path) {
     router.push(item.path)
+    emits('handleClick', item.path, index)
   } else {
     currentIndex.value = index
+    emits('handleClick', index)
   }
-  emits('handleClick', item.path, index)
+
 }
 
 const currentIndex = ref(0)
