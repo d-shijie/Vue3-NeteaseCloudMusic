@@ -62,11 +62,10 @@
           class="cursor-default w-20px h-20px bg-#363636 text-center leading-20px rounded-sm mr-2px">
           <svg-icon class="text-12px" :name="item"></svg-icon>
         </span>
-
       </div>
     </nav>
     <section>
-      <component :is="components[currentComponentIndex]"></component>
+      <component :currentLayout="currentBtnIndex" :is="components[currentComponentIndex]"></component>
     </section>
   </div>
 </template>
@@ -121,7 +120,8 @@ const activeShiftLayoutBtnStyle = computed(() => {
     background: currentBtnIndex.value === index ? '#606060' : '',
     color: currentBtnIndex.value === index ? '#fff' : ''
   })
-}) 
+})
+
 </script>
 
 <style scoped></style>
