@@ -1,6 +1,6 @@
 <template>
-  <div :style="{ opacity: props.id ? '1' : '0' }">
-    <section @click="gotoDetail" class="cover relative cursor-pointer">
+  <div :style="{ opacity: props.name ? '1' : '0' }">
+    <section class="cover relative cursor-pointer">
       <img class="w-full" :src="props.cover" alt="">
       <div class="absolute top-5px end-5px flex items-center text-13px">
         <svg-icon name="play"></svg-icon> {{ formatCount(props.playCount) }}
@@ -19,36 +19,21 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import { formatCount } from '@/util'
-const router = useRouter()
-
 interface Props {
-  id: number
   cover: string
   playCount?: number
   musicCount: number
   name: string
 }
 const props = withDefaults(defineProps<Props>(), {
-  id: 0,
   cover: 'https://img1.baidu.com/it/u=950943067,1138707327&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
   playCount: 0,
   musicCount: 0,
   name: ''
 })
 
-const gotoDetail = () => {
-  if (props.id) {
-    router.push({
-      path: '/index/playlist-detail',
-      query: {
-        id: Number(props.id)
-      }
-    })
-  }
 
-}
 </script>
 
 <style scoped lang="scss">
