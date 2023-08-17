@@ -5,7 +5,7 @@
         <appMenus />
       </div>
       <div class="wrapper">
-        <RouterView />
+        <RouterView :key="routeKey" />
       </div>
     </div>
     <div class="controller">
@@ -15,11 +15,15 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router';
+import { RouterView, useRoute } from 'vue-router';
 import appController from '@/layout/appController.vue';
 
 import appMenus from '@/layout/appMenus.vue';
-
+import { computed } from 'vue';
+const route = useRoute()
+const routeKey = computed(() => {
+  return route.path
+})
 </script>
 
 <style scoped lang="scss">

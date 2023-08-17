@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { getUserPlaylistApi } from '@/api/user'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -57,7 +57,9 @@ const gotoDetail = (id: number) => {
     }
   })
 }
-
+watch(() => route.query.id, () => {
+  getUserPlaylist()
+})
 </script>
 
 <style scoped lang="scss">

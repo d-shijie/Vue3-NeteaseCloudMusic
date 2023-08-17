@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, watch } from 'vue'
 import { getUserDetailApi } from '@/api/user'
 import { useRoute } from 'vue-router'
 import { Edit, Plus, ChatSquare } from '@element-plus/icons-vue'
@@ -85,8 +85,8 @@ import CreatePlaylist from './components/createPlaylist.vue'
 import SubPlaylist from './components/subPlaylist.vue'
 const userStore = useUserStore()
 const route = useRoute()
-const uid = route.query.id
-
+const uid = ref()
+uid.value = route.query.id
 const editBtnStyle = computed(() => {
   return reactive({
     background: '#2b2b2b',
@@ -96,8 +96,9 @@ const editBtnStyle = computed(() => {
 })
 const userInfo = ref<any>()
 const getUserDetail = () => {
-  getUserDetailApi(Number(uid)).then(res => {
+  getUserDetailApi(Number(uid.value)).then(res => {
     userInfo.value = res.data
+    console.log(userInfo.value);
   })
 }
 getUserDetail()
@@ -130,6 +131,10 @@ const activeShiftLayoutBtnStyle = computed(() => {
 
 const currentUserType = computed(() => {
   return userStore.userInfo.userId === Number(route.query.id)
+})
+watch(() => route.query.id, () => {
+  uid.value = route.query.id
+  getUserDetail()
 })
 </script>
 
