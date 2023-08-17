@@ -1,6 +1,6 @@
 <template>
   <div v-if="collectors.length" class="collectors">
-    <div v-for="(item, index) in collectors" :key="index" class="collector">
+    <div @click="gotoDetail(item.userId)" v-for="(item, index) in collectors" :key="index" class="collector">
       <img :src="item.avatarUrl" alt="">
       <div class="info">
         <div class="nickname">
@@ -23,6 +23,7 @@
 import { reactive, ref, watch } from 'vue';
 import { getPlaylistCollectorsApi } from '@/api/playlist'
 import { useRoute } from 'vue-router';
+import router from '@/router';
 const route = useRoute()
 const collectors = ref<any>([])
 const total = ref()
@@ -51,6 +52,15 @@ getPlaylistCollectors()
 const hanldCurrentChange = (page: number) => {
   params.offset = page
   getPlaylistCollectors()
+}
+
+const gotoDetail = (userId: number) => {
+  router.push({
+    path: "/index/profile",
+    query: {
+      id: userId
+    }
+  })
 }
 </script>
 

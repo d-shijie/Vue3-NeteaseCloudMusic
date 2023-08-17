@@ -1,9 +1,9 @@
 <template>
   <div class="app-comment__item">
-    <img :src="comment.avatarUrl" alt="">
+    <img @click="gotoDetail" :src="comment.avatarUrl" alt="">
     <div class="content-wrapper">
       <div class="content">
-        <span class="nickname">{{ comment.nickname }} : </span>
+        <span @click="gotoDetail" class="nickname">{{ comment.nickname }} : </span>
         <span>{{ comment.content }}</span>
       </div>
       <div class="time">
@@ -34,6 +34,7 @@ import { formateTime } from '@/util/timeFormat'
 import { likeCommentApi, type CType } from '@/api/comment'
 import { ElMessage } from 'element-plus'
 import { useRoute } from 'vue-router'
+import router from '@/router';
 const route = useRoute()
 export interface Comment {
   avatarUrl: string
@@ -76,7 +77,14 @@ const likeComment = () => {
   })
 
 }
-
+const gotoDetail = () => {
+  router.push({
+    path: "/index/profile",
+    query: {
+      id: props.comment.userId
+    }
+  })
+}
 </script>
 
 <style scoped lang="scss">

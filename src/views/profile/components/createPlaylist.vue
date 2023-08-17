@@ -22,7 +22,7 @@
 import { ref } from 'vue'
 import { getUserPlaylistApi } from '@/api/user'
 import { useRoute, useRouter } from 'vue-router'
-import { useUserStore } from '@/stores/modules/user'
+
 import DefaultPlaylistItem from './modules/defaultPlaylistItem.vue'
 import RowPlaylistItem from './modules/rowPlaylistItem.vue'
 import ColumnPlaylistItem from './modules/columnPlaylistItem.vue'
@@ -31,7 +31,7 @@ interface Props {
 }
 const route = useRoute()
 const router = useRouter()
-const userStore = useUserStore()
+
 const props = withDefaults(defineProps<Props>(), {
   currentLayout: 0
 })
@@ -41,9 +41,9 @@ const getUserPlaylist = () => {
   getUserPlaylistApi({
     uid: Number(route.query.id)
   }).then(res => {
-    const userId = userStore.userInfo.userId
+
     playlist.value = res.data.playlist.filter((item: any) => {
-      return item.creator.userId === userId
+      return item.creator.userId === Number(route.query.id)
     })
   })
 }
