@@ -16,7 +16,11 @@
               </span>
             </div>
 
-            <el-button :style="editBtnStyle" :icon="Edit" round>编辑个人信息</el-button>
+            <el-button v-if="currentUserType" :style="editBtnStyle" :icon="Edit" round>编辑个人信息</el-button>
+            <div v-else>
+              <el-button :style="editBtnStyle" :icon="ChatSquare" round>发私信</el-button>
+              <el-button :style="editBtnStyle" :icon="Plus" round>关注</el-button>
+            </div>
           </div>
         </section>
 
@@ -74,10 +78,12 @@
 import { ref, reactive, computed } from 'vue'
 import { getUserDetailApi } from '@/api/user'
 import { useRoute } from 'vue-router'
-import { Edit } from '@element-plus/icons-vue'
+import { Edit, Plus, ChatSquare } from '@element-plus/icons-vue'
+import { useUserStore } from '@/stores/modules/user'
 import SubTab, { type Tab } from '@/components/SubTab/subTab.vue'
 import CreatePlaylist from './components/createPlaylist.vue'
 import SubPlaylist from './components/subPlaylist.vue'
+const userStore = useUserStore()
 const route = useRoute()
 const uid = route.query.id
 
@@ -122,6 +128,9 @@ const activeShiftLayoutBtnStyle = computed(() => {
   })
 })
 
+const currentUserType = computed(() => {
+  return userStore.userInfo.userId === Number(route.query.id)
+})
 </script>
 
 <style scoped></style>
