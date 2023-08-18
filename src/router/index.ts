@@ -123,6 +123,11 @@ const router = createRouter({
           path: '/index/profile',
           name: 'Profile',
           component: () => import('@/views/profile/profileIndex.vue')
+        },
+        {
+          path: '/index/search',
+          name: 'Search',
+          component: () => import('@/views/searchResult/searchIndex.vue')
         }
       ]
     },

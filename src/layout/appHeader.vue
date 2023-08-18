@@ -10,7 +10,7 @@
         <div class="search">
           <el-button @click="router.go(-1)" text :icon="ArrowLeft"></el-button>
           <el-button text :icon="ArrowRight"></el-button>
-          <el-input placeholder="好久不见" v-model="keywords" class="custom-el-input"></el-input>
+          <el-input @keyup.enter="gotoSearch" placeholder="好久不见" v-model="keywords" class="custom-el-input"></el-input>
         </div>
       </el-col>
       <el-col :span="13">
@@ -59,6 +59,14 @@ const gotoProfile = () => {
     path: '/index/profile',
     query: {
       id: userStore.userInfo.userId
+    }
+  })
+}
+const gotoSearch = () => {
+  router.push({
+    path: '/index/search',
+    query: {
+      keywords: keywords.value
     }
   })
 }
