@@ -63,12 +63,14 @@ const gotoProfile = () => {
   })
 }
 const gotoSearch = () => {
-  router.push({
-    path: '/index/search',
-    query: {
-      keywords: keywords.value
-    }
-  })
+  if (keywords.value) {
+    router.push({
+      path: '/index/search',
+      query: {
+        keywords: keywords.value
+      }
+    })
+  }
 }
 </script>
 
