@@ -10,7 +10,36 @@
         <div class="search">
           <el-button @click="router.go(-1)" text :icon="ArrowLeft"></el-button>
           <el-button text :icon="ArrowRight"></el-button>
-          <el-input @keyup.enter="gotoSearch" placeholder="好久不见" v-model="keywords" class="custom-el-input"></el-input>
+          <el-popover v-model:visible="showPopover" :show-arrow="false" placement="top-start" :width="350"
+            trigger="contextmenu">
+            <section class="h-410px overflow-auto">
+              <h4 class="m-0 my-10px">热搜榜</h4>
+              <ul>
+                <li @click.stop.prevent="gotoSearch(item.searchWord)"
+                  class="flex cursor-pointer hover:bg-#333333 rounded items-center h-50px py-2px"
+                  v-for="(item, index) in hotSearchList" :key="index">
+                  <span :style="{ color: index < 3 ? '#df3838' : '' }" class="mr-20px text-15px font-bold ">{{ index + 1
+                  }}</span>
+                  <span class="text-12px flex flex-col justify-between">
+                    <div class="my-5px">
+                      <span class="text-#d6d6d6 mr-10px ">
+                        {{ item.searchWord }}
+                      </span>
+                      <span class="text-#575757">
+                        {{ item.score }}
+                      </span>
+                    </div>
+                    <div>{{ item.content }}</div>
+                  </span>
+                </li>
+              </ul>
+            </section>
+            <template #reference>
+              <el-input v-click-outside="onClickOutside" @focus="showPopover = true" :prefix-icon="Search"
+                @keyup.enter="gotoSearch" :placeholder="defaultKeywords" v-model="keywords"></el-input>
+            </template>
+          </el-popover>
+
         </div>
       </el-col>
       <el-col :span="13">
@@ -44,16 +73,36 @@
 <script setup lang="ts">
 import ProfileCard from '../components/LoginCard/profileCard.vue';
 import LoginCard from '@/components/LoginCard/loginCard.vue';
-import { ArrowLeft, ArrowRight, CaretBottom } from '@element-plus/icons-vue'
+import { ArrowLeft, ArrowRight, CaretBottom, Search } from '@element-plus/icons-vue'
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useUserStore } from '@/stores/modules/user'
+import { getDefaultSearchKeywordsApi, getHotSearchListApi } from '@/api/search'
+
+import { ClickOutside as vClickOutside } from "element-plus";
 const userStore = useUserStore()
 
 const router = useRouter()
-
+const defaultKeywords = ref('')
 const keywords = ref('')
+const getDefaultSearchKeywords = () => {
+  getDefaultSearchKeywordsApi().then(res => {
 
+    defaultKeywords.value = res.data.data.realkeyword
+  })
+}
+getDefaultSearchKeywords()
+
+const hotSearchList = ref<any[]>([])
+const getHotSearchList = () => {
+  getHotSearchListApi().then(res => {
+
+    hotSearchList.value = res.data.data
+  })
+}
+
+const showPopover = ref(false)
+getHotSearchList()
 const gotoProfile = () => {
   router.push({
     path: '/index/profile',
@@ -62,16 +111,20 @@ const gotoProfile = () => {
     }
   })
 }
-const gotoSearch = () => {
-  if (keywords.value) {
-    router.push({
-      path: '/index/search',
-      query: {
-        keywords: keywords.value
-      }
-    })
-  }
+const gotoSearch = (keyword?: string) => {
+  const word = typeof (keyword) === 'string' ? keyword : ''
+  router.push({
+    path: '/index/search',
+    query: {
+      keywords: word || keywords.value || defaultKeywords.value
+    }
+  })
 }
+
+const onClickOutside = (e: any) => {
+  showPopover.value = false;
+}
+
 </script>
 
 <style scoped lang="scss">
