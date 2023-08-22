@@ -121,7 +121,7 @@ const gotoSearch = (keyword?: string) => {
   })
 }
 
-const onClickOutside = (e: any) => {
+const onClickOutside = () => {
   showPopover.value = false;
 }
 

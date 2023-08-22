@@ -6,7 +6,8 @@
         {{ keywords }}
       </span>
     </header>
-    <SubTab class="mt-20px" :tabs="tabs"></SubTab>
+    <SubTab with-query class="my-20px" :tabs="tabs"></SubTab>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -20,10 +21,12 @@ keywords.value = String(route.query.keywords)
 
 const tabs = ref<Array<Tab>>([
   {
-    tab: '单曲'
+    tab: '单曲',
+    path: '/index/search/single-music'
   },
   {
-    tab: '歌手'
+    tab: '歌手',
+    path: '/index/search/singer'
   },
   {
     tab: '专辑'

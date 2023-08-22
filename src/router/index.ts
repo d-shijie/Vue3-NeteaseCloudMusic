@@ -127,7 +127,20 @@ const router = createRouter({
         {
           path: '/index/search',
           name: 'Search',
-          component: () => import('@/views/searchResult/searchIndex.vue')
+          component: () => import('@/views/searchResult/searchIndex.vue'),
+          redirect: '/index/search/single-music',
+          children: [
+            {
+              path: '/index/search/single-music',
+              name: 'SingleMusic',
+              component: () => import('@/views/searchResult/components/singleMusic.vue')
+            },
+            {
+              path: '/index/search/singer',
+              name: 'SearchSinger',
+              component: () => import('@/views/searchResult/components/searchSinger.vue')
+            }
+          ]
         }
       ]
     },
