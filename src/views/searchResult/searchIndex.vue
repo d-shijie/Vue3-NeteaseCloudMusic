@@ -16,7 +16,7 @@ import { useRoute } from 'vue-router'
 import SubTab, { type Tab } from '@/components/SubTab/subTab.vue'
 const route = useRoute()
 const keywords = ref('')
-keywords.value = route.query.keywords
+keywords.value = String(route.query.keywords)
 
 const tabs = ref<Array<Tab>>([
   {
@@ -48,7 +48,7 @@ const tabs = ref<Array<Tab>>([
   },
 ])
 watch(route, () => {
-  keywords.value = route.query.keywords
+  keywords.value = String(route.query.keywords)
 })
 </script>
 

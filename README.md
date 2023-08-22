@@ -41,30 +41,38 @@ pnpm run electron:build
 
 ## 部分页面截图
 
-### 发现音乐->歌单
+### 发现音乐
 
-![发现音乐->歌单](./docs/assets/find_music_new_music.png)
+![发现音乐](./docs/assets/find_music.png)
 
-### 发现音乐->排行榜
+### 播客
 
-![发现音乐->排行榜](./docs/assets/find_music_rank.png)
+![播客](./docs/assets/dj.png)
 
-### 发现音乐->歌手
+### 关注
 
-![发现音乐->排行榜](./docs/assets/find_music_singer.png)
+![关注](./docs/assets/follow.png)
 
-### 发现音乐->最新音乐
+### 私人漫游
 
-![发现音乐->排行榜](./docs/assets/find_music_new_music.png)
+![私人漫游](./docs/assets/fm.png)
 
-### 歌单详情->歌曲列表
+### 歌单详情
 
-![发现音乐->排行榜](./docs/assets/playlist_detail_musics.png)
+![歌单详情](./docs/assets/playlist_detail.png)
 
-### 歌单详情->评论列表
+### 视频列表
 
-![歌单详情->评论列表](./docs/assets/playlist_detail_comment.png)
+![视频列表](./docs/assets/video_list.png)
 
-## 演示视频
+### 视频详情
 
-![演示视频](./docs/assets/demo.mp4)
+![视频详情](./docs/assets/video_detail.png)
+
+### 评论
+
+![评论](./docs/assets/comments.png)
+
+### 用户信息
+
+![用户信息](./docs/assets/profile.png)
