@@ -22,7 +22,7 @@
 
 <script setup lang="ts">
 import { ref, watch, reactive } from 'vue';
-import { searchApi } from '@/api/search';
+import { searchApi,type SearchType } from '@/api/search';
 import { useRoute } from 'vue-router'
 import PlaylistMusics from '@/components/playlist/playlistMusics.vue';
 import { useGlobalStore } from '@/stores/modules/global';
@@ -31,7 +31,7 @@ const route = useRoute()
 
 const params = reactive({
   keywords: String(route.query.keywords),
-  type: 1,
+  type: 1 as SearchType,
   offset: 1,
   limit: 100
 })
