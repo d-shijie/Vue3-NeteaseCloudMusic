@@ -26,9 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import {ref, reactive} from 'vue'
+import {ref, reactive, watch} from 'vue'
 import {searchApi, type SearchType} from '@/api/search'
 import {useRoute} from 'vue-router'
+import {searchKeyword} from '@/util'
 const route = useRoute()
 const params = reactive({
   keywords: String(route.query.keywords),
@@ -48,11 +49,10 @@ const getSingers = () => {
   })
 }
 getSingers()
+watch(route, () => {
+  getSingers()
+})
 
-const searchKeyword = (singleStr: string, str: string): boolean => {
-  if (!str || !singleStr) return false
-  return str.includes(singleStr)
-}
 </script>
 
 <style scoped></style>
