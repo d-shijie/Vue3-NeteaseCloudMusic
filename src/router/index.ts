@@ -139,6 +139,41 @@ const router = createRouter({
               path: '/index/search/singer',
               name: 'SearchSinger',
               component: () => import('@/views/searchResult/components/searchSinger.vue')
+            },
+            {
+              path: '/index/search/album',
+              name: 'SearchAlbum',
+              component: () => import('@/views/searchResult/components/searchAlbum.vue')
+            },
+            {
+              path: '/index/search/video',
+              name: 'SearchVideo',
+              component: () => import('@/views/searchResult/components/searchVideo.vue')
+            },
+            {
+              path: '/index/search/playlist',
+              name: 'SearchPlaylist',
+              component: () => import('@/views/searchResult/components/searchPlaylist.vue')
+            },
+            {
+              path: '/index/search/lyric',
+              name: 'SearchLyric',
+              component: () => import('@/views/searchResult/components/searchLyric.vue')
+            },
+            {
+              path: '/index/search/dj',
+              name: 'SearchDj',
+              component: () => import('@/views/searchResult/components/searchDj.vue')
+            },
+            {
+              path: '/index/search/program',
+              name: 'SearchProgram',
+              component: () => import('@/views/searchResult/components/searchProgram.vue')
+            },
+            {
+              path: '/index/search/user',
+              name: 'SearchUser',
+              component: () => import('@/views/searchResult/components/searchUser.vue')
             }
           ]
         }

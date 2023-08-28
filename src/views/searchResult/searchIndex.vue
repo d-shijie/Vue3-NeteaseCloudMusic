@@ -12,9 +12,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
-import SubTab, { type Tab } from '@/components/SubTab/subTab.vue'
+import {ref, watch} from 'vue'
+import {useRoute} from 'vue-router'
+import SubTab, {type Tab} from '@/components/SubTab/subTab.vue'
 const route = useRoute()
 const keywords = ref('')
 keywords.value = String(route.query.keywords)
@@ -29,25 +29,32 @@ const tabs = ref<Array<Tab>>([
     path: '/index/search/singer'
   },
   {
-    tab: '专辑'
+    tab: '专辑',
+    path: '/index/search/album'
   },
   {
-    tab: '视频'
+    tab: '视频',
+    path: '/index/search/video'
   },
   {
-    tab: '歌单'
+    tab: '歌单',
+    path: '/index/search/playlist'
   },
   {
-    tab: '歌词'
+    tab: '歌词',
+    path: '/index/search/lyric'
   },
   {
-    tab: '播客'
+    tab: '播客',
+    path: '/index/search/dj'
   },
   {
-    tab: '声音'
+    tab: '声音',
+    path: '/index/search/program'
   },
   {
-    tab: '用户'
+    tab: '用户',
+    path: '/index/search/user'
   },
 ])
 watch(route, () => {
