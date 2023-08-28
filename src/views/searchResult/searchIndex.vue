@@ -62,4 +62,10 @@ watch(route, () => {
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+:deep(.item) {
+  &:hover {
+    background-color: #373737 !important;
+  }
+}
+</style>

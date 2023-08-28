@@ -3,7 +3,8 @@
     <section>
       <ul>
         <li :style="{background: (index % 2) === 0 ? '#2b2b2b' : '#2f2f2f'}"
-          class="cursor-pointer flex items-center p-10px hover:bg-#373737" v-for="(item, index) in singers" :key="index">
+          class="item cursor-pointer flex items-center p-10px hover:bg-#373737" v-for="(item, index) in singers"
+          :key="index">
           <img class="w-60px h-60px rounded mr-15px" :src="item.img1v1Url" alt="">
           <span class="flex-1 text-14px">
             <span :style="{color: searchKeyword(i, String(route.query.keywords)) ? '#85b9e6' : ''}"
