@@ -42,7 +42,7 @@ export const useGlobalStore = defineStore(
     // 可传递歌单列表/歌单id
     const setCurrentPlaylist = async (val: number | Array<Playlist>) => {
       if (Array.isArray(val)) {
-        currentPlaylistId.value = val[0].id
+
         currentPlaylist.value = val
       } else {
         currentPlaylistId.value = val

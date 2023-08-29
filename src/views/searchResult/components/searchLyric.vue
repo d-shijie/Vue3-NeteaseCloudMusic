@@ -2,7 +2,7 @@
   <div>
     <section>
       <ul>
-        <li :style="{background: (index % 2) === 0 ? '#2b2b2b' : '#2f2f2f'}"
+        <li @click="play(item.id)" :style="{background: (index % 2) === 0 ? '#2b2b2b' : '#2f2f2f'}"
           class="item cursor-pointer flex flex-col  h-100% p-15px overflow-hidden" v-for="(item, index) in lyricList"
           :key="index">
           <div class="w-full h-30px flex items-center justify-between mb-10px">
@@ -57,9 +57,12 @@
 <script setup lang="ts">
 import {ref, watch, reactive} from 'vue';
 import {searchApi, type SearchType} from '@/api/search';
+import {getMusicUrlApi} from '@/api/music'
 import {useRoute} from 'vue-router'
 import {searchKeyword, formatAr, stampToMin} from '@/util'
 import {ElMessage} from 'element-plus';
+import {useGlobalStore} from '@/stores/modules/global';
+const globalStore = useGlobalStore()
 const route = useRoute()
 const params = reactive({
   keywords: String(route.query.keywords),
@@ -110,6 +113,18 @@ const copyLyric = (index: number) => {
     .catch(() => {
       ElMessage.info('复制失败')
     });
+}
+const play = (id: number) => {
+  globalStore.setCurrentPlaylist(lyricList.value)
+  getMusicUrlApi({
+    id,
+    level: useGlobalStore().currentMusicLevel
+  }).then((res: any) => {
+    globalStore.setAudioUrlAndId(res.data.data[0].url, id)
+    globalStore.audioPlay()
+  }).catch(() => {
+    ElMessage.error('出错啦!')
+  })
 }
 watch(route, () => {
   getLyricList()
