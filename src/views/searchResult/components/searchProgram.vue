@@ -39,7 +39,7 @@ import {ref, watch, reactive} from 'vue';
 import {searchApi, type SearchType} from '@/api/search';
 import {useRoute} from 'vue-router'
 import {searchKeyword, formatCount} from '@/util'
-import router from '@/router';
+
 
 const route = useRoute()
 
