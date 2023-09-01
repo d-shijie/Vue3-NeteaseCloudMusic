@@ -45,7 +45,9 @@
       <div class="time">
         <span class="current-time">{{ stampToMin(currentTime) }}</span>
         <div class="controll-time" ref="controllTimeRef" @click="adjustTime($event)">
-          <div ref="timerRef" class="timer"></div>
+          <div ref="timerRef" class="timer">
+
+          </div>
         </div>
         <span class="end-time">{{ stampToMin(currentMusicInfo.info.dt) }}</span>
       </div>
@@ -56,9 +58,9 @@
           <ul>
             <li @click="shiftMusicQuality(item.value)" class="my-10px cursor-pointer text-#fefefe flex items-center"
               v-for="(item, index) in musicQuality" :key="index">
-              <svg-icon :style="{ opacity: globalStore.currentMusicLevel === item.value ? '1' : '0' }" class="mr-3px"
+              <svg-icon :style="{opacity: globalStore.currentMusicLevel === item.value ? '1' : '0'}" class="mr-3px"
                 name="correct"></svg-icon>
-              <span :style="{ color: globalStore.currentMusicLevel === item.value ? 'red' : '#fefefe' }">
+              <span :style="{color: globalStore.currentMusicLevel === item.value ? 'red' : '#fefefe'}">
                 {{ item.label }}
               </span>
             </li>
@@ -94,11 +96,11 @@
 </template>
 
 <script setup lang="ts">
-import { useGlobalStore } from '@/stores/modules/global'
-import type { currentMusicLevel } from '@/stores/types/global'
-import { getMusicDetailApi } from '@/api/music'
-import { computed, reactive, ref } from 'vue'
-import { stampToMin } from '@/util/timeFormat'
+import {useGlobalStore} from '@/stores/modules/global'
+import type {currentMusicLevel} from '@/stores/types/global'
+import {getMusicDetailApi} from '@/api/music'
+import {computed, reactive, ref} from 'vue'
+import {stampToMin} from '@/util/timeFormat'
 const globalStore = useGlobalStore()
 
 const timerRef = ref()
@@ -137,7 +139,7 @@ const pause = () => {
 }
 
 // 调整音质
-const musicQuality = ref<{ label: string; value: currentMusicLevel }[]>([
+const musicQuality = ref<{label: string; value: currentMusicLevel}[]>([
   {
     label: '标准音质',
     value: 'standard'
