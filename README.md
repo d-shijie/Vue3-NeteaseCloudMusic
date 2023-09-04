@@ -1,7 +1,7 @@
 ## [线上 DEMO](https://www.dshijie.fun/#/index/find-music/personalized-recommendations)
 
 首次加载可能需要手动刷新浏览器一次
-线上登录接口存在无法登录问题
+线上部分接口存在问题（如扫码登录）
 
 ### [接口服务](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
